@@ -3,6 +3,22 @@ import 'package:flutter/material.dart';
 import 'app_breakpoints.dart';
 import 'screen_type_resolver.dart';
 
+/// A layout builder that renders the appropriate widget based on screen size.
+///
+/// [mobile] is required. [tablet] and [desktop] are optional and fall back
+/// to the next smaller layout if not provided.
+///
+/// Only the active layout is built — the others are never constructed.
+///
+/// Usage:
+/// ```dart
+/// ResponsiveBuilder(
+///   mobile: (context) => MobileWeatherLayout(),
+///   tablet: (context) => TabletWeatherLayout(),
+///   desktop: (context) => DesktopWeatherLayout(),
+/// )
+/// ```
+
 class ResponsiveBuilder extends StatelessWidget {
   final Widget Function(BuildContext context) mobile;
   final Widget Function(BuildContext context)? tablet;
