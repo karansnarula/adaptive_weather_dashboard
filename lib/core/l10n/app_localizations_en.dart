@@ -1,0 +1,78 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appTitle => 'Weather Dashboard';
+
+  @override
+  String get navWeather => 'Weather';
+
+  @override
+  String get navFavorites => 'Favorites';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
+  String get searchCity => 'Search city...';
+
+  @override
+  String get temperature => 'Temperature';
+
+  @override
+  String get humidity => 'Humidity';
+
+  @override
+  String get windSpeed => 'Wind Speed';
+
+  @override
+  String feelsLike(String temp) {
+    return 'Feels like $temp°';
+  }
+
+  @override
+  String get forecast => '5-Day Forecast';
+
+  @override
+  String get favorites => 'Favorite Cities';
+
+  @override
+  String get noFavorites => 'No favorite cities yet';
+
+  @override
+  String get addedToFavorites => 'Added to favorites';
+
+  @override
+  String get removedFromFavorites => 'Removed from favorites';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get units => 'Units';
+
+  @override
+  String get celsius => 'Celsius';
+
+  @override
+  String get fahrenheit => 'Fahrenheit';
+
+  @override
+  String get errorGeneric => 'Something went wrong. Please try again.';
+
+  @override
+  String get errorNoInternet => 'No internet connection.';
+
+  @override
+  String get errorCityNotFound => 'City not found. Please try another search.';
+}

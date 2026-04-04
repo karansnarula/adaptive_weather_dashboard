@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "appTitle": "Weather Dashboard",
+  "navWeather": "Weather",
+  "navFavorites": "Favorites",
+  "navSettings": "Settings",
+  "searchCity": "Search city...",
+  "temperature": "Temperature",
+  "humidity": "Humidity",
+  "windSpeed": "Wind Speed",
+  "feelsLike": "Feels like {temp}°",
+  "@feelsLike": {
+    "placeholders": {
+      "temp": {
+        "type": "String"
+      }
+    }
+  },
+  "forecast": "5-Day Forecast",
+  "favorites": "Favorite Cities",
+  "noFavorites": "No favorite cities yet",
+  "addedToFavorites": "Added to favorites",
+  "removedFromFavorites": "Removed from favorites",
+  "settings": "Settings",
+  "language": "Language",
+  "units": "Units",
+  "celsius": "Celsius",
+  "fahrenheit": "Fahrenheit",
+  "errorGeneric": "Something went wrong. Please try again.",
+  "errorNoInternet": "No internet connection.",
+  "errorCityNotFound": "City not found. Please try another search."
+}

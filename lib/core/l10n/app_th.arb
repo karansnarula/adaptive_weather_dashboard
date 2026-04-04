@@ -1,0 +1,32 @@
+{
+  "@@locale": "th",
+  "appTitle": "แดชบอร์ดสภาพอากาศ",
+  "navWeather": "สภาพอากาศ",
+  "navFavorites": "รายการโปรด",
+  "navSettings": "ตั้งค่า",
+  "searchCity": "ค้นหาเมือง...",
+  "temperature": "อุณหภูมิ",
+  "humidity": "ความชื้น",
+  "windSpeed": "ความเร็วลม",
+  "feelsLike": "รู้สึกเหมือน {temp}°",
+  "@feelsLike": {
+    "placeholders": {
+      "temp": {
+        "type": "String"
+      }
+    }
+  },
+  "forecast": "พยากรณ์อากาศ 5 วัน",
+  "favorites": "เมืองโปรด",
+  "noFavorites": "ยังไม่มีเมืองโปรด",
+  "addedToFavorites": "เพิ่มในรายการโปรดแล้ว",
+  "removedFromFavorites": "ลบออกจากรายการโปรดแล้ว",
+  "settings": "ตั้งค่า",
+  "language": "ภาษา",
+  "units": "หน่วย",
+  "celsius": "เซลเซียส",
+  "fahrenheit": "ฟาเรนไฮต์",
+  "errorGeneric": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+  "errorNoInternet": "ไม่มีการเชื่อมต่ออินเทอร์เน็ต",
+  "errorCityNotFound": "ไม่พบเมืองที่ค้นหา กรุณาลองใหม่"
+}
