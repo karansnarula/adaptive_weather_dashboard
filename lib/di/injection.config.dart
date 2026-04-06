@@ -10,6 +10,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:adaptive_weather_dashboard/di/app_module.dart' as _i59;
+import 'package:adaptive_weather_dashboard/features/weather/data/datasources/weather_remote_data_source.dart'
+    as _i650;
+import 'package:adaptive_weather_dashboard/features/weather/domain/repositories/weather_repository.dart'
+    as _i315;
+import 'package:adaptive_weather_dashboard/features/weather/domain/usecases/get_current_weather.dart'
+    as _i728;
+import 'package:adaptive_weather_dashboard/features/weather/domain/usecases/get_forecast.dart'
+    as _i936;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -28,6 +36,15 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
+    gh.factory<_i728.GetCurrentWeather>(
+      () => _i728.GetCurrentWeather(gh<_i315.WeatherRepository>()),
+    );
+    gh.factory<_i936.GetForecast>(
+      () => _i936.GetForecast(gh<_i315.WeatherRepository>()),
+    );
+    gh.lazySingleton<_i650.WeatherRemoteDataSource>(
+      () => _i650.WeatherRemoteDataSource(gh<_i361.Dio>()),
+    );
     return this;
   }
 }
