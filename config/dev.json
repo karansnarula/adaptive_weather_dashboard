@@ -1,0 +1,6 @@
+{
+  "ENV": "dev",
+  "APP_NAME": "Weather Dev",
+  "API_BASE_URL": "https://api.openweathermap.org",
+  "API_KEY": "0a21de89f0dc180d9f473a75cd8e2764"
+}

@@ -1,0 +1,105 @@
+import 'package:flutter/material.dart';
+
+import '../../domain/entities/weather.dart';
+
+class WeatherCard extends StatelessWidget {
+  final Weather weather;
+
+  const WeatherCard({super.key, required this.weather});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              weather.cityName,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Image.network(
+              'https://openweathermap.org/img/wn/${weather.icon}@4x.png',
+              width: 100,
+              height: 100,
+              errorBuilder: (context, error, stack) =>
+              const Icon(Icons.cloud, size: 100),
+            ),
+            Text(
+              '${weather.temperature.round()}°',
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              weather.description,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _InfoTile(
+                  icon: Icons.thermostat,
+                  label: 'Feels like',
+                  value: '${weather.feelsLike.round()}°',
+                ),
+                _InfoTile(
+                  icon: Icons.water_drop,
+                  label: 'Humidity',
+                  value: '${weather.humidity}%',
+                ),
+                _InfoTile(
+                  icon: Icons.air,
+                  label: 'Wind',
+                  value: '${weather.windSpeed} m/s',
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const _InfoTile({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(icon, color: Theme.of(context).colorScheme.primary),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
+      ],
+    );
+  }
+}
