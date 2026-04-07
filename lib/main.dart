@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
 import 'core/config/app_config.dart';
 import 'core/theme/app_theme.dart';
@@ -12,6 +13,8 @@ void main() async {
 
   // Initialize environment config from --dart-define-from-file
   AppConfig.initialize();
+
+  await Hive.initFlutter();
 
   // Initialize dependency injection
   await configureDependencies();
