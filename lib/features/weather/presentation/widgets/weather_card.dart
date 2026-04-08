@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/weather.dart';
+import '../../../favorites/presentation/bloc/favorites_bloc.dart';
+import '../../../favorites/presentation/bloc/favorites_event.dart';
+import '../../../favorites/presentation/bloc/favorites_state.dart';
 
 class WeatherCard extends StatelessWidget {
   final Weather weather;
@@ -15,11 +19,43 @@ class WeatherCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              weather.cityName,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  weather.cityName,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                BlocBuilder<FavoritesBloc, FavoritesState>(
+                  builder: (context, state) {
+                    final isFavorite = state is FavoritesLoaded &&
+                        state.favorites.any((f) => f.name == weather.cityName);
+
+                    return IconButton(
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite
+                            ? Theme.of(context).colorScheme.error
+                            : null,
+                      ),
+                      onPressed: () {
+                        if (isFavorite) {
+                          context
+                              .read<FavoritesBloc>()
+                              .add(RemoveFavoriteCity(weather.cityName));
+                        } else {
+                          context
+                              .read<FavoritesBloc>()
+                              .add(AddFavoriteCity(weather.cityName));
+                        }
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             Image.network(

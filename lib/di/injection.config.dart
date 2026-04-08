@@ -24,6 +24,8 @@ import 'package:adaptive_weather_dashboard/features/favorites/domain/usecases/ge
     as _i868;
 import 'package:adaptive_weather_dashboard/features/favorites/domain/usecases/remove_favorite.dart'
     as _i666;
+import 'package:adaptive_weather_dashboard/features/favorites/presentation/bloc/favorites_bloc.dart'
+    as _i546;
 import 'package:adaptive_weather_dashboard/features/weather/data/datasources/weather_remote_data_source.dart'
     as _i650;
 import 'package:adaptive_weather_dashboard/features/weather/data/repositories/weather_repository_impl.dart'
@@ -81,6 +83,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i666.RemoveFavorite>(
       () => _i666.RemoveFavorite(gh<_i345.FavoritesRepository>()),
+    );
+    gh.factory<_i546.FavoritesBloc>(
+      () => _i546.FavoritesBloc(
+        gh<_i868.GetFavorites>(),
+        gh<_i872.AddFavorite>(),
+        gh<_i666.RemoveFavorite>(),
+      ),
     );
     gh.factory<_i728.GetCurrentWeather>(
       () => _i728.GetCurrentWeather(gh<_i315.WeatherRepository>()),
