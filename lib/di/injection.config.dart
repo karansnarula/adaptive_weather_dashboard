@@ -26,6 +26,8 @@ import 'package:adaptive_weather_dashboard/features/favorites/domain/usecases/re
     as _i666;
 import 'package:adaptive_weather_dashboard/features/favorites/presentation/bloc/favorites_bloc.dart'
     as _i546;
+import 'package:adaptive_weather_dashboard/features/settings/presentation/bloc/settings_bloc.dart'
+    as _i408;
 import 'package:adaptive_weather_dashboard/features/weather/data/datasources/weather_remote_data_source.dart'
     as _i650;
 import 'package:adaptive_weather_dashboard/features/weather/data/repositories/weather_repository_impl.dart'
@@ -68,6 +70,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i650.WeatherRemoteDataSource>(
       () => _i650.WeatherRemoteDataSource(gh<_i361.Dio>()),
+    );
+    gh.factory<_i408.SettingsBloc>(
+      () => _i408.SettingsBloc(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i345.FavoritesRepository>(
       () => _i74.FavoritesRepositoryImpl(gh<_i388.FavoritesLocalDataSource>()),

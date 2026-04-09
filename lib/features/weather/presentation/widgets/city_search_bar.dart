@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../settings/presentation/bloc/settings_bloc.dart';
+import '../../../settings/presentation/bloc/settings_state.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_event.dart';
 
@@ -17,7 +19,9 @@ class _CitySearchBarState extends State<CitySearchBar> {
   void _onSearch() {
     final city = _controller.text.trim();
     if (city.isNotEmpty) {
-      context.read<WeatherBloc>().add(SearchCity(city));
+      final isCelsius = context.read<SettingsBloc>().state.isCelsius;
+      final units = isCelsius ? 'metric' : 'imperial';
+      context.read<WeatherBloc>().add(SearchCity(city, units: units));
     }
   }
 

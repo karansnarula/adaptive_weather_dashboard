@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/responsive/responsive_builder.dart';
+import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../../../weather/presentation/bloc/weather_bloc.dart';
 import '../../../weather/presentation/bloc/weather_event.dart';
 import '../bloc/favorites_bloc.dart';
@@ -84,7 +85,9 @@ class FavoritesPage extends StatelessWidget {
   }
 
   void _onCityTap(BuildContext context, String city) {
-    context.read<WeatherBloc>().add(SearchCity(city));
+    final isCelsius = context.read<SettingsBloc>().state.isCelsius;
+    final units = isCelsius ? 'metric' : 'imperial';
+    context.read<WeatherBloc>().add(SearchCity(city, units: units));
     context.go('/weather');
   }
 

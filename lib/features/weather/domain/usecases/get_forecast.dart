@@ -11,7 +11,7 @@ class GetForecast {
 
   const GetForecast(this._repository);
 
-  Future<Either<Failure, Forecast>> call(String city) {
-    return _repository.getForecast(city);
+  Future<Either<Failure, Forecast>> call(String city, {String units = 'metric'}) {
+    return _repository.getForecast(city, units: units);
   }
 }

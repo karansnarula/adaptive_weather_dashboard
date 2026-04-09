@@ -10,24 +10,29 @@ import 'weather_state.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetCurrentWeather _getCurrentWeather;
   final GetForecast _getForecast;
+  String _lastCity = '';
+  String _lastUnits = 'metric';
 
   WeatherBloc(this._getCurrentWeather, this._getForecast)
       : super(const WeatherInitial()) {
     on<SearchCity>(_onSearchCity);
+    on<RefreshWeather>(_onRefreshWeather);
   }
 
   Future<void> _onSearchCity(
       SearchCity event,
       Emitter<WeatherState> emit,
       ) async {
+    _lastCity = event.city;
+    _lastUnits = event.units;
     emit(const WeatherLoading());
 
-    final weatherResult = await _getCurrentWeather(event.city);
+    final weatherResult = await _getCurrentWeather(event.city, units: event.units);
 
     await weatherResult.fold(
           (failure) async => emit(WeatherError(failure.message)),
           (weather) async {
-        final forecastResult = await _getForecast(event.city);
+        final forecastResult = await _getForecast(event.city, units: event.units);
 
         forecastResult.fold(
               (failure) => emit(WeatherError(failure.message)),
@@ -38,5 +43,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         );
       },
     );
+  }
+
+  Future<void> _onRefreshWeather(
+      RefreshWeather event,
+      Emitter<WeatherState> emit,
+      ) async {
+    if (_lastCity.isNotEmpty) {
+      add(SearchCity(_lastCity, units: event.units));
+    }
   }
 }

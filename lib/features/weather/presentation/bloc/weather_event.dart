@@ -9,9 +9,19 @@ sealed class WeatherEvent extends Equatable {
 
 class SearchCity extends WeatherEvent {
   final String city;
+  final String units;
 
-  const SearchCity(this.city);
+  const SearchCity(this.city, {this.units = 'metric'});
 
   @override
-  List<Object> get props => [city];
+  List<Object> get props => [city, units];
+}
+
+class RefreshWeather extends WeatherEvent {
+  final String units;
+
+  const RefreshWeather({this.units = 'metric'});
+
+  @override
+  List<Object> get props => [units];
 }

@@ -5,6 +5,6 @@ import '../entities/weather.dart';
 import '../entities/forecast.dart';
 
 abstract class WeatherRepository {
-  Future<Either<Failure, Weather>> getCurrentWeather(String city);
-  Future<Either<Failure, Forecast>> getForecast(String city);
+  Future<Either<Failure, Weather>> getCurrentWeather(String city, {String units = 'metric'});
+  Future<Either<Failure, Forecast>> getForecast(String city, {String units = 'metric'});
 }

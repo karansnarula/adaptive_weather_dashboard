@@ -9,8 +9,11 @@ import 'core/router/app_router.dart';
 import 'core/l10n/app_localizations.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'features/favorites/presentation/bloc/favorites_event.dart';
-import 'di/injection.dart';
+import 'features/settings/presentation/bloc/settings_bloc.dart';
+import 'features/settings/presentation/bloc/settings_event.dart';
+import 'features/settings/presentation/bloc/settings_state.dart';
 import 'features/weather/presentation/bloc/weather_bloc.dart';
+import 'di/injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,34 +35,45 @@ class WeatherDashboardApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-          getIt<WeatherBloc>(),
+          create: (context) => getIt<WeatherBloc>(),
         ),
         BlocProvider(
-          create: (context) =>
-              getIt<FavoritesBloc>()..add(const LoadFavorites()),
+          create: (context) => getIt<FavoritesBloc>()..add(const LoadFavorites()),
+        ),
+        BlocProvider(
+          create: (context) => getIt<SettingsBloc>()..add(const LoadSettings()),
         ),
       ],
-      child: MaterialApp.router(
-        title: AppConfig.instance.appName,
-        debugShowCheckedModeBanner: false,
+      child: BlocBuilder<SettingsBloc, SettingsState>(
+        buildWhen: (previous, current) =>
+        previous.languageCode != current.languageCode,
+        builder: (context, settingsState) {
+          return MaterialApp.router(
+            title: AppConfig.instance.appName,
+            debugShowCheckedModeBanner: false,
 
-        // Theme
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.system,
+            // Theme
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: ThemeMode.system,
 
-        // Routing
-        routerConfig: AppRouter.router,
+            // Routing
+            routerConfig: AppRouter.router,
 
-        // Localization
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('en'), Locale('th')],
+            // Localization
+            locale: Locale(settingsState.languageCode),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('th'),
+            ],
+          );
+        },
       ),
     );
   }

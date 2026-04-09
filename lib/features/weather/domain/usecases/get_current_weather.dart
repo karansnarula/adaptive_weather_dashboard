@@ -11,7 +11,7 @@ class GetCurrentWeather {
 
   const GetCurrentWeather(this._repository);
 
-  Future<Either<Failure, Weather>> call(String city) {
-    return _repository.getCurrentWeather(city);
+  Future<Either<Failure, Weather>> call(String city, {String units = 'metric'}) {
+    return _repository.getCurrentWeather(city, units: units);
   }
 }
