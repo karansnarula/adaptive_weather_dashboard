@@ -40,15 +40,21 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       AddFavoriteCity event,
       Emitter<FavoritesState> emit,
       ) async {
-    await _addFavorite(event.cityName);
-    add(const LoadFavorites());
+    final result = await _addFavorite(event.cityName);
+    result.fold(
+          (failure) => emit(FavoritesError(failure.message)),
+          (_) => add(const LoadFavorites()),
+    );
   }
 
   Future<void> _onRemoveFavorite(
       RemoveFavoriteCity event,
       Emitter<FavoritesState> emit,
       ) async {
-    await _removeFavorite(event.cityName);
-    add(const LoadFavorites());
+    final result = await _removeFavorite(event.cityName);
+    result.fold(
+          (failure) => emit(FavoritesError(failure.message)),
+          (_) => add(const LoadFavorites()),
+    );
   }
 }

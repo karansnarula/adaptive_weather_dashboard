@@ -10,6 +10,7 @@ import 'core/l10n/app_localizations.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'features/favorites/presentation/bloc/favorites_event.dart';
 import 'di/injection.dart';
+import 'features/weather/presentation/bloc/weather_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +29,17 @@ class WeatherDashboardApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<FavoritesBloc>()..add(const LoadFavorites()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+          getIt<WeatherBloc>(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              getIt<FavoritesBloc>()..add(const LoadFavorites()),
+        ),
+      ],
       child: MaterialApp.router(
         title: AppConfig.instance.appName,
         debugShowCheckedModeBanner: false,
@@ -49,10 +59,7 @@ class WeatherDashboardApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('th'),
-        ],
+        supportedLocales: const [Locale('en'), Locale('th')],
       ),
     );
   }

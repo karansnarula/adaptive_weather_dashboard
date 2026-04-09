@@ -44,10 +44,7 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: '/weather',
-                builder: (context, state) => BlocProvider(
-                  create: (context) => getIt<WeatherBloc>(),
-                  child: const WeatherPage(),
-                ),
+                builder: (context, state) => const WeatherPage(),
               ),
             ],
           ),

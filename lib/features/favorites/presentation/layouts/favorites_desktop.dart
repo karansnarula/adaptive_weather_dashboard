@@ -20,21 +20,18 @@ class FavoritesDesktop extends StatelessWidget {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1000),
-        child: GridView.builder(
+        child: ListView.builder(
           padding: const EdgeInsets.all(32),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 3,
-          ),
           itemCount: favorites.length,
           itemBuilder: (context, index) {
             final city = favorites[index];
-            return FavoriteCityTile(
-              city: city,
-              onTap: () => onCityTap(city.name),
-              onRemove: () => onRemove(city.name),
+            return ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 600),
+              child: FavoriteCityTile(
+                city: city,
+                onTap: () => onCityTap(city.name),
+                onRemove: () => onRemove(city.name),
+              ),
             );
           },
         ),

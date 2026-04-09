@@ -17,14 +17,8 @@ class FavoritesTablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return ListView.builder(
       padding: const EdgeInsets.all(24),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 3,
-      ),
       itemCount: favorites.length,
       itemBuilder: (context, index) {
         final city = favorites[index];
