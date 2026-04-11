@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,21 +21,21 @@ abstract class AppRouter {
             index,
             initialLocation: index == navigationShell.currentIndex,
           ),
-          destinations: const [
+          destinations: [
             NavigationDestination(
               icon: Icon(Icons.cloud_outlined),
               selectedIcon: Icon(Icons.cloud),
-              label: 'Weather',
+              label: context.l10n.navWeather,
             ),
             NavigationDestination(
               icon: Icon(Icons.favorite_outline),
               selectedIcon: Icon(Icons.favorite),
-              label: 'Favorites',
+              label: context.l10n.navFavorites,
             ),
             NavigationDestination(
               icon: Icon(Icons.settings_outlined),
               selectedIcon: Icon(Icons.settings),
-              label: 'Settings',
+              label: context.l10n.navSettings,
             ),
           ],
           body: navigationShell,
