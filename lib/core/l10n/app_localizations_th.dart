@@ -75,4 +75,28 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get errorCityNotFound => 'ไม่พบเมืองที่ค้นหา กรุณาลองใหม่';
+
+  @override
+  String get searchPrompt => 'ค้นหาเมืองเพื่อดูสภาพอากาศ';
+
+  @override
+  String get feelsLikeLabel => 'รู้สึกเหมือน';
+
+  @override
+  String get fiveDayForecast => 'พยากรณ์อากาศ 5 วัน';
+
+  @override
+  String get tapToViewWeather => 'แตะเพื่อดูสภาพอากาศ';
+
+  @override
+  String get noFavoritesSubtitle => 'ค้นหาเมืองแล้วแตะหัวใจเพื่อบันทึก';
+
+  @override
+  String get temperatureUnit => 'หน่วยอุณหภูมิ';
+
+  @override
+  String get switchToFahrenheit => 'เปลี่ยนเป็นฟาเรนไฮต์';
+
+  @override
+  String get switchToCelsius => 'เปลี่ยนเป็นเซลเซียส';
 }

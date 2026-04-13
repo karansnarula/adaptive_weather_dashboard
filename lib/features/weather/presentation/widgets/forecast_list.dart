@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/forecast.dart';
@@ -17,7 +18,7 @@ class ForecastList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '5-Day Forecast',
+              context.l10n.fiveDayForecast,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

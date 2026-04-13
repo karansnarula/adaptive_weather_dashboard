@@ -75,4 +75,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorCityNotFound => 'City not found. Please try another search.';
+
+  @override
+  String get searchPrompt => 'Search for a city to see the weather';
+
+  @override
+  String get feelsLikeLabel => 'Feels like';
+
+  @override
+  String get fiveDayForecast => '5-Day Forecast';
+
+  @override
+  String get tapToViewWeather => 'Tap to view weather';
+
+  @override
+  String get noFavoritesSubtitle =>
+      'Search for a city and tap the heart to save it';
+
+  @override
+  String get temperatureUnit => 'Temperature Unit';
+
+  @override
+  String get switchToFahrenheit => 'Switch to Fahrenheit';
+
+  @override
+  String get switchToCelsius => 'Switch to Celsius';
 }

@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/favorite_city.dart';
@@ -25,7 +26,7 @@ class FavoriteCityTile extends StatelessWidget {
           city.name,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        subtitle: const Text('Tap to view weather'),
+        subtitle: Text(context.l10n.tapToViewWeather),
         trailing: IconButton(
           icon: Icon(
             Icons.delete_outline,

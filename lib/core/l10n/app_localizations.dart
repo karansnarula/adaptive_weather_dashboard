@@ -229,6 +229,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'City not found. Please try another search.'**
   String get errorCityNotFound;
+
+  /// No description provided for @searchPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a city to see the weather'**
+  String get searchPrompt;
+
+  /// No description provided for @feelsLikeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Feels like'**
+  String get feelsLikeLabel;
+
+  /// No description provided for @fiveDayForecast.
+  ///
+  /// In en, this message translates to:
+  /// **'5-Day Forecast'**
+  String get fiveDayForecast;
+
+  /// No description provided for @tapToViewWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to view weather'**
+  String get tapToViewWeather;
+
+  /// No description provided for @noFavoritesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a city and tap the heart to save it'**
+  String get noFavoritesSubtitle;
+
+  /// No description provided for @temperatureUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature Unit'**
+  String get temperatureUnit;
+
+  /// No description provided for @switchToFahrenheit.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Fahrenheit'**
+  String get switchToFahrenheit;
+
+  /// No description provided for @switchToCelsius.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Celsius'**
+  String get switchToCelsius;
 }
 
 class _AppLocalizationsDelegate

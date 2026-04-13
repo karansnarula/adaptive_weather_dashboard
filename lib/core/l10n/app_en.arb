@@ -28,5 +28,13 @@
   "fahrenheit": "Fahrenheit",
   "errorGeneric": "Something went wrong. Please try again.",
   "errorNoInternet": "No internet connection.",
-  "errorCityNotFound": "City not found. Please try another search."
+  "errorCityNotFound": "City not found. Please try another search.",
+  "searchPrompt": "Search for a city to see the weather",
+  "feelsLikeLabel": "Feels like",
+  "fiveDayForecast": "5-Day Forecast",
+  "tapToViewWeather": "Tap to view weather",
+  "noFavoritesSubtitle": "Search for a city and tap the heart to save it",
+  "temperatureUnit": "Temperature Unit",
+  "switchToFahrenheit": "Switch to Fahrenheit",
+  "switchToCelsius": "Switch to Celsius"
 }

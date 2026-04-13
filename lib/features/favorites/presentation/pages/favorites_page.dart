@@ -12,6 +12,7 @@ import '../bloc/favorites_state.dart';
 import '../layouts/favorites_mobile.dart';
 import '../layouts/favorites_tablet.dart';
 import '../layouts/favorites_desktop.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
@@ -20,7 +21,7 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: Text(context.l10n.navFavorites),
       ),
       body: BlocBuilder<FavoritesBloc, FavoritesState>(
         builder: (context, state) {
@@ -69,12 +70,12 @@ class FavoritesPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No favorite cities yet',
+            context.l10n.noFavorites,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
           Text(
-            'Search for a city and tap the heart to save it',
+            context.l10n.noFavoritesSubtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),

@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +38,7 @@ class _CitySearchBarState extends State<CitySearchBar> {
       controller: _controller,
       onSubmitted: (_) => _onSearch(),
       decoration: InputDecoration(
-        hintText: 'Search city...',
+        hintText: context.l10n.searchCity,
         prefixIcon: const Icon(Icons.search),
         suffixIcon: IconButton(
           icon: const Icon(Icons.send),

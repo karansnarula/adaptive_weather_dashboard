@@ -28,5 +28,13 @@
   "fahrenheit": "ฟาเรนไฮต์",
   "errorGeneric": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
   "errorNoInternet": "ไม่มีการเชื่อมต่ออินเทอร์เน็ต",
-  "errorCityNotFound": "ไม่พบเมืองที่ค้นหา กรุณาลองใหม่"
+  "errorCityNotFound": "ไม่พบเมืองที่ค้นหา กรุณาลองใหม่",
+  "searchPrompt": "ค้นหาเมืองเพื่อดูสภาพอากาศ",
+  "feelsLikeLabel": "รู้สึกเหมือน",
+  "fiveDayForecast": "พยากรณ์อากาศ 5 วัน",
+  "tapToViewWeather": "แตะเพื่อดูสภาพอากาศ",
+  "noFavoritesSubtitle": "ค้นหาเมืองแล้วแตะหัวใจเพื่อบันทึก",
+  "temperatureUnit": "หน่วยอุณหภูมิ",
+  "switchToFahrenheit": "เปลี่ยนเป็นฟาเรนไฮต์",
+  "switchToCelsius": "เปลี่ยนเป็นเซลเซียส"
 }

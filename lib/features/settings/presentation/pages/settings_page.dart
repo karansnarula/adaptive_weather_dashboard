@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/language_selector.dart';
 import '../widgets/unit_selector.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -10,7 +11,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(context.l10n.navSettings),
       ),
       body: Center(
         child: ConstrainedBox(

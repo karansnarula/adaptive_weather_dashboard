@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,17 +85,17 @@ class WeatherCard extends StatelessWidget {
               children: [
                 _InfoTile(
                   icon: Icons.thermostat,
-                  label: 'Feels like',
+                  label: context.l10n.feelsLikeLabel,
                   value: '${weather.feelsLike.round()}°',
                 ),
                 _InfoTile(
                   icon: Icons.water_drop,
-                  label: 'Humidity',
+                  label: context.l10n.humidity,
                   value: '${weather.humidity}%',
                 ),
                 _InfoTile(
                   icon: Icons.air,
-                  label: 'Wind',
+                  label: context.l10n.windSpeed,
                   value: '${weather.windSpeed} m/s',
                 ),
               ],

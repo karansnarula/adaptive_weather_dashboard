@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,7 @@ class WeatherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Weather'),
+        title: Text(context.l10n.navWeather),
       ),
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
@@ -61,7 +62,7 @@ class WeatherPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Search for a city to see the weather',
+              context.l10n.searchPrompt,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 24),

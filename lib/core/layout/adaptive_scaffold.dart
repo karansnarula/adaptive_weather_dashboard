@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../responsive/responsive_builder.dart';
@@ -72,7 +73,7 @@ class AdaptiveScaffold extends StatelessWidget {
                     vertical: 8,
                   ),
                   child: Text(
-                    'Weather Dashboard',
+                    context.l10n.appTitle,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
