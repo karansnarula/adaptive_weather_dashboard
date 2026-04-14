@@ -11,7 +11,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetCurrentWeather _getCurrentWeather;
   final GetForecast _getForecast;
   String _lastCity = '';
-  String _lastUnits = 'metric';
 
   WeatherBloc(this._getCurrentWeather, this._getForecast)
       : super(const WeatherInitial()) {
@@ -24,7 +23,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       Emitter<WeatherState> emit,
       ) async {
     _lastCity = event.city;
-    _lastUnits = event.units;
     emit(const WeatherLoading());
 
     final weatherResult = await _getCurrentWeather(event.city, units: event.units);

@@ -1,14 +1,10 @@
 import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../di/injection.dart';
-import '../../features/weather/presentation/bloc/weather_bloc.dart';
 import '../layout/adaptive_scaffold.dart';
 import '../../features/weather/presentation/pages/weather_page.dart';
 import '../../features/favorites/presentation/pages/favorites_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(

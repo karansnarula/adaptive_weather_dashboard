@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../settings/presentation/bloc/settings_bloc.dart';
-import '../../../settings/presentation/bloc/settings_state.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_event.dart';
 
