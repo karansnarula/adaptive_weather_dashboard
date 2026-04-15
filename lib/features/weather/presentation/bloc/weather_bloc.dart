@@ -1,3 +1,4 @@
+import 'package:adaptive_weather_dashboard/features/weather/domain/repositories/weather_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
