@@ -36,5 +36,12 @@
   "noFavoritesSubtitle": "Search for a city and tap the heart to save it",
   "temperatureUnit": "Temperature Unit",
   "switchToFahrenheit": "Switch to Fahrenheit",
-  "switchToCelsius": "Switch to Celsius"
+  "switchToCelsius": "Switch to Celsius",
+  "authErrorEmailInUse": "An account already exists with this email.",
+  "authErrorInvalidEmail": "Invalid email address.",
+  "authErrorWeakPassword": "Password is too weak. Use at least 6 characters.",
+  "authErrorUserNotFound": "No account found with this email.",
+  "authErrorWrongPassword": "Incorrect password.",
+  "authErrorInvalidCredential": "Invalid email or password.",
+  "authErrorGeneric": "An unexpected error occurred. Please try again."
 }

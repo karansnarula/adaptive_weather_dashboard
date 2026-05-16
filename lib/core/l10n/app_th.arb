@@ -36,5 +36,12 @@
   "noFavoritesSubtitle": "ค้นหาเมืองแล้วแตะหัวใจเพื่อบันทึก",
   "temperatureUnit": "หน่วยอุณหภูมิ",
   "switchToFahrenheit": "เปลี่ยนเป็นฟาเรนไฮต์",
-  "switchToCelsius": "เปลี่ยนเป็นเซลเซียส"
+  "switchToCelsius": "เปลี่ยนเป็นเซลเซียส",
+  "authErrorEmailInUse": "มีบัญชีที่ใช้อีเมลนี้อยู่แล้ว",
+  "authErrorInvalidEmail": "ที่อยู่อีเมลไม่ถูกต้อง",
+  "authErrorWeakPassword": "รหัสผ่านไม่ปลอดภัยเพียงพอ ใช้อย่างน้อย 6 ตัวอักษร",
+  "authErrorUserNotFound": "ไม่พบบัญชีที่ใช้อีเมลนี้",
+  "authErrorWrongPassword": "รหัสผ่านไม่ถูกต้อง",
+  "authErrorInvalidCredential": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+  "authErrorGeneric": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
 }

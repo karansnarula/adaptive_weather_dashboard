@@ -10,6 +10,18 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:adaptive_weather_dashboard/di/app_module.dart' as _i59;
+import 'package:adaptive_weather_dashboard/features/auth/data/datasources/auth_remote_data_source.dart'
+    as _i221;
+import 'package:adaptive_weather_dashboard/features/auth/data/repositories/auth_repository_impl.dart'
+    as _i1003;
+import 'package:adaptive_weather_dashboard/features/auth/domain/repositories/auth_repository.dart'
+    as _i480;
+import 'package:adaptive_weather_dashboard/features/auth/domain/usecases/sign_in.dart'
+    as _i101;
+import 'package:adaptive_weather_dashboard/features/auth/domain/usecases/sign_out.dart'
+    as _i610;
+import 'package:adaptive_weather_dashboard/features/auth/domain/usecases/sign_up.dart'
+    as _i151;
 import 'package:adaptive_weather_dashboard/features/favorites/data/datasources/favorites_local_data_source.dart'
     as _i388;
 import 'package:adaptive_weather_dashboard/features/favorites/data/models/favorite_city_model.dart'
@@ -40,7 +52,9 @@ import 'package:adaptive_weather_dashboard/features/weather/domain/usecases/get_
     as _i936;
 import 'package:adaptive_weather_dashboard/features/weather/presentation/bloc/weather_bloc.dart'
     as _i806;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
+import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_ce/hive.dart' as _i738;
 import 'package:injectable/injectable.dart' as _i526;
@@ -62,6 +76,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => appModule.favoritesBox,
       preResolve: true,
     );
+    gh.lazySingleton<_i59.FirebaseAuth>(() => appModule.firebaseAuth);
+    gh.lazySingleton<_i974.FirebaseFirestore>(() => appModule.firestore);
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i388.FavoritesLocalDataSource>(
       () => _i388.FavoritesLocalDataSource(
@@ -71,9 +87,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i650.WeatherRemoteDataSource>(
       () => _i650.WeatherRemoteDataSource(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i221.AuthRemoteDataSource>(
+      () => _i221.AuthRemoteDataSource(
+        gh<_i59.FirebaseAuth>(),
+        gh<_i974.FirebaseFirestore>(),
+      ),
+    );
     gh.factory<_i408.SettingsBloc>(
       () => _i408.SettingsBloc(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i480.AuthRepository>(
+      () => _i1003.AuthRepositoryImpl(gh<_i221.AuthRemoteDataSource>()),
+    );
+    gh.factory<_i101.SignIn>(() => _i101.SignIn(gh<_i480.AuthRepository>()));
+    gh.factory<_i610.SignOut>(() => _i610.SignOut(gh<_i480.AuthRepository>()));
+    gh.factory<_i151.SignUp>(() => _i151.SignUp(gh<_i480.AuthRepository>()));
     gh.lazySingleton<_i345.FavoritesRepository>(
       () => _i74.FavoritesRepositoryImpl(gh<_i388.FavoritesLocalDataSource>()),
     );

@@ -1,16 +1,1 @@
-{
-  "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
-}
+{"hosting":{"public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]},"flutter":{"platforms":{"android":{"default":{"projectId":"adaptive-weather-dashboard","appId":"1:555454956170:android:97eeb8ee13896a6a29a373","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"adaptive-weather-dashboard","appId":"1:555454956170:ios:f733ea745754a16b29a373","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"adaptive-weather-dashboard","appId":"1:555454956170:ios:f733ea745754a16b29a373","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"adaptive-weather-dashboard","configurations":{"android":"1:555454956170:android:97eeb8ee13896a6a29a373","ios":"1:555454956170:ios:f733ea745754a16b29a373","macos":"1:555454956170:ios:f733ea745754a16b29a373","web":"1:555454956170:web:e514cf33d581cc1629a373","windows":"1:555454956170:web:230eff95df8597fa29a373"}}}}}}

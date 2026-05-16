@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -19,6 +21,12 @@ abstract class AppModule {
     Hive.registerAdapter(FavoriteCityModelAdapter());
     return Hive.openBox<FavoriteCityModel>('favorites');
   }
+
+  @lazySingleton
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+
+  @lazySingleton
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   @lazySingleton
   Dio get dio => Dio(
