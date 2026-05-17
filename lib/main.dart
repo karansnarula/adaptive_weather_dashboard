@@ -1,12 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 
 import 'core/config/app_config.dart';
 import 'core/theme/app_theme.dart';
 import 'core/router/app_router.dart';
 import 'core/l10n/app_localizations.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/auth/presentation/bloc/auth_event.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'features/favorites/presentation/bloc/favorites_event.dart';
 import 'features/settings/presentation/bloc/settings_bloc.dart';
@@ -14,15 +18,12 @@ import 'features/settings/presentation/bloc/settings_event.dart';
 import 'features/settings/presentation/bloc/settings_state.dart';
 import 'features/weather/presentation/bloc/weather_bloc.dart';
 import 'di/injection.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   AppConfig.initialize();
 
@@ -33,18 +34,33 @@ void main() async {
   runApp(const WeatherDashboardApp());
 }
 
-class WeatherDashboardApp extends StatelessWidget {
+class WeatherDashboardApp extends StatefulWidget {
   const WeatherDashboardApp({super.key});
+
+  @override
+  State<WeatherDashboardApp> createState() => _WeatherDashboardAppState();
+}
+
+class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
+  late final AuthBloc _authBloc;
+  late final GoRouter _router;
+
+  @override
+  void initState() {
+    super.initState();
+    _authBloc = getIt<AuthBloc>()..add(const AuthCheckRequested());
+    _router = AppRouter.router(_authBloc);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => _authBloc),
+        BlocProvider(create: (context) => getIt<WeatherBloc>()),
         BlocProvider(
-          create: (context) => getIt<WeatherBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<FavoritesBloc>()..add(const LoadFavorites()),
+          create: (context) =>
+              getIt<FavoritesBloc>()..add(const LoadFavorites()),
         ),
         BlocProvider(
           create: (context) => getIt<SettingsBloc>()..add(const LoadSettings()),
@@ -52,7 +68,8 @@ class WeatherDashboardApp extends StatelessWidget {
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: (previous, current) =>
-        previous.languageCode != current.languageCode,
+            previous.languageCode != current.languageCode ||
+            previous.themeMode != current.themeMode,
         builder: (context, settingsState) {
           return MaterialApp.router(
             title: AppConfig.instance.appName,
@@ -61,10 +78,14 @@ class WeatherDashboardApp extends StatelessWidget {
             // Theme
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
-            themeMode: ThemeMode.system,
+            themeMode: switch (settingsState.themeMode) {
+              'light' => ThemeMode.light,
+              'dark' => ThemeMode.dark,
+              _ => ThemeMode.system,
+            },
 
             // Routing
-            routerConfig: AppRouter.router,
+            routerConfig: _router,
 
             // Localization
             locale: Locale(settingsState.languageCode),
@@ -74,10 +95,7 @@ class WeatherDashboardApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('th'),
-            ],
+            supportedLocales: const [Locale('en'), Locale('th')],
           );
         },
       ),

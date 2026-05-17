@@ -100,4 +100,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get switchToCelsius => 'Switch to Celsius';
+
+  @override
+  String get authErrorEmailInUse =>
+      'An account already exists with this email.';
+
+  @override
+  String get authErrorInvalidEmail => 'Invalid email address.';
+
+  @override
+  String get authErrorWeakPassword =>
+      'Password is too weak. Use at least 6 characters.';
+
+  @override
+  String get authErrorUserNotFound => 'No account found with this email.';
+
+  @override
+  String get authErrorWrongPassword => 'Incorrect password.';
+
+  @override
+  String get authErrorInvalidCredential => 'Invalid email or password.';
+
+  @override
+  String get authErrorGeneric =>
+      'An unexpected error occurred. Please try again.';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get lightMode => 'Light Mode';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get systemMode => 'System Default';
 }

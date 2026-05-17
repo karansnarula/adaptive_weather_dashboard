@@ -11,11 +11,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   static const _languageKey = 'language_code';
   static const _unitKey = 'is_celsius';
+  static const _themeKey = 'theme_mode';
 
   SettingsBloc(this._prefs) : super(const SettingsState()) {
     on<LoadSettings>(_onLoadSettings);
     on<ChangeLanguage>(_onChangeLanguage);
     on<ChangeUnit>(_onChangeUnit);
+    on<ChangeTheme>(_onChangeTheme);
   }
 
   void _onLoadSettings(
@@ -24,10 +26,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       ) {
     final languageCode = _prefs.getString(_languageKey) ?? 'en';
     final isCelsius = _prefs.getBool(_unitKey) ?? true;
+    final themeMode = _prefs.getString(_themeKey) ?? 'system';
 
     emit(SettingsState(
       languageCode: languageCode,
       isCelsius: isCelsius,
+      themeMode: themeMode,
     ));
   }
 
@@ -45,5 +49,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       ) async {
     await _prefs.setBool(_unitKey, event.isCelsius);
     emit(state.copyWith(isCelsius: event.isCelsius));
+  }
+
+  Future<void> _onChangeTheme(
+      ChangeTheme event,
+      Emitter<SettingsState> emit,
+      ) async {
+    await _prefs.setString(_themeKey, event.themeMode);
+    emit(state.copyWith(themeMode: event.themeMode));
   }
 }

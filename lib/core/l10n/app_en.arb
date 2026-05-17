@@ -43,5 +43,10 @@
   "authErrorUserNotFound": "No account found with this email.",
   "authErrorWrongPassword": "Incorrect password.",
   "authErrorInvalidCredential": "Invalid email or password.",
-  "authErrorGeneric": "An unexpected error occurred. Please try again."
+  "authErrorGeneric": "An unexpected error occurred. Please try again.",
+  "logout": "Logout",
+  "theme": "Theme",
+  "lightMode": "Light Mode",
+  "darkMode": "Dark Mode",
+  "systemMode": "System Default"
 }

@@ -99,4 +99,41 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get switchToCelsius => 'เปลี่ยนเป็นเซลเซียส';
+
+  @override
+  String get authErrorEmailInUse => 'มีบัญชีที่ใช้อีเมลนี้อยู่แล้ว';
+
+  @override
+  String get authErrorInvalidEmail => 'ที่อยู่อีเมลไม่ถูกต้อง';
+
+  @override
+  String get authErrorWeakPassword =>
+      'รหัสผ่านไม่ปลอดภัยเพียงพอ ใช้อย่างน้อย 6 ตัวอักษร';
+
+  @override
+  String get authErrorUserNotFound => 'ไม่พบบัญชีที่ใช้อีเมลนี้';
+
+  @override
+  String get authErrorWrongPassword => 'รหัสผ่านไม่ถูกต้อง';
+
+  @override
+  String get authErrorInvalidCredential => 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
+
+  @override
+  String get authErrorGeneric => 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+
+  @override
+  String get logout => 'ออกจากระบบ';
+
+  @override
+  String get theme => 'ธีม';
+
+  @override
+  String get lightMode => 'โหมดสว่าง';
+
+  @override
+  String get darkMode => 'โหมดมืด';
+
+  @override
+  String get systemMode => 'ตามระบบ';
 }

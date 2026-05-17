@@ -17,3 +17,9 @@ class ChangeUnit extends SettingsEvent {
 
   const ChangeUnit(this.isCelsius);
 }
+
+class ChangeTheme extends SettingsEvent {
+  final String themeMode;
+
+  const ChangeTheme(this.themeMode);
+}

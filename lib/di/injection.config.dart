@@ -22,6 +22,8 @@ import 'package:adaptive_weather_dashboard/features/auth/domain/usecases/sign_ou
     as _i610;
 import 'package:adaptive_weather_dashboard/features/auth/domain/usecases/sign_up.dart'
     as _i151;
+import 'package:adaptive_weather_dashboard/features/auth/presentation/bloc/auth_bloc.dart'
+    as _i174;
 import 'package:adaptive_weather_dashboard/features/favorites/data/datasources/favorites_local_data_source.dart'
     as _i388;
 import 'package:adaptive_weather_dashboard/features/favorites/data/models/favorite_city_model.dart'
@@ -129,6 +131,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i936.GetForecast>(
       () => _i936.GetForecast(gh<_i315.WeatherRepository>()),
+    );
+    gh.factory<_i174.AuthBloc>(
+      () => _i174.AuthBloc(
+        gh<_i101.SignIn>(),
+        gh<_i151.SignUp>(),
+        gh<_i610.SignOut>(),
+        gh<_i480.AuthRepository>(),
+      ),
     );
     gh.factory<_i806.WeatherBloc>(
       () => _i806.WeatherBloc(

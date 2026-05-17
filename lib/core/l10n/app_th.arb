@@ -43,5 +43,10 @@
   "authErrorUserNotFound": "ไม่พบบัญชีที่ใช้อีเมลนี้",
   "authErrorWrongPassword": "รหัสผ่านไม่ถูกต้อง",
   "authErrorInvalidCredential": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
-  "authErrorGeneric": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+  "authErrorGeneric": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+  "logout": "ออกจากระบบ",
+  "theme": "ธีม",
+  "lightMode": "โหมดสว่าง",
+  "darkMode": "โหมดมืด",
+  "systemMode": "ตามระบบ"
 }
