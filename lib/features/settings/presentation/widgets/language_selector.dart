@@ -16,41 +16,33 @@ class LanguageSelector extends StatelessWidget {
         return Card(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.l10n.language,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+            child: RadioGroup(
+              groupValue: state.languageCode,
+              onChanged: (value) {
+                if (value != null) {
+                  context.read<SettingsBloc>().add(ChangeLanguage(value));
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.l10n.language,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                RadioListTile<String>(
-                  title: const Text('English'),
-                  value: 'en',
-                  groupValue: state.languageCode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      context
-                          .read<SettingsBloc>()
-                          .add(ChangeLanguage(value));
-                    }
-                  },
-                ),
-                RadioListTile<String>(
-                  title: const Text('ไทย'),
-                  value: 'th',
-                  groupValue: state.languageCode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      context
-                          .read<SettingsBloc>()
-                          .add(ChangeLanguage(value));
-                    }
-                  },
-                ),
-              ],
+                  const SizedBox(height: 12),
+                  RadioListTile<String>(
+                    title: const Text('English'),
+                    value: 'en',
+                  ),
+                  RadioListTile<String>(
+                      title: const Text('ไทย'),
+                      value: 'th',
+                  ),
+                ],
+              ),
             ),
           ),
         );

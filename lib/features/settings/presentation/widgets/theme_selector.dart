@@ -35,7 +35,7 @@ class ThemeSelector extends StatelessWidget {
                     ),
                     ButtonSegment(
                       value: 'system',
-                      label: Text(context.l10n.systemMode),
+                      label: Text(context.l10n.systemMode,textAlign: TextAlign.center,),
                       icon: const Icon(Icons.settings_brightness),
                     ),
                     ButtonSegment(

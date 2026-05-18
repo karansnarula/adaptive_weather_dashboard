@@ -1,5 +1,3 @@
-import '../../domain/entities/app_user.dart';
-
 sealed class AuthEvent {
   const AuthEvent();
 }
