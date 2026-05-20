@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
+import '../../../notifications/presentation/widgets/notification_city_card.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/unit_selector.dart';
 import '../widgets/theme_selector.dart';
@@ -24,6 +25,8 @@ class SettingsPage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
+                const NotificationCityCard(),
+                const SizedBox(height: 16),
                 const LanguageSelector(),
                 const SizedBox(height: 16),
                 const UnitSelector(),

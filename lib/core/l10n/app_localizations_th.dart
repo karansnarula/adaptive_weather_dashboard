@@ -136,4 +136,17 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get systemMode => 'ตามระบบ';
+
+  @override
+  String get dailyWeatherNotification => 'การแจ้งเตือนสภาพอากาศรายวัน';
+
+  @override
+  String get dailyWeatherUpdates => 'คุณจะได้รับข้อมูลสภาพอากาศประจำวัน';
+
+  @override
+  String get noNotificationCity => 'ยังไม่ได้ตั้งเมืองสำหรับแจ้งเตือน';
+
+  @override
+  String get notificationHint =>
+      'แตะไอคอนกระดิ่งบนการ์ดสภาพอากาศเพื่อเปิดใช้งาน';
 }

@@ -48,5 +48,9 @@
   "theme": "Theme",
   "lightMode": "Light Mode",
   "darkMode": "Dark Mode",
-  "systemMode": "System Default"
+  "systemMode": "System Default",
+  "dailyWeatherNotification": "Daily Weather Notification",
+  "dailyWeatherUpdates": "You will receive daily weather updates",
+  "noNotificationCity": "No notification city set",
+  "notificationHint": "Tap the bell icon on a weather card to enable"
 }

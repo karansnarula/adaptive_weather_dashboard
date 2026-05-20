@@ -40,6 +40,20 @@ import 'package:adaptive_weather_dashboard/features/favorites/domain/usecases/re
     as _i666;
 import 'package:adaptive_weather_dashboard/features/favorites/presentation/bloc/favorites_bloc.dart'
     as _i546;
+import 'package:adaptive_weather_dashboard/features/notifications/data/datasources/notification_remote_data_source.dart'
+    as _i311;
+import 'package:adaptive_weather_dashboard/features/notifications/data/repositories/notification_repository_impl.dart'
+    as _i979;
+import 'package:adaptive_weather_dashboard/features/notifications/domain/repositories/notification_repository.dart'
+    as _i235;
+import 'package:adaptive_weather_dashboard/features/notifications/domain/usecases/clear_notification_city.dart'
+    as _i227;
+import 'package:adaptive_weather_dashboard/features/notifications/domain/usecases/get_notification_city.dart'
+    as _i281;
+import 'package:adaptive_weather_dashboard/features/notifications/domain/usecases/set_notification_city.dart'
+    as _i728;
+import 'package:adaptive_weather_dashboard/features/notifications/presentation/bloc/notification_bloc.dart'
+    as _i728;
 import 'package:adaptive_weather_dashboard/features/settings/presentation/bloc/settings_bloc.dart'
     as _i408;
 import 'package:adaptive_weather_dashboard/features/weather/data/datasources/weather_remote_data_source.dart'
@@ -104,6 +118,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i101.SignIn>(() => _i101.SignIn(gh<_i480.AuthRepository>()));
     gh.factory<_i610.SignOut>(() => _i610.SignOut(gh<_i480.AuthRepository>()));
     gh.factory<_i151.SignUp>(() => _i151.SignUp(gh<_i480.AuthRepository>()));
+    gh.lazySingleton<_i311.NotificationRemoteDataSource>(
+      () => _i311.NotificationRemoteDataSource(gh<_i974.FirebaseFirestore>()),
+    );
     gh.lazySingleton<_i345.FavoritesRepository>(
       () => _i74.FavoritesRepositoryImpl(gh<_i388.FavoritesLocalDataSource>()),
     );
@@ -140,10 +157,31 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i480.AuthRepository>(),
       ),
     );
+    gh.lazySingleton<_i235.NotificationRepository>(
+      () => _i979.NotificationRepositoryImpl(
+        gh<_i311.NotificationRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i806.WeatherBloc>(
       () => _i806.WeatherBloc(
         gh<_i728.GetCurrentWeather>(),
         gh<_i936.GetForecast>(),
+      ),
+    );
+    gh.factory<_i227.ClearNotificationCity>(
+      () => _i227.ClearNotificationCity(gh<_i235.NotificationRepository>()),
+    );
+    gh.factory<_i281.GetNotificationCity>(
+      () => _i281.GetNotificationCity(gh<_i235.NotificationRepository>()),
+    );
+    gh.factory<_i728.SetNotificationCity>(
+      () => _i728.SetNotificationCity(gh<_i235.NotificationRepository>()),
+    );
+    gh.factory<_i728.NotificationBloc>(
+      () => _i728.NotificationBloc(
+        gh<_i281.GetNotificationCity>(),
+        gh<_i728.SetNotificationCity>(),
+        gh<_i227.ClearNotificationCity>(),
       ),
     );
     return this;

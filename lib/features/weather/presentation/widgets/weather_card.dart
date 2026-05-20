@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/weather.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../favorites/presentation/bloc/favorites_bloc.dart';
 import '../../../favorites/presentation/bloc/favorites_event.dart';
 import '../../../favorites/presentation/bloc/favorites_state.dart';
+import '../../../notifications/presentation/bloc/notification_bloc.dart';
+import '../../../notifications/presentation/bloc/notification_event.dart';
+import '../../../notifications/presentation/bloc/notification_state.dart';
 
 class WeatherCard extends StatelessWidget {
   final Weather weather;
@@ -51,6 +56,42 @@ class WeatherCard extends StatelessWidget {
                           context
                               .read<FavoritesBloc>()
                               .add(AddFavoriteCity(weather.cityName));
+                        }
+                      },
+                    );
+                  },
+                ),
+                BlocBuilder<NotificationBloc, NotificationState>(
+                  builder: (context, state) {
+                    final isNotificationCity = state is NotificationLoaded &&
+                        state.city?.cityName == weather.cityName;
+
+                    return IconButton(
+                      icon: Icon(
+                        isNotificationCity
+                            ? Icons.notifications_active
+                            : Icons.notifications_none,
+                        color: isNotificationCity
+                            ? Theme.of(context).colorScheme.primary
+                            : null,
+                      ),
+                      onPressed: () {
+                        final authState = context.read<AuthBloc>().state;
+                        if (authState is! Authenticated) return;
+
+                        final uid = authState.user.uid;
+
+                        if (isNotificationCity) {
+                          context
+                              .read<NotificationBloc>()
+                              .add(ClearNotificationCityEvent(uid));
+                        } else {
+                          context.read<NotificationBloc>().add(
+                            SetNotificationCityEvent(
+                              uid: uid,
+                              cityName: weather.cityName,
+                            ),
+                          );
                         }
                       },
                     );

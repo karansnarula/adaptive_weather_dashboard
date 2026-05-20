@@ -13,6 +13,7 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'features/favorites/presentation/bloc/favorites_event.dart';
+import 'features/notifications/presentation/bloc/notification_bloc.dart';
 import 'features/settings/presentation/bloc/settings_bloc.dart';
 import 'features/settings/presentation/bloc/settings_event.dart';
 import 'features/settings/presentation/bloc/settings_state.dart';
@@ -65,6 +66,7 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
         BlocProvider(
           create: (context) => getIt<SettingsBloc>()..add(const LoadSettings()),
         ),
+        BlocProvider(create: (context) => getIt<NotificationBloc>()),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: (previous, current) =>

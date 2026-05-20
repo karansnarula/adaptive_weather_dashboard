@@ -349,6 +349,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System Default'**
   String get systemMode;
+
+  /// No description provided for @dailyWeatherNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Weather Notification'**
+  String get dailyWeatherNotification;
+
+  /// No description provided for @dailyWeatherUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'You will receive daily weather updates'**
+  String get dailyWeatherUpdates;
+
+  /// No description provided for @noNotificationCity.
+  ///
+  /// In en, this message translates to:
+  /// **'No notification city set'**
+  String get noNotificationCity;
+
+  /// No description provided for @notificationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the bell icon on a weather card to enable'**
+  String get notificationHint;
 }
 
 class _AppLocalizationsDelegate

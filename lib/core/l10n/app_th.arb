@@ -48,5 +48,9 @@
   "theme": "ธีม",
   "lightMode": "โหมดสว่าง",
   "darkMode": "โหมดมืด",
-  "systemMode": "ตามระบบ"
+  "systemMode": "ตามระบบ",
+  "dailyWeatherNotification": "การแจ้งเตือนสภาพอากาศรายวัน",
+  "dailyWeatherUpdates": "คุณจะได้รับข้อมูลสภาพอากาศประจำวัน",
+  "noNotificationCity": "ยังไม่ได้ตั้งเมืองสำหรับแจ้งเตือน",
+  "notificationHint": "แตะไอคอนกระดิ่งบนการ์ดสภาพอากาศเพื่อเปิดใช้งาน"
 }

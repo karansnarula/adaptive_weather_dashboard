@@ -139,4 +139,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get systemMode => 'System Default';
+
+  @override
+  String get dailyWeatherNotification => 'Daily Weather Notification';
+
+  @override
+  String get dailyWeatherUpdates => 'You will receive daily weather updates';
+
+  @override
+  String get noNotificationCity => 'No notification city set';
+
+  @override
+  String get notificationHint =>
+      'Tap the bell icon on a weather card to enable';
 }
