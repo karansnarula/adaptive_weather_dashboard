@@ -20,24 +20,24 @@ class WeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.only(
+          top: 5,
+          bottom: 24,
+          right: 10,
+          left: 10,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  weather.cityName,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(width: 8),
                 BlocBuilder<FavoritesBloc, FavoritesState>(
                   builder: (context, state) {
-                    final isFavorite = state is FavoritesLoaded &&
+                    final isFavorite =
+                        state is FavoritesLoaded &&
                         state.favorites.any((f) => f.name == weather.cityName);
 
                     return IconButton(
@@ -49,13 +49,13 @@ class WeatherCard extends StatelessWidget {
                       ),
                       onPressed: () {
                         if (isFavorite) {
-                          context
-                              .read<FavoritesBloc>()
-                              .add(RemoveFavoriteCity(weather.cityName));
+                          context.read<FavoritesBloc>().add(
+                            RemoveFavoriteCity(weather.cityName),
+                          );
                         } else {
-                          context
-                              .read<FavoritesBloc>()
-                              .add(AddFavoriteCity(weather.cityName));
+                          context.read<FavoritesBloc>().add(
+                            AddFavoriteCity(weather.cityName),
+                          );
                         }
                       },
                     );
@@ -63,7 +63,8 @@ class WeatherCard extends StatelessWidget {
                 ),
                 BlocBuilder<NotificationBloc, NotificationState>(
                   builder: (context, state) {
-                    final isNotificationCity = state is NotificationLoaded &&
+                    final isNotificationCity =
+                        state is NotificationLoaded &&
                         state.city?.cityName == weather.cityName;
 
                     return IconButton(
@@ -82,9 +83,9 @@ class WeatherCard extends StatelessWidget {
                         final uid = authState.user.uid;
 
                         if (isNotificationCity) {
-                          context
-                              .read<NotificationBloc>()
-                              .add(ClearNotificationCityEvent(uid));
+                          context.read<NotificationBloc>().add(
+                            ClearNotificationCityEvent(uid),
+                          );
                         } else {
                           context.read<NotificationBloc>().add(
                             SetNotificationCityEvent(
@@ -100,18 +101,27 @@ class WeatherCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
+            Text(
+              weather.cityName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
             Image.network(
               'https://openweathermap.org/img/wn/${weather.icon}@4x.png',
               width: 100,
               height: 100,
               errorBuilder: (context, error, stack) =>
-              const Icon(Icons.cloud, size: 100),
+                  const Icon(Icons.cloud, size: 100),
             ),
             Text(
               '${weather.temperature.round()}°',
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.displayMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
@@ -167,9 +177,9 @@ class _InfoTile extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
           label,

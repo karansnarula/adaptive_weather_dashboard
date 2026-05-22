@@ -47,6 +47,16 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+    if (name != null && name.length > 15) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Name too long, please use a shorter name or remove name completely'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+      return;
+    }
+
     context.read<AuthBloc>().add(AuthSignUpRequested(
       email: email,
       password: password,

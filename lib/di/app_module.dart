@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/config/app_config.dart';
 import '../features/favorites/data/models/favorite_city_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 @module
 abstract class AppModule {
@@ -27,6 +28,9 @@ abstract class AppModule {
 
   @lazySingleton
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
+
+  @lazySingleton
+  FirebaseMessaging get messaging => FirebaseMessaging.instance;
 
   @lazySingleton
   Dio get dio => Dio(

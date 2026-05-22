@@ -44,6 +44,8 @@ import 'package:adaptive_weather_dashboard/features/notifications/data/datasourc
     as _i311;
 import 'package:adaptive_weather_dashboard/features/notifications/data/repositories/notification_repository_impl.dart'
     as _i979;
+import 'package:adaptive_weather_dashboard/features/notifications/data/services/fcm_service.dart'
+    as _i493;
 import 'package:adaptive_weather_dashboard/features/notifications/domain/repositories/notification_repository.dart'
     as _i235;
 import 'package:adaptive_weather_dashboard/features/notifications/domain/usecases/clear_notification_city.dart'
@@ -71,6 +73,7 @@ import 'package:adaptive_weather_dashboard/features/weather/presentation/bloc/we
 import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
+import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_ce/hive.dart' as _i738;
 import 'package:injectable/injectable.dart' as _i526;
@@ -94,6 +97,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i59.FirebaseAuth>(() => appModule.firebaseAuth);
     gh.lazySingleton<_i974.FirebaseFirestore>(() => appModule.firestore);
+    gh.lazySingleton<_i892.FirebaseMessaging>(() => appModule.messaging);
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i388.FavoritesLocalDataSource>(
       () => _i388.FavoritesLocalDataSource(
@@ -120,6 +124,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i151.SignUp>(() => _i151.SignUp(gh<_i480.AuthRepository>()));
     gh.lazySingleton<_i311.NotificationRemoteDataSource>(
       () => _i311.NotificationRemoteDataSource(gh<_i974.FirebaseFirestore>()),
+    );
+    gh.lazySingleton<_i493.FcmService>(
+      () => _i493.FcmService(
+        gh<_i892.FirebaseMessaging>(),
+        gh<_i974.FirebaseFirestore>(),
+        gh<_i59.FirebaseAuth>(),
+      ),
     );
     gh.lazySingleton<_i345.FavoritesRepository>(
       () => _i74.FavoritesRepositoryImpl(gh<_i388.FavoritesLocalDataSource>()),
