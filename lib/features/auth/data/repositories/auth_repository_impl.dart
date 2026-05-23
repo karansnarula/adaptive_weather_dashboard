@@ -49,15 +49,11 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return right(result.toEntity());
     } on FirebaseAuthException catch (e) {
-      print('Firebase Auth error: $e');
-      print('Firebase Error type: ${e.runtimeType}');
       return left(AuthFailure(
         code: e.code,
         message: e.message ?? 'An unexpected error occurred.',
       ));
     } catch (e) {
-      print('final catch Auth error: $e');
-      print('final catch Error type: ${e.runtimeType}');
       return left(ServerFailure(e.toString()));
     }
   }

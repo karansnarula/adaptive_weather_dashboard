@@ -26,12 +26,16 @@ void main() {
     windSpeed: 3.6,
     description: 'clear sky',
     icon: '01d',
+    latitude: 13.75,
+    longitude: 100.52,
+    timezoneOffset: 25200,
   );
 
   test('should return Weather from repository on success', () async {
     // Arrange
-    when(() => mockRepository.getCurrentWeather('Bangkok'))
-        .thenAnswer((_) async => const Right(testWeather));
+    when(
+      () => mockRepository.getCurrentWeather('Bangkok'),
+    ).thenAnswer((_) async => const Right(testWeather));
 
     // Act
     final result = await useCase('Bangkok');
@@ -43,8 +47,9 @@ void main() {
 
   test('should return Failure from repository on error', () async {
     // Arrange
-    when(() => mockRepository.getCurrentWeather('InvalidCity'))
-        .thenAnswer((_) async => const Left(ServerFailure('City not found.')));
+    when(
+      () => mockRepository.getCurrentWeather('InvalidCity'),
+    ).thenAnswer((_) async => const Left(ServerFailure('City not found.')));
 
     // Act
     final result = await useCase('InvalidCity');

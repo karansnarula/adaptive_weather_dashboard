@@ -26,6 +26,8 @@ void main() {
     main: MainModel(temp: 32.0, feelsLike: 36.0, humidity: 74),
     wind: WindModel(speed: 3.6),
     weather: [WeatherInfoModel(description: 'clear sky', icon: '01d')],
+    coord: CoordModel(lat: 13.75, lon: 100.52),
+    timezone: 25200,
   );
 
   const testWeatherEntity = Weather(
@@ -36,33 +38,41 @@ void main() {
     windSpeed: 3.6,
     description: 'clear sky',
     icon: '01d',
+    latitude: 13.75,
+    longitude: 100.52,
+    timezoneOffset: 25200,
   );
 
   group('getCurrentWeather', () {
     test('should return Weather entity when data source succeeds', () async {
       // Arrange
-      when(() => mockDataSource.getCurrentWeather('Bangkok', 'metric'))
-          .thenAnswer((_) async => testWeatherModel);
+      when(
+        () => mockDataSource.getCurrentWeather('Bangkok', 'metric'),
+      ).thenAnswer((_) async => testWeatherModel);
 
       // Act
       final result = await repository.getCurrentWeather('Bangkok');
 
       // Assert
       expect(result, const Right(testWeatherEntity));
-      verify(() => mockDataSource.getCurrentWeather('Bangkok', 'metric'))
-          .called(1);
+      verify(
+        () => mockDataSource.getCurrentWeather('Bangkok', 'metric'),
+      ).called(1);
     });
 
     test('should return ServerFailure when city not found', () async {
       // Arrange
-      when(() => mockDataSource.getCurrentWeather('InvalidCity', 'metric'))
-          .thenThrow(DioException(
-        requestOptions: RequestOptions(path: ''),
-        response: Response(
+      when(
+        () => mockDataSource.getCurrentWeather('InvalidCity', 'metric'),
+      ).thenThrow(
+        DioException(
           requestOptions: RequestOptions(path: ''),
-          statusCode: 404,
+          response: Response(
+            requestOptions: RequestOptions(path: ''),
+            statusCode: 404,
+          ),
         ),
-      ));
+      );
 
       // Act
       final result = await repository.getCurrentWeather('InvalidCity');
@@ -73,8 +83,9 @@ void main() {
 
     test('should return ServerFailure when unexpected error occurs', () async {
       // Arrange
-      when(() => mockDataSource.getCurrentWeather('Bangkok', 'metric'))
-          .thenThrow(Exception('unexpected'));
+      when(
+        () => mockDataSource.getCurrentWeather('Bangkok', 'metric'),
+      ).thenThrow(Exception('unexpected'));
 
       // Act
       final result = await repository.getCurrentWeather('Bangkok');

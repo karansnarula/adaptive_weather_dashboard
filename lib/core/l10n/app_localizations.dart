@@ -373,6 +373,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap the bell icon on a weather card to enable'**
   String get notificationHint;
+
+  /// No description provided for @mapUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Map unavailable'**
+  String get mapUnavailable;
 }
 
 class _AppLocalizationsDelegate

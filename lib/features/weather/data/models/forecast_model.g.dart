@@ -17,11 +17,14 @@ ForecastModel _$ForecastModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ForecastModelToJson(ForecastModel instance) =>
     <String, dynamic>{'city': instance.city, 'list': instance.list};
 
-CityModel _$CityModelFromJson(Map<String, dynamic> json) =>
-    CityModel(name: json['name'] as String);
+CityModel _$CityModelFromJson(Map<String, dynamic> json) => CityModel(
+  name: json['name'] as String,
+  coord: CoordModel.fromJson(json['coord'] as Map<String, dynamic>),
+);
 
 Map<String, dynamic> _$CityModelToJson(CityModel instance) => <String, dynamic>{
   'name': instance.name,
+  'coord': instance.coord,
 };
 
 ForecastItemModel _$ForecastItemModelFromJson(Map<String, dynamic> json) =>

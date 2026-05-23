@@ -11,10 +11,7 @@ class ForecastModel {
   final CityModel city;
   final List<ForecastItemModel> list;
 
-  const ForecastModel({
-    required this.city,
-    required this.list,
-  });
+  const ForecastModel({required this.city, required this.list});
 
   factory ForecastModel.fromJson(Map<String, dynamic> json) =>
       _$ForecastModelFromJson(json);
@@ -22,8 +19,6 @@ class ForecastModel {
   Map<String, dynamic> toJson() => _$ForecastModelToJson(this);
 
   Forecast toEntity() {
-    // OpenWeatherMap returns 3-hour intervals
-    // Group by day and take one entry per day
     final dailyMap = <String, ForecastItemModel>{};
     for (final item in list) {
       final date = item.dtTxt.split(' ').first;
@@ -34,15 +29,20 @@ class ForecastModel {
       cityName: city.name,
       days: dailyMap.values
           .take(5)
-          .map((item) => Weather(
-        cityName: city.name,
-        temperature: item.main.temp,
-        feelsLike: item.main.feelsLike,
-        humidity: item.main.humidity,
-        windSpeed: item.wind.speed,
-        description: item.weather.first.description,
-        icon: item.weather.first.icon,
-      ))
+          .map(
+            (item) => Weather(
+              cityName: city.name,
+              temperature: item.main.temp,
+              feelsLike: item.main.feelsLike,
+              humidity: item.main.humidity,
+              windSpeed: item.wind.speed,
+              description: item.weather.first.description,
+              icon: item.weather.first.icon,
+              latitude: city.coord.lat,
+              longitude: city.coord.lon,
+              timezoneOffset: 0,
+            ),
+          )
           .toList(),
     );
   }
@@ -51,8 +51,9 @@ class ForecastModel {
 @JsonSerializable()
 class CityModel {
   final String name;
+  final CoordModel coord;
 
-  const CityModel({required this.name});
+  const CityModel({required this.name, required this.coord});
 
   factory CityModel.fromJson(Map<String, dynamic> json) =>
       _$CityModelFromJson(json);

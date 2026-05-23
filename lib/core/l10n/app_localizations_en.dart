@@ -152,4 +152,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationHint =>
       'Tap the bell icon on a weather card to enable';
+
+  @override
+  String get mapUnavailable => 'Map unavailable';
 }

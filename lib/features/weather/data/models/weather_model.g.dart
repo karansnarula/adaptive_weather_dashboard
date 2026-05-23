@@ -13,6 +13,8 @@ WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) => WeatherModel(
   weather: (json['weather'] as List<dynamic>)
       .map((e) => WeatherInfoModel.fromJson(e as Map<String, dynamic>))
       .toList(),
+  coord: CoordModel.fromJson(json['coord'] as Map<String, dynamic>),
+  timezone: (json['timezone'] as num).toInt(),
 );
 
 Map<String, dynamic> _$WeatherModelToJson(WeatherModel instance) =>
@@ -21,7 +23,17 @@ Map<String, dynamic> _$WeatherModelToJson(WeatherModel instance) =>
       'main': instance.main,
       'wind': instance.wind,
       'weather': instance.weather,
+      'coord': instance.coord,
+      'timezone': instance.timezone,
     };
+
+CoordModel _$CoordModelFromJson(Map<String, dynamic> json) => CoordModel(
+  lat: (json['lat'] as num).toDouble(),
+  lon: (json['lon'] as num).toDouble(),
+);
+
+Map<String, dynamic> _$CoordModelToJson(CoordModel instance) =>
+    <String, dynamic>{'lat': instance.lat, 'lon': instance.lon};
 
 MainModel _$MainModelFromJson(Map<String, dynamic> json) => MainModel(
   temp: (json['temp'] as num).toDouble(),

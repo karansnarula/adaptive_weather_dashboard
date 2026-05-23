@@ -38,12 +38,12 @@ void main() {
     windSpeed: 3.6,
     description: 'clear sky',
     icon: '01d',
+    latitude: 13.75,
+    longitude: 100.52,
+    timezoneOffset: 25200,
   );
 
-  const testForecast = Forecast(
-    cityName: 'Bangkok',
-    days: [testWeather],
-  );
+  const testForecast = Forecast(cityName: 'Bangkok', days: [testWeather]);
 
   test('initial state should be WeatherInitial', () {
     expect(bloc.state, const WeatherInitial());
@@ -51,18 +51,17 @@ void main() {
 
   test('should emit [Loading, Loaded] when search succeeds', () {
     // Arrange
-    when(() => mockGetCurrentWeather('Bangkok', units: 'metric'))
-        .thenAnswer((_) async => const Right(testWeather));
-    when(() => mockGetForecast('Bangkok', units: 'metric'))
-        .thenAnswer((_) async => const Right(testForecast));
+    when(
+      () => mockGetCurrentWeather('Bangkok', units: 'metric'),
+    ).thenAnswer((_) async => const Right(testWeather));
+    when(
+      () => mockGetForecast('Bangkok', units: 'metric'),
+    ).thenAnswer((_) async => const Right(testForecast));
 
     // Assert later
     expectLater(
       bloc.stream,
-      emitsInOrder([
-        isA<WeatherLoading>(),
-        isA<WeatherLoaded>(),
-      ]),
+      emitsInOrder([isA<WeatherLoading>(), isA<WeatherLoaded>()]),
     );
 
     // Act
@@ -71,16 +70,14 @@ void main() {
 
   test('should emit [Loading, Error] when weather fetch fails', () {
     // Arrange
-    when(() => mockGetCurrentWeather('InvalidCity', units: 'metric'))
-        .thenAnswer((_) async => const Left(ServerFailure('City not found.')));
+    when(
+      () => mockGetCurrentWeather('InvalidCity', units: 'metric'),
+    ).thenAnswer((_) async => const Left(ServerFailure('City not found.')));
 
     // Assert later
     expectLater(
       bloc.stream,
-      emitsInOrder([
-        isA<WeatherLoading>(),
-        isA<WeatherError>(),
-      ]),
+      emitsInOrder([isA<WeatherLoading>(), isA<WeatherError>()]),
     );
 
     // Act
@@ -89,18 +86,17 @@ void main() {
 
   test('should emit [Loading, Error] when forecast fetch fails', () {
     // Arrange
-    when(() => mockGetCurrentWeather('Bangkok', units: 'metric'))
-        .thenAnswer((_) async => const Right(testWeather));
-    when(() => mockGetForecast('Bangkok', units: 'metric'))
-        .thenAnswer((_) async => const Left(ServerFailure()));
+    when(
+      () => mockGetCurrentWeather('Bangkok', units: 'metric'),
+    ).thenAnswer((_) async => const Right(testWeather));
+    when(
+      () => mockGetForecast('Bangkok', units: 'metric'),
+    ).thenAnswer((_) async => const Left(ServerFailure()));
 
     // Assert later
     expectLater(
       bloc.stream,
-      emitsInOrder([
-        isA<WeatherLoading>(),
-        isA<WeatherError>(),
-      ]),
+      emitsInOrder([isA<WeatherLoading>(), isA<WeatherError>()]),
     );
 
     // Act

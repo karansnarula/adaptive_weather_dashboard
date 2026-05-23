@@ -8,6 +8,9 @@ class Weather extends Equatable {
   final double windSpeed;
   final String description;
   final String icon;
+  final double latitude;
+  final double longitude;
+  final int timezoneOffset;
 
   const Weather({
     required this.cityName,
@@ -17,6 +20,9 @@ class Weather extends Equatable {
     required this.windSpeed,
     required this.description,
     required this.icon,
+    required this.latitude,
+    required this.longitude,
+    required this.timezoneOffset,
   });
 
   @override
@@ -28,5 +34,8 @@ class Weather extends Equatable {
     windSpeed,
     description,
     icon,
+    latitude,
+    longitude,
+    timezoneOffset,
   ];
 }

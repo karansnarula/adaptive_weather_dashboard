@@ -10,12 +10,16 @@ class WeatherModel {
   final MainModel main;
   final WindModel wind;
   final List<WeatherInfoModel> weather;
+  final CoordModel coord;
+  final int timezone;
 
   const WeatherModel({
     required this.name,
     required this.main,
     required this.wind,
     required this.weather,
+    required this.coord,
+    required this.timezone,
   });
 
   factory WeatherModel.fromJson(Map<String, dynamic> json) =>
@@ -31,7 +35,23 @@ class WeatherModel {
     windSpeed: wind.speed,
     description: weather.first.description,
     icon: weather.first.icon,
+    latitude: coord.lat,
+    longitude: coord.lon,
+    timezoneOffset: timezone,
   );
+}
+
+@JsonSerializable()
+class CoordModel {
+  final double lat;
+  final double lon;
+
+  const CoordModel({required this.lat, required this.lon});
+
+  factory CoordModel.fromJson(Map<String, dynamic> json) =>
+      _$CoordModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CoordModelToJson(this);
 }
 
 @JsonSerializable()

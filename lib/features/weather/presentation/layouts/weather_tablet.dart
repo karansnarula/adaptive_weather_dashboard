@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/weather.dart';
 import '../../domain/entities/forecast.dart';
 import '../widgets/city_search_bar.dart';
+import '../widgets/city_time_card.dart';
 import '../widgets/weather_card.dart';
 import '../widgets/forecast_list.dart';
+import '../widgets/weather_map.dart';
 
 class WeatherTablet extends StatelessWidget {
   final Weather weather;
@@ -24,6 +26,8 @@ class WeatherTablet extends StatelessWidget {
         children: [
           const CitySearchBar(),
           const SizedBox(height: 24),
+          CityTimeCard(weather: weather),
+          const SizedBox(height: 24),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -32,6 +36,8 @@ class WeatherTablet extends StatelessWidget {
               Expanded(child: ForecastList(forecast: forecast)),
             ],
           ),
+          const SizedBox(height: 24),
+          WeatherMap(weather: weather),
         ],
       ),
     );

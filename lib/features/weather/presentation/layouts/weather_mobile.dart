@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/weather.dart';
 import '../../domain/entities/forecast.dart';
 import '../widgets/city_search_bar.dart';
+import '../widgets/city_time_card.dart';
 import '../widgets/weather_card.dart';
 import '../widgets/forecast_list.dart';
+import '../widgets/weather_map.dart';
 
 class WeatherMobile extends StatelessWidget {
   final Weather weather;
@@ -24,9 +26,13 @@ class WeatherMobile extends StatelessWidget {
         children: [
           const CitySearchBar(),
           const SizedBox(height: 16),
+          CityTimeCard(weather: weather),
+          const SizedBox(height: 16),
           WeatherCard(weather: weather),
           const SizedBox(height: 16),
           ForecastList(forecast: forecast),
+          const SizedBox(height: 16),
+          WeatherMap(weather: weather),
         ],
       ),
     );

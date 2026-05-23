@@ -149,4 +149,7 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get notificationHint =>
       'แตะไอคอนกระดิ่งบนการ์ดสภาพอากาศเพื่อเปิดใช้งาน';
+
+  @override
+  String get mapUnavailable => 'แผนที่ไม่พร้อมใช้งาน';
 }
