@@ -152,4 +152,31 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get mapUnavailable => 'แผนที่ไม่พร้อมใช้งาน';
+
+  @override
+  String get chatbot => 'แชทบอท';
+
+  @override
+  String get weatherNews => 'ข่าว';
+
+  @override
+  String get airQuality => 'คุณภาพอากาศ';
+
+  @override
+  String get pollenAllergy => 'เกสรดอกไม้';
+
+  @override
+  String get comingSoon => 'เร็วๆ นี้';
+
+  @override
+  String get comingSoonMessage =>
+      'ฟีเจอร์นี้จะพร้อมใช้งานในการอัปเดตครั้งถัดไป';
+
+  @override
+  String get ok => 'ตกลง';
+
+  @override
+  String welcomeBack(String name) {
+    return 'ยินดีต้อนรับกลับ, $name!';
+  }
 }

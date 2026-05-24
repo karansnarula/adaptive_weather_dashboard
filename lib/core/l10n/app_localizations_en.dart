@@ -155,4 +155,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapUnavailable => 'Map unavailable';
+
+  @override
+  String get chatbot => 'Chatbot';
+
+  @override
+  String get weatherNews => 'News';
+
+  @override
+  String get airQuality => 'Air Quality';
+
+  @override
+  String get pollenAllergy => 'Pollen';
+
+  @override
+  String get comingSoon => 'Coming Soon';
+
+  @override
+  String get comingSoonMessage =>
+      'This feature will be available in a future update.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String welcomeBack(String name) {
+    return 'Welcome back, $name!';
+  }
 }

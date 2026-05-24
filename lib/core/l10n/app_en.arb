@@ -53,5 +53,20 @@
   "dailyWeatherUpdates": "You will receive daily weather updates",
   "noNotificationCity": "No notification city set",
   "notificationHint": "Tap the bell icon on a weather card to enable",
-  "mapUnavailable": "Map unavailable"
+  "mapUnavailable": "Map unavailable",
+  "chatbot": "Chatbot",
+  "weatherNews": "News",
+  "airQuality": "Air Quality",
+  "pollenAllergy": "Pollen",
+  "comingSoon": "Coming Soon",
+  "comingSoonMessage": "This feature will be available in a future update.",
+  "ok": "OK",
+  "welcomeBack": "Welcome back, {name}!",
+  "@welcomeBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

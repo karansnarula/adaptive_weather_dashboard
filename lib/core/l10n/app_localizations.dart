@@ -379,6 +379,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Map unavailable'**
   String get mapUnavailable;
+
+  /// No description provided for @chatbot.
+  ///
+  /// In en, this message translates to:
+  /// **'Chatbot'**
+  String get chatbot;
+
+  /// No description provided for @weatherNews.
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get weatherNews;
+
+  /// No description provided for @airQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality'**
+  String get airQuality;
+
+  /// No description provided for @pollenAllergy.
+  ///
+  /// In en, this message translates to:
+  /// **'Pollen'**
+  String get pollenAllergy;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon'**
+  String get comingSoon;
+
+  /// No description provided for @comingSoonMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature will be available in a future update.'**
+  String get comingSoonMessage;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back, {name}!'**
+  String welcomeBack(String name);
 }
 
 class _AppLocalizationsDelegate

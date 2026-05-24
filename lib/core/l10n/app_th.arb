@@ -53,5 +53,20 @@
   "dailyWeatherUpdates": "คุณจะได้รับข้อมูลสภาพอากาศประจำวัน",
   "noNotificationCity": "ยังไม่ได้ตั้งเมืองสำหรับแจ้งเตือน",
   "notificationHint": "แตะไอคอนกระดิ่งบนการ์ดสภาพอากาศเพื่อเปิดใช้งาน",
-  "mapUnavailable": "แผนที่ไม่พร้อมใช้งาน"
+  "mapUnavailable": "แผนที่ไม่พร้อมใช้งาน",
+  "chatbot": "แชทบอท",
+  "weatherNews": "ข่าว",
+  "airQuality": "คุณภาพอากาศ",
+  "pollenAllergy": "เกสรดอกไม้",
+  "comingSoon": "เร็วๆ นี้",
+  "comingSoonMessage": "ฟีเจอร์นี้จะพร้อมใช้งานในการอัปเดตครั้งถัดไป",
+  "ok": "ตกลง",
+  "welcomeBack": "ยินดีต้อนรับกลับ, {name}!",
+  "@welcomeBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }
