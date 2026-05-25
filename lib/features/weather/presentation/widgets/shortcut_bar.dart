@@ -37,6 +37,7 @@ class ShortcutBar extends StatelessWidget {
               icon: Icons.air,
               label: context.l10n.airQuality,
               enabled: isSearched,
+              // ignore: unnecessary_non_null_assertion
               onTap: () => context.push(
                 '/air-quality/$cityName?lat=${loadedState!.weather.latitude}&lon=${loadedState!.weather.longitude}',
               ),
