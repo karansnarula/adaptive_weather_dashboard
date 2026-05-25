@@ -182,4 +182,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String welcomeBack(String name) {
     return 'Welcome back, $name!';
   }
+
+  @override
+  String get aqiGood => 'Good';
+
+  @override
+  String get aqiFair => 'Fair';
+
+  @override
+  String get aqiModerate => 'Moderate';
+
+  @override
+  String get aqiPoor => 'Poor';
+
+  @override
+  String get aqiVeryPoor => 'Very Poor';
+
+  @override
+  String get aqiUnknown => 'Unknown';
+
+  @override
+  String get airQualityIndex => 'Air Quality Index';
+
+  @override
+  String get pollutantLevels => 'Pollutant Levels (μg/m³)';
+
+  @override
+  String appVersion(String version) {
+    return 'App Version: $version';
+  }
 }

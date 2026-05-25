@@ -8,9 +8,7 @@ A production-grade multi-platform weather application built with Flutter, demons
 
 ## Overview
 
-Adaptive Weather Dashboard is a portfolio project showcasing production-level Flutter engineering practices. The app searches for cities, displays current weather and a 5-day forecast, allows saving favorite cities, and supports language switching between English and Thai.
-
-While the feature set is intentionally minimal, the underlying architecture demonstrates the skills required to build and maintain a large-scale Flutter application across five platforms from a single codebase.
+Adaptive Weather Dashboard is a portfolio project showcasing production-level Flutter engineering practices. The app features user authentication, weather search with real-time city data, 5-day forecasts, favorite cities, air quality visualization, push notifications, and multi-language support — all running across five platforms from a single codebase.
 
 ## Platforms
 
@@ -22,6 +20,22 @@ While the feature set is intentionally minimal, the underlying architecture demo
 
 All platforms share the same codebase with adaptive UI that automatically adjusts navigation patterns and layouts based on screen size.
 
+## Features
+
+- **Authentication** — Email/password sign up and sign in with Firebase Auth, user data stored in Firestore
+- **Weather Search** — Search any city for current weather conditions with temperature, humidity, wind speed, and weather icon
+- **5-Day Forecast** — Grouped daily forecast from OpenWeatherMap's 3-hour interval data
+- **City Time Display** — Shows the searched city's local time, date, and highlighted day of the week using timezone offset
+- **Favorite Cities** — Save and remove favorite cities with local Hive storage, tap to load weather instantly
+- **Air Quality** — Visualize air quality index and pollutant levels (CO, NO₂, O₃, SO₂, PM2.5, PM10) with interactive bar charts
+- **Push Notifications** — Daily weather notifications for a selected city via Firebase Cloud Messaging with a scheduled Cloud Function
+- **Static Map** — Google Static Maps showing the searched city's location with a pin marker
+- **Quick Access Shortcuts** — Contextual shortcuts for Chatbot, News, Air Quality, and Pollen that enable after a successful search
+- **Multi-Language** — English and Thai with compile-time safe localization using ARB files
+- **Theme Switching** — Light, dark, and system theme modes persisted in SharedPreferences
+- **Temperature Units** — Toggle between Celsius and Fahrenheit
+- **App Version Display** — Dynamic version display in settings using package_info_plus
+
 ## Tech Stack
 
 | Concern | Package | Rationale |
@@ -31,35 +45,66 @@ All platforms share the same codebase with adaptive UI that automatically adjust
 | Networking | `dio` + `retrofit` | Retrofit generates clean API clients from annotations |
 | Functional Error Handling | `fpdart` | Explicit `Either<Failure, Success>` eliminates try-catch sprawl |
 | Navigation | `go_router` | URL-based routing works natively for web, official Flutter team package |
+| Authentication | `firebase_auth` | Industry-standard auth with email/password support |
+| Cloud Database | `cloud_firestore` | Real-time cloud storage for user data and notification preferences |
+| Push Notifications | `firebase_messaging` + `flutter_local_notifications` | FCM for background/terminated delivery, local notifications for foreground display |
 | Local Storage | `hive_ce` | Fast, type-safe key-value storage that works across all platforms |
 | Preferences | `shared_preferences` | Standard solution for simple user preferences |
-| Localization | `flutter_localizations` + ARB | Compile-time safe translations with IDE autocomplete |
+| Charts | `fl_chart` | Lightweight, customizable bar charts for air quality visualization |
+| Maps | Google Static Maps API | Simple embeddable map images without SDK overhead |
+| Localization | `flutter_localizations` + `intl` + ARB | Compile-time safe translations with automatic date and number formatting |
+| App Info | `package_info_plus` | Dynamic version display from pubspec.yaml |
 
 ## Architecture
 
-The project follows **clean architecture** with three distinct layers per feature:
+The project follows **clean architecture** with three distinct layers per feature, with a lighter approach for simpler features:
 
 ```
 lib/
 ├── core/                           ← Shared infrastructure
-│   ├── config/                     ← Environment configuration
-│   ├── constants/                  ← API endpoints, shared constants
+│   ├── config/                     ← Environment configuration (AppConfig)
+│   ├── constants/                  ← API endpoints
 │   ├── error/                      ← Failure and exception classes
-│   ├── l10n/                       ← Localization files (.arb)
+│   ├── l10n/                       ← Localization files (.arb) and extension
 │   ├── layout/                     ← AdaptiveScaffold
-│   ├── responsive/                 ← Breakpoints, ResponsiveBuilder
-│   ├── router/                     ← go_router configuration
+│   ├── network/                    ← Network connectivity checker
+│   ├── responsive/                 ← Breakpoints, ResponsiveBuilder, ResponsiveValue
+│   ├── router/                     ← go_router with auth redirect guard
 │   └── theme/                      ← Light and dark themes
-├── features/                       ← Feature modules
-│   ├── weather/
-│   │   ├── data/                   ← Data sources, models, repository impl
-│   │   ├── domain/                 ← Entities, repository interface, use cases
-│   │   └── presentation/           ← BloC, pages, layouts, widgets
-│   ├── favorites/                  ← Same three-layer structure
-│   └── settings/                   ← Presentation only (no data layer needed)
+├── features/
+│   ├── auth/                       ← Full clean architecture (data/domain/presentation)
+│   │   ├── data/                   ← Firebase Auth data source, user model
+│   │   ├── domain/                 ← AppUser entity, AuthRepository, use cases
+│   │   └── presentation/           ← AuthBloc, login/register pages
+│   ├── weather/                    ← Full clean architecture
+│   │   ├── data/                   ← Retrofit API client, weather/forecast models
+│   │   ├── domain/                 ← Weather/Forecast entities, repository, use cases
+│   │   └── presentation/           ← WeatherBloc, responsive layouts, shared widgets
+│   ├── favorites/                  ← Full clean architecture
+│   │   ├── data/                   ← Hive local data source
+│   │   ├── domain/                 ← FavoriteCity entity, repository, use cases
+│   │   └── presentation/           ← FavoritesBloc, responsive layouts
+│   ├── notifications/              ← Full clean architecture
+│   │   ├── data/                   ← Firestore data source, FCM service
+│   │   ├── domain/                 ← NotificationCity entity, repository, use cases
+│   │   └── presentation/           ← NotificationBloc, notification city card
+│   ├── settings/                   ← Presentation only
+│   │   └── presentation/           ← SettingsBloc, theme/language/unit selectors
+│   └── air_quality/                ← Lightweight architecture (no repository/use cases)
+│       ├── data/                   ← AirQualityService (fetch + parse in one class)
+│       ├── domain/
+│       │   └── entities/           ← AirQuality entity
+│       └── presentation/
+│           └── pages/              ← FutureBuilder-based page with fl_chart
 ├── di/                             ← Dependency injection configuration
 └── main.dart                       ← Single entry point
 ```
+
+### Architectural Approaches
+
+**Full clean architecture** is used for core features with complex state management, multiple data sources, or cross-feature communication (auth, weather, favorites, notifications).
+
+**Lightweight architecture** is used for simple read-only screens that fetch and display data without state mutation or caching (air quality). This demonstrates the senior judgment of knowing when full clean architecture is overkill.
 
 ### Layer Responsibilities
 
@@ -68,8 +113,6 @@ lib/
 **Data layer** — concrete repository implementations, API models with JSON serialization, remote and local data sources. Depends only on the domain layer for contracts.
 
 **Presentation layer** — BloCs, pages, responsive layouts, and widgets. Depends on the domain layer for use cases and entities.
-
-Data flows inward: UI → BloC → Use Case → Repository (abstract) → Repository Implementation → Data Source → API/Storage. Each layer knows only about the layer directly below it, which is why the codebase is easy to test and evolve.
 
 ## Key Architectural Decisions
 
@@ -85,13 +128,21 @@ Business logic and shared widgets have zero platform awareness. Only layout file
 
 The same pattern applies to navigation via `AdaptiveScaffold`, which switches between bottom navigation bar (mobile), navigation rail (tablet), and navigation drawer (desktop) — all powered by the same `go_router` configuration.
 
+### Authentication with Route Guards
+
+Firebase Auth state is managed through a stream-based `AuthBloc`. The `go_router` redirect guard checks auth state on every navigation — unauthenticated users are redirected to login, authenticated users are prevented from accessing auth pages. Auth state changes (login/logout) trigger automatic navigation through a `GoRouterRefreshListenable`.
+
 ### `fpdart` for Error Handling
 
-Every repository method returns `Future<Either<Failure, T>>`. Try-catch exists only in the data layer where external errors (Dio, Hive exceptions) are converted into `Failure` objects. The domain and presentation layers deal exclusively with `Either` — no exceptions bubble up, and every call site is forced to handle both success and failure.
+Every repository method returns `Future<Either<Failure, T>>`. Try-catch exists only in the data layer where external errors (Dio, Firebase, Hive exceptions) are converted into `Failure` objects. The domain and presentation layers deal exclusively with `Either` — no exceptions bubble up, and every call site is forced to handle both success and failure.
 
-### `@module` for Third-Party Dependencies
+### Push Notifications Architecture
 
-Classes you own get annotated with `@injectable`, `@singleton`, or `@lazySingleton`. Third-party classes like `Dio`, `SharedPreferences`, and Hive boxes that you can't annotate are registered in `AppModule` with `@module`. This keeps the DI setup centralized and scalable.
+FCM device tokens are stored in Firestore per user. A Firebase Cloud Function runs daily on a schedule, reads each user's notification city preference and device token, fetches the weather, and sends a push notification. The Flutter app handles notifications in three states — foreground (using flutter_local_notifications), background, and terminated (using FCM handlers). Tapping a notification deep-links to the weather page for that city.
+
+### Lightweight vs Full Architecture
+
+The air quality feature uses a `FutureBuilder` with a service class instead of full BloC + repository + use case layering. This is a deliberate decision — a single read-only API call that displays data doesn't warrant 6-7 files of abstraction. This demonstrates understanding of when to apply patterns and when simplicity serves better.
 
 ### Feature-First Folder Structure
 
@@ -99,11 +150,8 @@ Features are self-contained modules with their own `data/`, `domain/`, and `pres
 
 ## Git Strategy
 
-- `main` — Production releases, tagged with version numbers (e.g. `v1.0.0`)
+- `main` — Production releases, tagged with version numbers (e.g. `v1.1.0`)
 - `develop` — Active development, QA builds
-- `feature/*` — Short-lived branches created off `develop`
-
-Feature freeze is applied to `develop` during UAT to avoid unintended features landing in production. UAT builds are manually triggered from `develop` via CI/CD when needed. Production builds trigger automatically when a tag is pushed to `main`.
 
 ## Flavors
 
@@ -117,13 +165,21 @@ Three environments with separate application IDs and display names:
 
 All three can be installed side by side on the same device.
 
+## Firebase Integration
+
+- **Firebase Auth** — Email/password authentication
+- **Cloud Firestore** — User profiles, notification city preferences, FCM tokens
+- **Firebase Cloud Messaging** — Push notification delivery
+- **Firebase Cloud Functions** — Scheduled daily weather notifications
+- **Firebase Hosting** — Web deployment
+
 ## CI/CD
 
 Two GitHub Actions workflows:
 
 **`ci.yml`** — runs on every pull request and every push to `develop`. Installs dependencies, generates code, runs lint analysis, and executes tests. Prevents broken code from reaching the main branches.
 
-**`build.yml`** — triggered when a version tag is pushed (e.g. `v1.0.0`). Builds Android APK, iOS IPA (unsigned), and web bundle for the production flavor. API credentials are injected from GitHub repository secrets.
+**`build.yml`** — triggered when a version tag is pushed (e.g. `v1.1.0`). Builds Android APK, iOS IPA (unsigned), and web bundle for the production flavor. API credentials are injected from GitHub repository secrets.
 
 ## Testing
 
@@ -139,6 +195,8 @@ Tests are written at each clean architecture layer:
 
 - Flutter SDK 3.9+
 - An OpenWeatherMap API key (free tier): [https://openweathermap.org/api](https://openweathermap.org/api)
+- A Google Maps Static API key: [https://console.cloud.google.com](https://console.cloud.google.com)
+- A Firebase project with Auth, Firestore, and Cloud Messaging enabled
 - Xcode (for iOS/macOS builds)
 - Android Studio (for Android builds)
 
@@ -146,7 +204,7 @@ Tests are written at each clean architecture layer:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/adaptive_weather_dashboard.git
+   git clone https://github.com/karansnarula/adaptive_weather_dashboard.git
    cd adaptive_weather_dashboard
    ```
 
@@ -157,19 +215,24 @@ Tests are written at each clean architecture layer:
    cp config/dev.json.example config/prod.json
    ```
 
-3. Add your OpenWeatherMap API key to each config file.
+3. Add your API keys to each config file (OpenWeatherMap and Google Maps).
 
-4. Install dependencies:
+4. Configure Firebase:
+   ```bash
+   flutterfire configure
+   ```
+
+5. Install dependencies:
    ```bash
    flutter pub get
    ```
 
-5. Run code generation:
+6. Run code generation:
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-6. Generate localization files:
+7. Generate localization files:
    ```bash
    flutter gen-l10n
    ```
@@ -223,22 +286,30 @@ flutter test
 
 ## Deployment
 
-The web build is deployed to Firebase Hosting. To deploy your own:
+The web build is deployed to Firebase Hosting:
 
 ```bash
 flutter build web --dart-define-from-file=config/prod.json
 firebase deploy --only hosting
 ```
 
+## Roadmap
+
+- **v1.2.0** — AI-powered weather chatbot, weather news feed with in-app browser
+- **Future** — Pollen allergy data, user profile image upload, offline-first sync
+
 ## What This Project Demonstrates
 
-- Clean architecture with strict layer separation
-- State management at scale with BloC
+- Clean architecture with strict layer separation and pragmatic lightweight alternatives
+- State management at scale with BloC and Cubit
+- Firebase integration (Auth, Firestore, FCM, Cloud Functions, Hosting)
+- Push notifications with scheduled Cloud Functions and deep linking
 - Dependency injection patterns for a growing codebase
 - Multi-platform responsive design without platform-specific features in business logic
 - Functional error handling with `fpdart`
+- Data visualization with interactive charts
 - Environment configuration without hardcoded secrets
 - CI/CD pipeline for multi-flavor builds
 - Testing strategy across all architecture layers
-- Localization with compile-time safety
+- Localization with compile-time safety and automatic date/number formatting
 - Production-ready project structure suitable for long-term maintenance

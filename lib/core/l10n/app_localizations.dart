@@ -427,6 +427,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome back, {name}!'**
   String welcomeBack(String name);
+
+  /// No description provided for @aqiGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get aqiGood;
+
+  /// No description provided for @aqiFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get aqiFair;
+
+  /// No description provided for @aqiModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get aqiModerate;
+
+  /// No description provided for @aqiPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get aqiPoor;
+
+  /// No description provided for @aqiVeryPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Poor'**
+  String get aqiVeryPoor;
+
+  /// No description provided for @aqiUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get aqiUnknown;
+
+  /// No description provided for @airQualityIndex.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality Index'**
+  String get airQualityIndex;
+
+  /// No description provided for @pollutantLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'Pollutant Levels (μg/m³)'**
+  String get pollutantLevels;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version: {version}'**
+  String appVersion(String version);
 }
 
 class _AppLocalizationsDelegate

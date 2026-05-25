@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/air_quality/presentation/pages/air_quality_page.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
@@ -41,6 +42,19 @@ abstract class AppRouter {
       GoRoute(
         path: '/register',
         builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: '/air-quality/:city',
+        builder: (context, state) {
+          final city = state.pathParameters['city'] ?? '';
+          final lat = double.tryParse(state.uri.queryParameters['lat'] ?? '') ?? 0;
+          final lon = double.tryParse(state.uri.queryParameters['lon'] ?? '') ?? 0;
+          return AirQualityPage(
+            cityName: city,
+            latitude: lat,
+            longitude: lon,
+          );
+        },
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => AdaptiveScaffold(

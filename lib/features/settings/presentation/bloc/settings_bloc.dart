@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'settings_event.dart';
@@ -20,18 +21,20 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<ChangeTheme>(_onChangeTheme);
   }
 
-  void _onLoadSettings(
+  Future<void> _onLoadSettings(
       LoadSettings event,
       Emitter<SettingsState> emit,
-      ) {
+      ) async {
     final languageCode = _prefs.getString(_languageKey) ?? 'en';
     final isCelsius = _prefs.getBool(_unitKey) ?? true;
     final themeMode = _prefs.getString(_themeKey) ?? 'system';
+    final packageInfo = await PackageInfo.fromPlatform();
 
     emit(SettingsState(
       languageCode: languageCode,
       isCelsius: isCelsius,
       themeMode: themeMode,
+      appVersion: packageInfo.version,
     ));
   }
 

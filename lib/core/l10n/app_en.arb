@@ -68,5 +68,21 @@
         "type": "String"
       }
     }
+  },
+  "aqiGood": "Good",
+  "aqiFair": "Fair",
+  "aqiModerate": "Moderate",
+  "aqiPoor": "Poor",
+  "aqiVeryPoor": "Very Poor",
+  "aqiUnknown": "Unknown",
+  "airQualityIndex": "Air Quality Index",
+  "pollutantLevels": "Pollutant Levels (μg/m³)",
+  "appVersion": "App Version: {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -68,5 +68,21 @@
         "type": "String"
       }
     }
+  },
+  "aqiGood": "ดี",
+  "aqiFair": "พอใช้",
+  "aqiModerate": "ปานกลาง",
+  "aqiPoor": "แย่",
+  "aqiVeryPoor": "แย่มาก",
+  "aqiUnknown": "ไม่ทราบ",
+  "airQualityIndex": "ดัชนีคุณภาพอากาศ",
+  "pollutantLevels": "ระดับมลพิษ (μg/m³)",
+  "appVersion": "เวอร์ชันแอป: {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   }
 }

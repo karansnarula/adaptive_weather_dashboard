@@ -10,6 +10,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:adaptive_weather_dashboard/di/app_module.dart' as _i59;
+import 'package:adaptive_weather_dashboard/features/air_quality/data/air_quality_service.dart'
+    as _i435;
 import 'package:adaptive_weather_dashboard/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i221;
 import 'package:adaptive_weather_dashboard/features/auth/data/repositories/auth_repository_impl.dart'
@@ -112,6 +114,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i59.FirebaseAuth>(),
         gh<_i974.FirebaseFirestore>(),
       ),
+    );
+    gh.lazySingleton<_i435.AirQualityService>(
+      () => _i435.AirQualityService(gh<_i361.Dio>()),
     );
     gh.factory<_i408.SettingsBloc>(
       () => _i408.SettingsBloc(gh<_i460.SharedPreferences>()),

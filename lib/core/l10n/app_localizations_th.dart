@@ -179,4 +179,33 @@ class AppLocalizationsTh extends AppLocalizations {
   String welcomeBack(String name) {
     return 'ยินดีต้อนรับกลับ, $name!';
   }
+
+  @override
+  String get aqiGood => 'ดี';
+
+  @override
+  String get aqiFair => 'พอใช้';
+
+  @override
+  String get aqiModerate => 'ปานกลาง';
+
+  @override
+  String get aqiPoor => 'แย่';
+
+  @override
+  String get aqiVeryPoor => 'แย่มาก';
+
+  @override
+  String get aqiUnknown => 'ไม่ทราบ';
+
+  @override
+  String get airQualityIndex => 'ดัชนีคุณภาพอากาศ';
+
+  @override
+  String get pollutantLevels => 'ระดับมลพิษ (μg/m³)';
+
+  @override
+  String appVersion(String version) {
+    return 'เวอร์ชันแอป: $version';
+  }
 }

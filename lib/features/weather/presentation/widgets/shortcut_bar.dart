@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/widgets/custom_dialog.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_state.dart';
 
@@ -13,8 +14,9 @@ class ShortcutBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WeatherBloc, WeatherState>(
       builder: (context, state) {
-        final isSearched = state is WeatherLoaded;
-        final cityName = isSearched ? state.weather.cityName : '';
+        final loadedState = state is WeatherLoaded ? state : null;
+        final isSearched = loadedState != null;
+        final cityName = loadedState?.weather.cityName ?? '';
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,7 +37,9 @@ class ShortcutBar extends StatelessWidget {
               icon: Icons.air,
               label: context.l10n.airQuality,
               enabled: isSearched,
-              onTap: () => context.push('/air-quality/$cityName'),
+              onTap: () => context.push(
+                '/air-quality/$cityName?lat=${loadedState!.weather.latitude}&lon=${loadedState!.weather.longitude}',
+              ),
             ),
             _ShortcutItem(
               icon: Icons.grass_outlined,
@@ -50,18 +54,13 @@ class ShortcutBar extends StatelessWidget {
   }
 
   void _showComingSoon(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.comingSoon),
-        content: Text(context.l10n.comingSoonMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(context.l10n.ok),
-          ),
-        ],
-      ),
+    CustomDialog.show(
+      context,
+      icon: Icons.rocket_launch,
+      iconColor: Colors.orange,
+      title: context.l10n.comingSoon,
+      message: context.l10n.comingSoonMessage,
+      buttonText: context.l10n.ok,
     );
   }
 }

@@ -5,6 +5,8 @@ import '../../../../core/l10n/l10n_extension.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
 import '../../../notifications/presentation/widgets/notification_city_card.dart';
+import '../bloc/settings_bloc.dart';
+import '../bloc/settings_state.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/unit_selector.dart';
 import '../widgets/theme_selector.dart';
@@ -32,6 +34,19 @@ class SettingsPage extends StatelessWidget {
                 const UnitSelector(),
                 const SizedBox(height: 16),
                 const ThemeSelector(),
+                const SizedBox(height: 32),
+                BlocBuilder<SettingsBloc, SettingsState>(
+                  buildWhen: (previous, current) =>
+                  previous.appVersion != current.appVersion,
+                  builder: (context, state) {
+                    return Text(
+                      context.l10n.appVersion(state.appVersion),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(height: 32),
                 SizedBox(
                   width: double.infinity,
