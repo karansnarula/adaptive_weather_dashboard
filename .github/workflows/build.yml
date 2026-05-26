@@ -89,6 +89,9 @@ jobs:
             "API_KEY": "${{ secrets.API_KEY }}"
           }' > config/prod.json
 
+      - name: Set iOS deployment target
+        run: sed -i '' 's/# platform :ios, .*/platform :ios, '\''15.0'\''/' ios/Podfile
+
       - name: Install dependencies
         run: flutter pub get
 
