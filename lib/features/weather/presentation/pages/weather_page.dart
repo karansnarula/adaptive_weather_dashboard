@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/responsive/responsive_builder.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_state.dart';
 import '../layouts/weather_mobile.dart';
@@ -44,27 +45,27 @@ class WeatherPage extends StatelessWidget {
 
   Widget _buildInitial(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(AppDimens.space2xl),
       child: Column(
         children: [
           const WelcomeHeader(),
-          const SizedBox(height: 100),
+          const SizedBox(height: AppDimens.space7xl),
           Icon(
             Icons.cloud_outlined,
-            size: 100,
+            size: AppDimens.imageHeightSm,
             color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           Text(
             context.l10n.searchPrompt,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
+            constraints: const BoxConstraints(maxWidth: AppDimens.formMaxWidth),
             child: const CitySearchBar(),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           const ShortcutBar(),
         ],
       ),
@@ -73,28 +74,28 @@ class WeatherPage extends StatelessWidget {
 
   Widget _buildError(BuildContext context, String message) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(AppDimens.space2xl),
       child: Column(
         children: [
           const WelcomeHeader(),
-          const SizedBox(height: 100),
+          const SizedBox(height: AppDimens.space7xl),
           Icon(
             Icons.error_outline,
-            size: 80,
+            size: AppDimens.iconLogo,
             color: Theme.of(context).colorScheme.error,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           Text(
             message,
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
+            constraints: const BoxConstraints(maxWidth: AppDimens.formMaxWidth),
             child: const CitySearchBar(),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           const ShortcutBar(),
         ],
       ),

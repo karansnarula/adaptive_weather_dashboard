@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
 import '../../../notifications/presentation/widgets/notification_city_card.dart';
@@ -22,19 +23,19 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
+          constraints: const BoxConstraints(maxWidth: AppDimens.contentMaxWidthSm),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppDimens.spaceLg),
             child: Column(
               children: [
                 const NotificationCityCard(),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppDimens.spaceLg),
                 const LanguageSelector(),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppDimens.spaceLg),
                 const UnitSelector(),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppDimens.spaceLg),
                 const ThemeSelector(),
-                const SizedBox(height: 32),
+                const SizedBox(height: AppDimens.space3xl),
                 BlocBuilder<SettingsBloc, SettingsState>(
                   buildWhen: (previous, current) =>
                   previous.appVersion != current.appVersion,
@@ -47,7 +48,7 @@ class SettingsPage extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: AppDimens.space3xl),
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
@@ -61,9 +62,9 @@ class SettingsPage extends StatelessWidget {
                       side: BorderSide(
                         color: Theme.of(context).colorScheme.error,
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: AppDimens.spaceLg),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppDimens.radiusMd),
                       ),
                     ),
                   ),

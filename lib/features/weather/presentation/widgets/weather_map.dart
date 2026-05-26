@@ -2,6 +2,7 @@ import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_config.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/weather.dart';
 
 class WeatherMap extends StatelessWidget {
@@ -28,27 +29,27 @@ class WeatherMap extends StatelessWidget {
           Image.network(
             mapUrl,
             width: double.infinity,
-            height: 200,
+            height: AppDimens.imageHeightMd,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
               return const SizedBox(
-                height: 200,
+                height: AppDimens.imageHeightMd,
                 child: Center(child: CircularProgressIndicator()),
               );
             },
             errorBuilder: (context, error, stack) => SizedBox(
-              height: 200,
+              height: AppDimens.imageHeightMd,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.map_outlined,
-                      size: 48,
+                      size: AppDimens.iconButtonSize,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppDimens.spaceSm),
                     Text(
                       context.l10n.mapUnavailable,
                       style: Theme.of(context).textTheme.bodySmall,
@@ -59,7 +60,7 @@ class WeatherMap extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(AppDimens.spaceMd),
             child: Text(
               '${weather.cityName} (${weather.latitude.toStringAsFixed(2)}, ${weather.longitude.toStringAsFixed(2)})',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

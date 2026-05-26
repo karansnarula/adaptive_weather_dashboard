@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/responsive/responsive_builder.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../../../weather/presentation/bloc/weather_bloc.dart';
 import '../../../weather/presentation/bloc/weather_event.dart';
@@ -65,15 +66,15 @@ class FavoritesPage extends StatelessWidget {
         children: [
           Icon(
             Icons.favorite_border,
-            size: 80,
+            size: AppDimens.iconLogo,
             color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           Text(
             context.l10n.noFavorites,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimens.spaceSm),
           Text(
             context.l10n.noFavoritesSubtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(

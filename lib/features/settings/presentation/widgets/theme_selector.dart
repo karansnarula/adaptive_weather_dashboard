@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../bloc/settings_bloc.dart';
 import '../bloc/settings_event.dart';
 import '../bloc/settings_state.dart';
@@ -15,7 +16,7 @@ class ThemeSelector extends StatelessWidget {
       builder: (context, state) {
         return Card(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppDimens.spaceLg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -25,7 +26,7 @@ class ThemeSelector extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppDimens.spaceMd),
                 SegmentedButton<String>(
                   segments: [
                     ButtonSegment(

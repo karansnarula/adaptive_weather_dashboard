@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/weather.dart';
 import '../../domain/entities/forecast.dart';
 import '../widgets/city_search_bar.dart';
@@ -23,26 +24,26 @@ class WeatherTablet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(AppDimens.space2xl),
       child: Column(
         children: [
           const WelcomeHeader(),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           const CitySearchBar(),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           CityTimeCard(weather: weather),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           const ShortcutBar(),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(child: WeatherCard(weather: weather)),
-              const SizedBox(width: 24),
+              const SizedBox(width: AppDimens.space2xl),
               Expanded(child: ForecastList(forecast: forecast)),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.space2xl),
           WeatherMap(weather: weather),
         ],
       ),

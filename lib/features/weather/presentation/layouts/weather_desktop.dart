@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/weather.dart';
 import '../../domain/entities/forecast.dart';
 import '../widgets/city_search_bar.dart';
@@ -24,22 +25,22 @@ class WeatherDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1200),
+        constraints: const BoxConstraints(maxWidth: AppDimens.desktopMaxWidth),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(AppDimens.space3xl),
           child: Column(
             children: [
               const WelcomeHeader(),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppDimens.space3xl),
               ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 600),
+                constraints: const BoxConstraints(maxWidth: AppDimens.contentMaxWidthSm),
                 child: const CitySearchBar(),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppDimens.space3xl),
               CityTimeCard(weather: weather),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppDimens.space3xl),
               const ShortcutBar(),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppDimens.space3xl),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,14 +48,14 @@ class WeatherDesktop extends StatelessWidget {
                     flex: 2,
                     child: WeatherCard(weather: weather),
                   ),
-                  const SizedBox(width: 32),
+                  const SizedBox(width: AppDimens.space3xl),
                   Expanded(
                     flex: 3,
                     child: ForecastList(forecast: forecast),
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppDimens.space3xl),
               WeatherMap(weather: weather),
             ],
           ),

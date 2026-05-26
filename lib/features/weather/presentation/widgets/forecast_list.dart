@@ -1,6 +1,7 @@
 import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/forecast.dart';
 
 class ForecastList extends StatelessWidget {
@@ -13,7 +14,7 @@ class ForecastList extends StatelessWidget {
     return Card(
       color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppDimens.spaceLg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -24,19 +25,19 @@ class ForecastList extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppDimens.spaceMd),
             ...forecast.days.map((day) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: AppDimens.spaceSm),
               child: Row(
                 children: [
                   Image.network(
                     'https://openweathermap.org/img/wn/${day.icon}@2x.png',
-                    width: 40,
-                    height: 40,
+                    width: AppDimens.avatarMd,
+                    height: AppDimens.avatarMd,
                     errorBuilder: (context, error, stack) =>
-                    const Icon(Icons.cloud, size: 40),
+                    const Icon(Icons.cloud, size: AppDimens.avatarMd),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppDimens.spaceMd),
                   Expanded(
                     child: Text(
                       day.description,

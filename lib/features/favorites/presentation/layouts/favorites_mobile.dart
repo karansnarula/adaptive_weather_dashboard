@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/favorite_city.dart';
 import '../widgets/favorite_city_tile.dart';
 
@@ -18,7 +19,7 @@ class FavoritesMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppDimens.spaceLg),
       itemCount: favorites.length,
       itemBuilder: (context, index) {
         final city = favorites[index];

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../../../../core/widgets/custom_dialog.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_state.dart';
@@ -89,8 +90,8 @@ class _ShortcutItem extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: AppDimens.iconButtonSize,
+              height: AppDimens.iconButtonSize,
               decoration: BoxDecoration(
                 color: enabled
                     ? Theme.of(context).colorScheme.primaryContainer
@@ -104,7 +105,7 @@ class _ShortcutItem extends StatelessWidget {
                     : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: AppDimens.spaceXs),
             Text(
               label,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(

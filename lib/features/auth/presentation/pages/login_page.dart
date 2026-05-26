@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -42,9 +43,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppDimens.space2xl),
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
+            constraints: const BoxConstraints(maxWidth: AppDimens.formMaxWidth),
             child: BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthError) {
@@ -62,10 +63,10 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Icon(
                     Icons.cloud,
-                    size: 80,
+                    size: AppDimens.iconLogo,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppDimens.spaceLg),
                   Text(
                     'Weather Dashboard',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -73,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: AppDimens.space3xl),
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -81,11 +82,11 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: 'Email',
                       prefixIcon: const Icon(Icons.email_outlined),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppDimens.radiusMd),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppDimens.spaceLg),
                   TextField(
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
@@ -105,28 +106,28 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppDimens.radiusMd),
                       ),
                     ),
                     onSubmitted: (_) => _onSignIn(),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppDimens.space2xl),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       return FilledButton(
                         onPressed: state is AuthLoading ? null : _onSignIn,
                         style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: AppDimens.spaceLg),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(AppDimens.radiusMd),
                           ),
                         ),
                         child: state is AuthLoading
                             ? const SizedBox(
-                          height: 20,
-                          width: 20,
+                          height: AppDimens.iconSm,
+                          width: AppDimens.iconSm,
                           child: CircularProgressIndicator(
-                            strokeWidth: 2,
+                            strokeWidth: AppDimens.strokeMd,
                             color: Colors.white,
                           ),
                         )
@@ -134,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppDimens.spaceLg),
                   TextButton(
                     onPressed: () => context.go('/register'),
                     child: const Text("Don't have an account? Sign Up"),
