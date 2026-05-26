@@ -48,9 +48,7 @@ class WeatherPage extends StatelessWidget {
       child: Column(
         children: [
           const WelcomeHeader(),
-          const SizedBox(height: 16),
-          const ShortcutBar(),
-          const SizedBox(height: 48),
+          const SizedBox(height: 100),
           Icon(
             Icons.cloud_outlined,
             size: 100,
@@ -66,6 +64,8 @@ class WeatherPage extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 400),
             child: const CitySearchBar(),
           ),
+          const SizedBox(height: 16),
+          const ShortcutBar(),
         ],
       ),
     );
@@ -77,9 +77,7 @@ class WeatherPage extends StatelessWidget {
       child: Column(
         children: [
           const WelcomeHeader(),
-          const SizedBox(height: 16),
-          const ShortcutBar(),
-          const SizedBox(height: 48),
+          const SizedBox(height: 100),
           Icon(
             Icons.error_outline,
             size: 80,
@@ -96,6 +94,8 @@ class WeatherPage extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 400),
             child: const CitySearchBar(),
           ),
+          const SizedBox(height: 16),
+          const ShortcutBar(),
         ],
       ),
     );

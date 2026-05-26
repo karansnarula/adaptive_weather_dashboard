@@ -17,6 +17,8 @@ class ShortcutBar extends StatelessWidget {
         final loadedState = state is WeatherLoaded ? state : null;
         final isSearched = loadedState != null;
         final cityName = loadedState?.weather.cityName ?? '';
+        final lat = loadedState?.weather.latitude ?? 0;
+        final lon = loadedState?.weather.longitude ?? 0;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -37,9 +39,8 @@ class ShortcutBar extends StatelessWidget {
               icon: Icons.air,
               label: context.l10n.airQuality,
               enabled: isSearched,
-              // ignore: unnecessary_non_null_assertion
               onTap: () => context.push(
-                '/air-quality/$cityName?lat=${loadedState!.weather.latitude}&lon=${loadedState!.weather.longitude}',
+                '/air-quality/$cityName?lat=$lat&lon=$lon',
               ),
             ),
             _ShortcutItem(
