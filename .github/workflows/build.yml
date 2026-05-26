@@ -92,6 +92,10 @@ jobs:
       - name: Set iOS deployment target
         run: sed -i '' 's/# platform :ios, .*/platform :ios, '\''15.0'\''/' ios/Podfile
 
+      - name: Set iOS deployment target in Xcode Project settings
+        run: |
+            sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = [0-9.]*/IPHONEOS_DEPLOYMENT_TARGET = 15.0/g' ios/Runner.xcodeproj/project.pbxproj
+
       - name: Install dependencies
         run: flutter pub get
 
