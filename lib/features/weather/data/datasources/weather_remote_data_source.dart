@@ -12,7 +12,8 @@ part 'weather_remote_data_source.g.dart';
 @lazySingleton
 abstract class WeatherRemoteDataSource {
   @factoryMethod
-  factory WeatherRemoteDataSource(Dio dio) = _WeatherRemoteDataSource;
+  factory WeatherRemoteDataSource(@Named('weatherDio') Dio dio) =
+      _WeatherRemoteDataSource;
 
   @GET(ApiConstants.currentWeather)
   Future<WeatherModel> getCurrentWeather(

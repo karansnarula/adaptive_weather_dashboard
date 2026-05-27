@@ -211,4 +211,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String appVersion(String version) {
     return 'App Version: $version';
   }
+
+  @override
+  String get chatbotPageTitle => 'AI Weather Assistant';
+
+  @override
+  String get chatbotInputHint => 'Ask about the weather…';
+
+  @override
+  String get chatbotEmptyStateGeneric =>
+      'Hi! I\'m your weather assistant. Ask me about the climate, forecasts, or any weather curiosity.';
+
+  @override
+  String chatbotEmptyStateWithCity(String city) {
+    return 'Hi! Ask me anything about the weather in $city, or any other place.';
+  }
+
+  @override
+  String get chatbotQuotaExceeded => 'Daily limit reached. Try again tomorrow.';
+
+  @override
+  String chatbotQuotaExceededDetail(int limit) {
+    return 'You\'ve used your $limit free messages for today. Come back tomorrow — paid tier coming soon.';
+  }
+
+  @override
+  String chatbotQuotaResetAt(String time) {
+    return 'Resets at $time';
+  }
+
+  @override
+  String get chatbotError =>
+      'Couldn\'t reach the assistant. Tap send to retry.';
 }

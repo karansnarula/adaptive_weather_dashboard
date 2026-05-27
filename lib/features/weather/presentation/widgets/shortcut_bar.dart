@@ -28,7 +28,11 @@ class ShortcutBar extends StatelessWidget {
               icon: Icons.smart_toy_outlined,
               label: context.l10n.chatbot,
               enabled: true,
-              onTap: () => context.push('/chatbot'),
+              onTap: () => context.push(
+                isSearched
+                    ? '/chatbot?city=${Uri.encodeQueryComponent(cityName)}'
+                    : '/chatbot',
+              ),
             ),
             _ShortcutItem(
               icon: Icons.newspaper_outlined,

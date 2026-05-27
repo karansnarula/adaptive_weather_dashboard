@@ -22,7 +22,9 @@ jobs:
             "ENV": "prod",
             "APP_NAME": "Weather Dashboard",
             "API_BASE_URL": "${{ secrets.API_BASE_URL }}",
-            "API_KEY": "${{ secrets.API_KEY }}"
+            "API_KEY": "${{ secrets.API_KEY }}",
+            "GEMINI_API_URL": "https://generativelanguage.googleapis.com/v1beta/",
+            "GEMINI_API_KEY": "${{ secrets.GEMINI_API_KEY }}"
           }' > config/prod.json
 
       - name: Install dependencies
@@ -54,7 +56,9 @@ jobs:
             "ENV": "prod",
             "APP_NAME": "Weather Dashboard",
             "API_BASE_URL": "${{ secrets.API_BASE_URL }}",
-            "API_KEY": "${{ secrets.API_KEY }}"
+            "API_KEY": "${{ secrets.API_KEY }}",
+            "GEMINI_API_URL": "https://generativelanguage.googleapis.com/v1beta/",
+            "GEMINI_API_KEY": "${{ secrets.GEMINI_API_KEY }}"
           }' > config/prod.json
 
       - name: Install dependencies
@@ -86,7 +90,9 @@ jobs:
             "ENV": "prod",
             "APP_NAME": "Weather Dashboard",
             "API_BASE_URL": "${{ secrets.API_BASE_URL }}",
-            "API_KEY": "${{ secrets.API_KEY }}"
+            "API_KEY": "${{ secrets.API_KEY }}",
+            "GEMINI_API_URL": "https://generativelanguage.googleapis.com/v1beta/",
+            "GEMINI_API_KEY": "${{ secrets.GEMINI_API_KEY }}"
           }' > config/prod.json
 
       - name: Set iOS deployment target

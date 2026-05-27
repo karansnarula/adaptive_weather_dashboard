@@ -481,6 +481,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'App Version: {version}'**
   String appVersion(String version);
+
+  /// No description provided for @chatbotPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Weather Assistant'**
+  String get chatbotPageTitle;
+
+  /// No description provided for @chatbotInputHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about the weather…'**
+  String get chatbotInputHint;
+
+  /// No description provided for @chatbotEmptyStateGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! I\'m your weather assistant. Ask me about the climate, forecasts, or any weather curiosity.'**
+  String get chatbotEmptyStateGeneric;
+
+  /// No description provided for @chatbotEmptyStateWithCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! Ask me anything about the weather in {city}, or any other place.'**
+  String chatbotEmptyStateWithCity(String city);
+
+  /// No description provided for @chatbotQuotaExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily limit reached. Try again tomorrow.'**
+  String get chatbotQuotaExceeded;
+
+  /// No description provided for @chatbotQuotaExceededDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used your {limit} free messages for today. Come back tomorrow — paid tier coming soon.'**
+  String chatbotQuotaExceededDetail(int limit);
+
+  /// No description provided for @chatbotQuotaResetAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Resets at {time}'**
+  String chatbotQuotaResetAt(String time);
+
+  /// No description provided for @chatbotError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the assistant. Tap send to retry.'**
+  String get chatbotError;
 }
 
 class _AppLocalizationsDelegate

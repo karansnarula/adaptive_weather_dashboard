@@ -8,7 +8,7 @@ import '../domain/entities/air_quality.dart';
 class AirQualityService {
   final Dio _dio;
 
-  const AirQualityService(this._dio);
+  const AirQualityService(@Named('weatherDio') this._dio);
 
   Future<AirQuality> getAirQuality(double lat, double lon) async {
     final response = await _dio.get(

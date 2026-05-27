@@ -84,5 +84,34 @@
         "type": "String"
       }
     }
-  }
+  },
+  "chatbotPageTitle": "ผู้ช่วยสภาพอากาศ AI",
+  "chatbotInputHint": "ถามเกี่ยวกับสภาพอากาศ…",
+  "chatbotEmptyStateGeneric": "สวัสดี! ฉันคือผู้ช่วยสภาพอากาศของคุณ ถามฉันได้เกี่ยวกับสภาพภูมิอากาศ การพยากรณ์ หรือเรื่องราวเกี่ยวกับสภาพอากาศที่คุณสงสัย",
+  "chatbotEmptyStateWithCity": "สวัสดี! ถามฉันได้เกี่ยวกับสภาพอากาศใน {city} หรือสถานที่อื่นๆ",
+  "@chatbotEmptyStateWithCity": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "chatbotQuotaExceeded": "ครบจำนวนข้อความรายวันแล้ว ลองใหม่พรุ่งนี้",
+  "chatbotQuotaExceededDetail": "คุณใช้ข้อความฟรี {limit} ข้อความของวันนี้หมดแล้ว กลับมาใหม่พรุ่งนี้ — เร็วๆ นี้จะมีแพ็กเกจแบบเสียค่าใช้จ่าย",
+  "@chatbotQuotaExceededDetail": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "chatbotQuotaResetAt": "รีเซ็ตเวลา {time}",
+  "@chatbotQuotaResetAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "chatbotError": "ไม่สามารถเชื่อมต่อผู้ช่วยได้ แตะส่งเพื่อลองใหม่"
 }

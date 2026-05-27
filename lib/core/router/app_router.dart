@@ -6,6 +6,7 @@ import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/chatbot/presentation/pages/chatbot_page.dart';
 import '../../features/weather/presentation/pages/weather_page.dart';
 import '../../features/favorites/presentation/pages/favorites_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
@@ -54,6 +55,14 @@ abstract class AppRouter {
             latitude: lat,
             longitude: lon,
           );
+        },
+      ),
+      GoRoute(
+        path: '/chatbot',
+        builder: (context, state) {
+          final city = state.uri.queryParameters['city'];
+          final trimmed = (city == null || city.trim().isEmpty) ? null : city;
+          return ChatbotPage(city: trimmed);
         },
       ),
       StatefulShellRoute.indexedStack(

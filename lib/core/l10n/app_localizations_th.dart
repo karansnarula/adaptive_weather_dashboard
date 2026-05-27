@@ -208,4 +208,36 @@ class AppLocalizationsTh extends AppLocalizations {
   String appVersion(String version) {
     return 'เวอร์ชันแอป: $version';
   }
+
+  @override
+  String get chatbotPageTitle => 'ผู้ช่วยสภาพอากาศ AI';
+
+  @override
+  String get chatbotInputHint => 'ถามเกี่ยวกับสภาพอากาศ…';
+
+  @override
+  String get chatbotEmptyStateGeneric =>
+      'สวัสดี! ฉันคือผู้ช่วยสภาพอากาศของคุณ ถามฉันได้เกี่ยวกับสภาพภูมิอากาศ การพยากรณ์ หรือเรื่องราวเกี่ยวกับสภาพอากาศที่คุณสงสัย';
+
+  @override
+  String chatbotEmptyStateWithCity(String city) {
+    return 'สวัสดี! ถามฉันได้เกี่ยวกับสภาพอากาศใน $city หรือสถานที่อื่นๆ';
+  }
+
+  @override
+  String get chatbotQuotaExceeded =>
+      'ครบจำนวนข้อความรายวันแล้ว ลองใหม่พรุ่งนี้';
+
+  @override
+  String chatbotQuotaExceededDetail(int limit) {
+    return 'คุณใช้ข้อความฟรี $limit ข้อความของวันนี้หมดแล้ว กลับมาใหม่พรุ่งนี้ — เร็วๆ นี้จะมีแพ็กเกจแบบเสียค่าใช้จ่าย';
+  }
+
+  @override
+  String chatbotQuotaResetAt(String time) {
+    return 'รีเซ็ตเวลา $time';
+  }
+
+  @override
+  String get chatbotError => 'ไม่สามารถเชื่อมต่อผู้ช่วยได้ แตะส่งเพื่อลองใหม่';
 }

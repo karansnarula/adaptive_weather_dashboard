@@ -26,6 +26,20 @@ import 'package:adaptive_weather_dashboard/features/auth/domain/usecases/sign_up
     as _i151;
 import 'package:adaptive_weather_dashboard/features/auth/presentation/bloc/auth_bloc.dart'
     as _i174;
+import 'package:adaptive_weather_dashboard/features/chatbot/data/datasources/chat_quota_local_data_source.dart'
+    as _i709;
+import 'package:adaptive_weather_dashboard/features/chatbot/data/datasources/gemini_remote_data_source.dart'
+    as _i46;
+import 'package:adaptive_weather_dashboard/features/chatbot/data/repositories/chatbot_repository_impl.dart'
+    as _i932;
+import 'package:adaptive_weather_dashboard/features/chatbot/domain/repositories/chatbot_repository.dart'
+    as _i482;
+import 'package:adaptive_weather_dashboard/features/chatbot/domain/usecases/get_quota.dart'
+    as _i110;
+import 'package:adaptive_weather_dashboard/features/chatbot/domain/usecases/send_message.dart'
+    as _i95;
+import 'package:adaptive_weather_dashboard/features/chatbot/presentation/bloc/chatbot_bloc.dart'
+    as _i1068;
 import 'package:adaptive_weather_dashboard/features/favorites/data/datasources/favorites_local_data_source.dart'
     as _i388;
 import 'package:adaptive_weather_dashboard/features/favorites/data/models/favorite_city_model.dart'
@@ -100,14 +114,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i59.FirebaseAuth>(() => appModule.firebaseAuth);
     gh.lazySingleton<_i974.FirebaseFirestore>(() => appModule.firestore);
     gh.lazySingleton<_i892.FirebaseMessaging>(() => appModule.messaging);
-    gh.lazySingleton<_i361.Dio>(() => appModule.dio);
+    gh.lazySingleton<_i361.Dio>(
+      () => appModule.chatbotDio,
+      instanceName: 'chatbotDio',
+    );
+    gh.lazySingleton<_i361.Dio>(
+      () => appModule.weatherDio,
+      instanceName: 'weatherDio',
+    );
     gh.lazySingleton<_i388.FavoritesLocalDataSource>(
       () => _i388.FavoritesLocalDataSource(
         gh<_i738.Box<_i484.FavoriteCityModel>>(),
       ),
     );
-    gh.lazySingleton<_i650.WeatherRemoteDataSource>(
-      () => _i650.WeatherRemoteDataSource(gh<_i361.Dio>()),
+    gh.lazySingleton<_i435.AirQualityService>(
+      () => _i435.AirQualityService(gh<_i361.Dio>(instanceName: 'weatherDio')),
+    );
+    gh.lazySingleton<_i46.GeminiRemoteDataSource>(
+      () => _i46.GeminiRemoteDataSource(
+        gh<_i361.Dio>(instanceName: 'chatbotDio'),
+      ),
     );
     gh.lazySingleton<_i221.AuthRemoteDataSource>(
       () => _i221.AuthRemoteDataSource(
@@ -115,11 +141,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i974.FirebaseFirestore>(),
       ),
     );
-    gh.lazySingleton<_i435.AirQualityService>(
-      () => _i435.AirQualityService(gh<_i361.Dio>()),
-    );
     gh.factory<_i408.SettingsBloc>(
       () => _i408.SettingsBloc(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i709.ChatQuotaLocalDataSource>(
+      () => _i709.ChatQuotaLocalDataSource(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i480.AuthRepository>(
       () => _i1003.AuthRepositoryImpl(gh<_i221.AuthRemoteDataSource>()),
@@ -140,9 +166,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i345.FavoritesRepository>(
       () => _i74.FavoritesRepositoryImpl(gh<_i388.FavoritesLocalDataSource>()),
     );
-    gh.lazySingleton<_i315.WeatherRepository>(
-      () => _i61.WeatherRepositoryImpl(gh<_i650.WeatherRemoteDataSource>()),
-    );
     gh.factory<_i872.AddFavorite>(
       () => _i872.AddFavorite(gh<_i345.FavoritesRepository>()),
     );
@@ -152,6 +175,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i666.RemoveFavorite>(
       () => _i666.RemoveFavorite(gh<_i345.FavoritesRepository>()),
     );
+    gh.lazySingleton<_i482.ChatbotRepository>(
+      () => _i932.ChatbotRepositoryImpl(
+        gh<_i46.GeminiRemoteDataSource>(),
+        gh<_i709.ChatQuotaLocalDataSource>(),
+      ),
+    );
     gh.factory<_i546.FavoritesBloc>(
       () => _i546.FavoritesBloc(
         gh<_i868.GetFavorites>(),
@@ -159,11 +188,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i666.RemoveFavorite>(),
       ),
     );
-    gh.factory<_i728.GetCurrentWeather>(
-      () => _i728.GetCurrentWeather(gh<_i315.WeatherRepository>()),
-    );
-    gh.factory<_i936.GetForecast>(
-      () => _i936.GetForecast(gh<_i315.WeatherRepository>()),
+    gh.lazySingleton<_i650.WeatherRemoteDataSource>(
+      () => _i650.WeatherRemoteDataSource(
+        gh<_i361.Dio>(instanceName: 'weatherDio'),
+      ),
     );
     gh.factory<_i174.AuthBloc>(
       () => _i174.AuthBloc(
@@ -178,11 +206,23 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i311.NotificationRemoteDataSource>(),
       ),
     );
-    gh.factory<_i806.WeatherBloc>(
-      () => _i806.WeatherBloc(
-        gh<_i728.GetCurrentWeather>(),
-        gh<_i936.GetForecast>(),
-      ),
+    gh.factory<_i110.GetQuota>(
+      () => _i110.GetQuota(gh<_i482.ChatbotRepository>()),
+    );
+    gh.factory<_i95.SendMessage>(
+      () => _i95.SendMessage(gh<_i482.ChatbotRepository>()),
+    );
+    gh.lazySingleton<_i315.WeatherRepository>(
+      () => _i61.WeatherRepositoryImpl(gh<_i650.WeatherRemoteDataSource>()),
+    );
+    gh.factory<_i1068.ChatbotBloc>(
+      () => _i1068.ChatbotBloc(gh<_i95.SendMessage>(), gh<_i110.GetQuota>()),
+    );
+    gh.factory<_i728.GetCurrentWeather>(
+      () => _i728.GetCurrentWeather(gh<_i315.WeatherRepository>()),
+    );
+    gh.factory<_i936.GetForecast>(
+      () => _i936.GetForecast(gh<_i315.WeatherRepository>()),
     );
     gh.factory<_i227.ClearNotificationCity>(
       () => _i227.ClearNotificationCity(gh<_i235.NotificationRepository>()),
@@ -198,6 +238,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i281.GetNotificationCity>(),
         gh<_i728.SetNotificationCity>(),
         gh<_i227.ClearNotificationCity>(),
+      ),
+    );
+    gh.factory<_i806.WeatherBloc>(
+      () => _i806.WeatherBloc(
+        gh<_i728.GetCurrentWeather>(),
+        gh<_i936.GetForecast>(),
       ),
     );
     return this;

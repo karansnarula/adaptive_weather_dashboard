@@ -84,5 +84,34 @@
         "type": "String"
       }
     }
-  }
+  },
+  "chatbotPageTitle": "AI Weather Assistant",
+  "chatbotInputHint": "Ask about the weather…",
+  "chatbotEmptyStateGeneric": "Hi! I'm your weather assistant. Ask me about the climate, forecasts, or any weather curiosity.",
+  "chatbotEmptyStateWithCity": "Hi! Ask me anything about the weather in {city}, or any other place.",
+  "@chatbotEmptyStateWithCity": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "chatbotQuotaExceeded": "Daily limit reached. Try again tomorrow.",
+  "chatbotQuotaExceededDetail": "You've used your {limit} free messages for today. Come back tomorrow — paid tier coming soon.",
+  "@chatbotQuotaExceededDetail": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "chatbotQuotaResetAt": "Resets at {time}",
+  "@chatbotQuotaResetAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "chatbotError": "Couldn't reach the assistant. Tap send to retry."
 }
