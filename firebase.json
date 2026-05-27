@@ -65,5 +65,11 @@
         "*.local"
       ]
     }
-  ]
+  ],
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-southeast3",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
 }

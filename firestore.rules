@@ -1,0 +1,119 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ============ helpers ============
+    function isAuthed() {
+      return request.auth != null;
+    }
+
+    function isUid(uid) {
+      return isAuthed() && request.auth.uid == uid;
+    }
+
+    function onlyChanges(keys) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys);
+    }
+
+    // True iff the user added their own uid to likedBy (and nothing else).
+    function likedSelf() {
+      let before = resource.data.likedBy;
+      let after = request.resource.data.likedBy;
+      return !(request.auth.uid in before)
+          && (request.auth.uid in after)
+          && after.size() == before.size() + 1
+          && after.hasAll(before);
+    }
+
+    // True iff the user removed their own uid from likedBy.
+    function unlikedSelf() {
+      let before = resource.data.likedBy;
+      let after = request.resource.data.likedBy;
+      return (request.auth.uid in before)
+          && !(request.auth.uid in after)
+          && after.size() == before.size() - 1
+          && before.hasAll(after);
+    }
+
+    // commentCount must change by exactly +1 or -1 — never jump.
+    function commentCountChangedByOne() {
+      return request.resource.data.commentCount == resource.data.commentCount + 1
+          || request.resource.data.commentCount == resource.data.commentCount - 1;
+    }
+
+    function isValidPost() {
+      return request.resource.data.keys().hasAll([
+               'title', 'description', 'imageUrl', 'city',
+               'authorId', 'authorName', 'createdAt',
+               'likedBy', 'commentCount'
+             ])
+          && request.resource.data.title is string
+          && request.resource.data.title.size() > 0
+          && request.resource.data.title.size() <= 100
+          && request.resource.data.description is string
+          && request.resource.data.description.size() <= 200
+          && request.resource.data.city is string
+          && request.resource.data.city.size() <= 100
+          && request.resource.data.imageUrl is string
+          && request.resource.data.imageUrl.size() <= 2000
+          && request.resource.data.authorName is string
+          && request.resource.data.authorName.size() <= 100;
+    }
+
+    function isValidComment() {
+      return request.resource.data.keys().hasAll([
+               'text', 'authorId', 'authorName', 'createdAt'
+             ])
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 50
+          && request.resource.data.authorName is string
+          && request.resource.data.authorName.size() <= 100;
+    }
+
+    // ============ users — each user owns their own document ============
+    match /users/{uid} {
+      allow read, write: if isUid(uid);
+    }
+
+    // ============ discussions — community feed ============
+    match /discussions/{postId} {
+      allow read: if isAuthed();
+
+      allow create: if isAuthed()
+                    && request.resource.data.authorId == request.auth.uid
+                    && request.resource.data.likedBy.size() == 0
+                    && request.resource.data.commentCount == 0
+                    && isValidPost();
+
+      // Post body is immutable. Only likedBy (self toggle) and commentCount (+/-1) can change.
+      allow update: if isAuthed() && (
+        (onlyChanges(['likedBy']) && (likedSelf() || unlikedSelf())) ||
+        (onlyChanges(['commentCount']) && commentCountChangedByOne())
+      );
+
+      // Only the author can delete their own post.
+      allow delete: if isAuthed()
+                    && resource.data.authorId == request.auth.uid;
+
+      match /comments/{commentId} {
+        allow read: if isAuthed();
+
+        allow create: if isAuthed()
+                      && request.resource.data.authorId == request.auth.uid
+                      && isValidComment();
+
+        // Comments are immutable once posted.
+        allow update: if false;
+
+        // Either the comment author OR the parent post's author can delete.
+        // (Lets the post owner clear their own thread when deleting a post.)
+        allow delete: if isAuthed() && (
+          resource.data.authorId == request.auth.uid ||
+          get(/databases/$(database)/documents/discussions/$(postId)).data.authorId == request.auth.uid
+        );
+      }
+    }
+  }
+}
