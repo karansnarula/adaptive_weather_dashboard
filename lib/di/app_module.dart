@@ -70,4 +70,22 @@ abstract class AppModule {
       responseBody: true,
     ),
   );
+
+  @lazySingleton
+  @Named('newsDio')
+  Dio get newsDio => Dio(
+    BaseOptions(
+      baseUrl: AppConfig.instance.newsApiUrl,
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
+      queryParameters: {
+        'apiKey': AppConfig.instance.newsApiKey,
+      },
+    ),
+  )..interceptors.add(
+    PrettyDioLogger(
+      requestBody: true,
+      responseBody: true,
+    ),
+  );
 }

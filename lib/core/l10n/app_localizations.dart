@@ -703,6 +703,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tornado'**
   String get eventTornado;
+
+  /// No description provided for @newsPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get newsPageTitle;
+
+  /// No description provided for @newsTabWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get newsTabWeather;
+
+  /// No description provided for @newsTabGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get newsTabGeneral;
+
+  /// No description provided for @newsTabTravel.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get newsTabTravel;
+
+  /// No description provided for @newsNoArticles.
+  ///
+  /// In en, this message translates to:
+  /// **'No articles found.'**
+  String get newsNoArticles;
+
+  /// No description provided for @newsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load news. Pull down to retry.'**
+  String get newsError;
+
+  /// No description provided for @newsRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get newsRetry;
+
+  /// No description provided for @newsErrorOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the article.'**
+  String get newsErrorOpening;
 }
 
 class _AppLocalizationsDelegate

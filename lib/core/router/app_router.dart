@@ -13,6 +13,7 @@ import '../../features/discussion/presentation/bloc/feed/feed_bloc.dart';
 import '../../features/discussion/presentation/bloc/feed/feed_event.dart';
 import '../../features/discussion/presentation/pages/discussion_detail_page.dart';
 import '../../features/discussion/presentation/pages/discussion_feed_page.dart';
+import '../../features/news/presentation/pages/news_page.dart';
 import '../../features/weather/presentation/pages/weather_page.dart';
 import '../../features/favorites/presentation/pages/favorites_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
@@ -69,6 +70,13 @@ abstract class AppRouter {
           final city = state.uri.queryParameters['city'];
           final trimmed = (city == null || city.trim().isEmpty) ? null : city;
           return ChatbotPage(city: trimmed);
+        },
+      ),
+      GoRoute(
+        path: '/news/:city',
+        builder: (context, state) {
+          final city = state.pathParameters['city'] ?? '';
+          return NewsPage(cityName: city);
         },
       ),
       // /discussion + /discussion/:postId share a single FeedBloc instance

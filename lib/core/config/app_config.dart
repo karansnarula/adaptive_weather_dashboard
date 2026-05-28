@@ -8,6 +8,8 @@ class AppConfig {
   final String mapsApiKey;
   final String geminiApiUrl;
   final String geminiApiKey;
+  final String newsApiUrl;
+  final String newsApiKey;
 
   const AppConfig._({
     required this.environment,
@@ -17,6 +19,8 @@ class AppConfig {
     required this.mapsApiKey,
     required this.geminiApiUrl,
     required this.geminiApiKey,
+    required this.newsApiUrl,
+    required this.newsApiKey,
   });
 
   static late final AppConfig instance;
@@ -32,6 +36,11 @@ class AppConfig {
       defaultValue: 'https://generativelanguage.googleapis.com/v1beta/',
     );
     const geminiApiKey = String.fromEnvironment('GEMINI_API_KEY');
+    const newsApiUrl = String.fromEnvironment(
+      'NEWS_API_URL',
+      defaultValue: 'https://newsapi.org/v2/',
+    );
+    const newsApiKey = String.fromEnvironment('NEWS_API_KEY');
 
     instance = AppConfig._(
       environment: Environment.values.byName(env),
@@ -41,6 +50,8 @@ class AppConfig {
       mapsApiKey: mapsApiKey,
       geminiApiUrl: geminiApiUrl,
       geminiApiKey: geminiApiKey,
+      newsApiUrl: newsApiUrl,
+      newsApiKey: newsApiKey,
     );
   }
 

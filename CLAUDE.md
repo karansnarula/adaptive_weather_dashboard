@@ -32,7 +32,7 @@ flutter build ios    --flavor prod --dart-define-from-file=config/prod.json --no
 flutter build web                  --dart-define-from-file=config/prod.json
 ```
 
-`config/*.json` are gitignored. `config/dev.json.example` is the template. Required keys: `ENV`, `APP_NAME`, `API_BASE_URL`, `API_KEY`, `MAPS_API_KEY`, `GEMINI_API_URL`, `GEMINI_API_KEY`. CI's `build.yml` constructs `config/prod.json` from GitHub secrets — if you add a new config key, update `build.yml` too.
+`config/*.json` are gitignored. `config/dev.json.example` is the template. Required keys: `ENV`, `APP_NAME`, `API_BASE_URL`, `API_KEY`, `MAPS_API_KEY`, `GEMINI_API_URL`, `GEMINI_API_KEY`, `NEWS_API_URL`, `NEWS_API_KEY`. CI's `build.yml` constructs `config/prod.json` from GitHub secrets — if you add a new config key, update `build.yml` too.
 
 ## Architecture
 

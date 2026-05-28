@@ -84,6 +84,8 @@ import 'package:adaptive_weather_dashboard/features/favorites/domain/usecases/re
     as _i666;
 import 'package:adaptive_weather_dashboard/features/favorites/presentation/bloc/favorites_bloc.dart'
     as _i546;
+import 'package:adaptive_weather_dashboard/features/news/data/news_service.dart'
+    as _i142;
 import 'package:adaptive_weather_dashboard/features/notifications/data/datasources/notification_remote_data_source.dart'
     as _i311;
 import 'package:adaptive_weather_dashboard/features/notifications/data/repositories/notification_repository_impl.dart'
@@ -168,6 +170,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i59.FirebaseAuth>(),
         gh<_i974.FirebaseFirestore>(),
       ),
+    );
+    gh.lazySingleton<_i361.Dio>(
+      () => appModule.newsDio,
+      instanceName: 'newsDio',
+    );
+    gh.lazySingleton<_i142.NewsService>(
+      () => _i142.NewsService(gh<_i361.Dio>(instanceName: 'newsDio')),
     );
     gh.lazySingleton<_i185.DiscussionRemoteDataSource>(
       () => _i185.DiscussionRemoteDataSource(

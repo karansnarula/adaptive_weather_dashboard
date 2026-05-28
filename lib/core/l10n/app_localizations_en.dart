@@ -337,4 +337,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTornado => 'Tornado';
+
+  @override
+  String get newsPageTitle => 'News';
+
+  @override
+  String get newsTabWeather => 'Weather';
+
+  @override
+  String get newsTabGeneral => 'General';
+
+  @override
+  String get newsTabTravel => 'Travel';
+
+  @override
+  String get newsNoArticles => 'No articles found.';
+
+  @override
+  String get newsError => 'Couldn\'t load news. Pull down to retry.';
+
+  @override
+  String get newsRetry => 'Retry';
+
+  @override
+  String get newsErrorOpening => 'Couldn\'t open the article.';
 }

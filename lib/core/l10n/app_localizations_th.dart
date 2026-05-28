@@ -334,4 +334,28 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get eventTornado => 'ทอร์นาโด';
+
+  @override
+  String get newsPageTitle => 'ข่าว';
+
+  @override
+  String get newsTabWeather => 'สภาพอากาศ';
+
+  @override
+  String get newsTabGeneral => 'ทั่วไป';
+
+  @override
+  String get newsTabTravel => 'ท่องเที่ยว';
+
+  @override
+  String get newsNoArticles => 'ไม่พบบทความ';
+
+  @override
+  String get newsError => 'โหลดข่าวไม่สำเร็จ ดึงลงเพื่อลองใหม่';
+
+  @override
+  String get newsRetry => 'ลองใหม่';
+
+  @override
+  String get newsErrorOpening => 'ไม่สามารถเปิดบทความได้';
 }

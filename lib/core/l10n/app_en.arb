@@ -156,5 +156,13 @@
   "eventHeatwave": "Heatwave",
   "eventDrought": "Drought",
   "eventWildfire": "Wildfire",
-  "eventTornado": "Tornado"
+  "eventTornado": "Tornado",
+  "newsPageTitle": "News",
+  "newsTabWeather": "Weather",
+  "newsTabGeneral": "General",
+  "newsTabTravel": "Travel",
+  "newsNoArticles": "No articles found.",
+  "newsError": "Couldn't load news. Pull down to retry.",
+  "newsRetry": "Retry",
+  "newsErrorOpening": "Couldn't open the article."
 }
