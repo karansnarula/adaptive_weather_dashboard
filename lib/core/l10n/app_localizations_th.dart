@@ -240,4 +240,98 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get chatbotError => 'ไม่สามารถเชื่อมต่อผู้ช่วยได้ แตะส่งเพื่อลองใหม่';
+
+  @override
+  String get weatherDiscussion => 'พูดคุย';
+
+  @override
+  String get discussionFeedTitle => 'พูดคุยเรื่องสภาพอากาศ';
+
+  @override
+  String get discussionPostTitle => 'โพสต์';
+
+  @override
+  String get discussionAddPost => 'เพิ่มโพสต์';
+
+  @override
+  String get discussionSearchCityFirst => 'ค้นหาเมืองก่อนเพื่อโพสต์';
+
+  @override
+  String get discussionNoPostsYet => 'ยังไม่มีโพสต์ มาเป็นคนแรกที่แชร์กันเถอะ!';
+
+  @override
+  String get discussionNoCommentsYet =>
+      'ยังไม่มีความคิดเห็น เริ่มต้นการสนทนากันเถอะ';
+
+  @override
+  String get discussionRetry => 'ลองใหม่';
+
+  @override
+  String get discussionPostedOn => 'โพสต์เมื่อ:';
+
+  @override
+  String discussionByAuthor(String name) {
+    return 'โดย $name';
+  }
+
+  @override
+  String get discussionCreatePostTitle => 'แชร์อัปเดต';
+
+  @override
+  String discussionCreatePostUnder(String city) {
+    return 'โพสต์ภายใต้ $city';
+  }
+
+  @override
+  String get discussionTitleLabel => 'หัวข้อ';
+
+  @override
+  String get discussionImageUrlLabel => 'URL รูปภาพ (ไม่บังคับ)';
+
+  @override
+  String get discussionDescriptionLabel => 'รายละเอียด';
+
+  @override
+  String get discussionSubmitPost => 'โพสต์';
+
+  @override
+  String get discussionAddComment => 'เพิ่มความคิดเห็น';
+
+  @override
+  String get discussionDeletePostTitle => 'ลบโพสต์?';
+
+  @override
+  String get discussionDeletePostBody =>
+      'การทำเช่นนี้จะลบโพสต์และความคิดเห็นทั้งหมดอย่างถาวร';
+
+  @override
+  String get discussionDeleteCommentTitle => 'ลบความคิดเห็น?';
+
+  @override
+  String get discussionDeleteCommentBody =>
+      'การทำเช่นนี้จะลบความคิดเห็นอย่างถาวร';
+
+  @override
+  String get discussionCancel => 'ยกเลิก';
+
+  @override
+  String get discussionDelete => 'ลบ';
+
+  @override
+  String get eventStorm => 'พายุ';
+
+  @override
+  String get eventFlood => 'น้ำท่วม';
+
+  @override
+  String get eventHeatwave => 'คลื่นความร้อน';
+
+  @override
+  String get eventDrought => 'ภัยแล้ง';
+
+  @override
+  String get eventWildfire => 'ไฟป่า';
+
+  @override
+  String get eventTornado => 'ทอร์นาโด';
 }

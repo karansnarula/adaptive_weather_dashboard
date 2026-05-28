@@ -40,6 +40,34 @@ import 'package:adaptive_weather_dashboard/features/chatbot/domain/usecases/send
     as _i95;
 import 'package:adaptive_weather_dashboard/features/chatbot/presentation/bloc/chatbot_bloc.dart'
     as _i1068;
+import 'package:adaptive_weather_dashboard/features/discussion/data/datasources/discussion_remote_data_source.dart'
+    as _i185;
+import 'package:adaptive_weather_dashboard/features/discussion/data/repositories/discussion_repository_impl.dart'
+    as _i341;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/repositories/discussion_repository.dart'
+    as _i187;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/add_comment.dart'
+    as _i314;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/create_post.dart'
+    as _i105;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/delete_comment.dart'
+    as _i316;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/delete_post.dart'
+    as _i216;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/get_comments.dart'
+    as _i857;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/get_post.dart'
+    as _i646;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/get_posts.dart'
+    as _i866;
+import 'package:adaptive_weather_dashboard/features/discussion/domain/usecases/toggle_like.dart'
+    as _i168;
+import 'package:adaptive_weather_dashboard/features/discussion/presentation/bloc/create_post/create_post_bloc.dart'
+    as _i946;
+import 'package:adaptive_weather_dashboard/features/discussion/presentation/bloc/detail/detail_bloc.dart'
+    as _i516;
+import 'package:adaptive_weather_dashboard/features/discussion/presentation/bloc/feed/feed_bloc.dart'
+    as _i684;
 import 'package:adaptive_weather_dashboard/features/favorites/data/datasources/favorites_local_data_source.dart'
     as _i388;
 import 'package:adaptive_weather_dashboard/features/favorites/data/models/favorite_city_model.dart'
@@ -141,6 +169,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i974.FirebaseFirestore>(),
       ),
     );
+    gh.lazySingleton<_i185.DiscussionRemoteDataSource>(
+      () => _i185.DiscussionRemoteDataSource(
+        gh<_i974.FirebaseFirestore>(),
+        gh<_i59.FirebaseAuth>(),
+      ),
+    );
     gh.factory<_i408.SettingsBloc>(
       () => _i408.SettingsBloc(gh<_i460.SharedPreferences>()),
     );
@@ -165,6 +199,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i345.FavoritesRepository>(
       () => _i74.FavoritesRepositoryImpl(gh<_i388.FavoritesLocalDataSource>()),
+    );
+    gh.lazySingleton<_i187.DiscussionRepository>(
+      () => _i341.DiscussionRepositoryImpl(
+        gh<_i185.DiscussionRemoteDataSource>(),
+      ),
     );
     gh.factory<_i872.AddFavorite>(
       () => _i872.AddFavorite(gh<_i345.FavoritesRepository>()),
@@ -193,6 +232,30 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i361.Dio>(instanceName: 'weatherDio'),
       ),
     );
+    gh.factory<_i314.AddComment>(
+      () => _i314.AddComment(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i105.CreatePost>(
+      () => _i105.CreatePost(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i316.DeleteComment>(
+      () => _i316.DeleteComment(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i216.DeletePost>(
+      () => _i216.DeletePost(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i857.GetComments>(
+      () => _i857.GetComments(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i646.GetPost>(
+      () => _i646.GetPost(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i866.GetPosts>(
+      () => _i866.GetPosts(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i168.ToggleLike>(
+      () => _i168.ToggleLike(gh<_i187.DiscussionRepository>()),
+    );
     gh.factory<_i174.AuthBloc>(
       () => _i174.AuthBloc(
         gh<_i101.SignIn>(),
@@ -212,11 +275,32 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i95.SendMessage>(
       () => _i95.SendMessage(gh<_i482.ChatbotRepository>()),
     );
+    gh.factory<_i516.DetailBloc>(
+      () => _i516.DetailBloc(
+        gh<_i646.GetPost>(),
+        gh<_i857.GetComments>(),
+        gh<_i168.ToggleLike>(),
+        gh<_i314.AddComment>(),
+        gh<_i216.DeletePost>(),
+        gh<_i316.DeleteComment>(),
+        gh<_i185.DiscussionRemoteDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i315.WeatherRepository>(
       () => _i61.WeatherRepositoryImpl(gh<_i650.WeatherRemoteDataSource>()),
     );
     gh.factory<_i1068.ChatbotBloc>(
       () => _i1068.ChatbotBloc(gh<_i95.SendMessage>(), gh<_i110.GetQuota>()),
+    );
+    gh.factoryParam<_i946.CreatePostBloc, String, dynamic>(
+      (city, _) => _i946.CreatePostBloc(gh<_i105.CreatePost>(), city: city),
+    );
+    gh.factory<_i684.FeedBloc>(
+      () => _i684.FeedBloc(
+        gh<_i866.GetPosts>(),
+        gh<_i168.ToggleLike>(),
+        gh<_i185.DiscussionRemoteDataSource>(),
+      ),
     );
     gh.factory<_i728.GetCurrentWeather>(
       () => _i728.GetCurrentWeather(gh<_i315.WeatherRepository>()),

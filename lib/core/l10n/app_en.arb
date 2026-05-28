@@ -113,5 +113,48 @@
       }
     }
   },
-  "chatbotError": "Couldn't reach the assistant. Tap send to retry."
+  "chatbotError": "Couldn't reach the assistant. Tap send to retry.",
+  "weatherDiscussion": "Discussion",
+  "discussionFeedTitle": "Weather Discussion",
+  "discussionPostTitle": "Post",
+  "discussionAddPost": "Add post",
+  "discussionSearchCityFirst": "Search a city first to post",
+  "discussionNoPostsYet": "No posts yet. Be the first to share!",
+  "discussionNoCommentsYet": "No comments yet. Start the conversation.",
+  "discussionRetry": "Retry",
+  "discussionPostedOn": "Posted:",
+  "discussionByAuthor": "By {name}",
+  "@discussionByAuthor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "discussionCreatePostTitle": "Share an update",
+  "discussionCreatePostUnder": "Posting under {city}",
+  "@discussionCreatePostUnder": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "discussionTitleLabel": "Title",
+  "discussionImageUrlLabel": "Image URL (optional)",
+  "discussionDescriptionLabel": "Description",
+  "discussionSubmitPost": "Post",
+  "discussionAddComment": "Add a comment",
+  "discussionDeletePostTitle": "Delete post?",
+  "discussionDeletePostBody": "This will permanently remove the post and all its comments.",
+  "discussionDeleteCommentTitle": "Delete comment?",
+  "discussionDeleteCommentBody": "This will permanently remove the comment.",
+  "discussionCancel": "Cancel",
+  "discussionDelete": "Delete",
+  "eventStorm": "Storm",
+  "eventFlood": "Flood",
+  "eventHeatwave": "Heatwave",
+  "eventDrought": "Drought",
+  "eventWildfire": "Wildfire",
+  "eventTornado": "Tornado"
 }

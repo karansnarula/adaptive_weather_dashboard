@@ -113,5 +113,48 @@
       }
     }
   },
-  "chatbotError": "ไม่สามารถเชื่อมต่อผู้ช่วยได้ แตะส่งเพื่อลองใหม่"
+  "chatbotError": "ไม่สามารถเชื่อมต่อผู้ช่วยได้ แตะส่งเพื่อลองใหม่",
+  "weatherDiscussion": "พูดคุย",
+  "discussionFeedTitle": "พูดคุยเรื่องสภาพอากาศ",
+  "discussionPostTitle": "โพสต์",
+  "discussionAddPost": "เพิ่มโพสต์",
+  "discussionSearchCityFirst": "ค้นหาเมืองก่อนเพื่อโพสต์",
+  "discussionNoPostsYet": "ยังไม่มีโพสต์ มาเป็นคนแรกที่แชร์กันเถอะ!",
+  "discussionNoCommentsYet": "ยังไม่มีความคิดเห็น เริ่มต้นการสนทนากันเถอะ",
+  "discussionRetry": "ลองใหม่",
+  "discussionPostedOn": "โพสต์เมื่อ:",
+  "discussionByAuthor": "โดย {name}",
+  "@discussionByAuthor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "discussionCreatePostTitle": "แชร์อัปเดต",
+  "discussionCreatePostUnder": "โพสต์ภายใต้ {city}",
+  "@discussionCreatePostUnder": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "discussionTitleLabel": "หัวข้อ",
+  "discussionImageUrlLabel": "URL รูปภาพ (ไม่บังคับ)",
+  "discussionDescriptionLabel": "รายละเอียด",
+  "discussionSubmitPost": "โพสต์",
+  "discussionAddComment": "เพิ่มความคิดเห็น",
+  "discussionDeletePostTitle": "ลบโพสต์?",
+  "discussionDeletePostBody": "การทำเช่นนี้จะลบโพสต์และความคิดเห็นทั้งหมดอย่างถาวร",
+  "discussionDeleteCommentTitle": "ลบความคิดเห็น?",
+  "discussionDeleteCommentBody": "การทำเช่นนี้จะลบความคิดเห็นอย่างถาวร",
+  "discussionCancel": "ยกเลิก",
+  "discussionDelete": "ลบ",
+  "eventStorm": "พายุ",
+  "eventFlood": "น้ำท่วม",
+  "eventHeatwave": "คลื่นความร้อน",
+  "eventDrought": "ภัยแล้ง",
+  "eventWildfire": "ไฟป่า",
+  "eventTornado": "ทอร์นาโด"
 }

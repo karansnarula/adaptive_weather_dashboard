@@ -21,40 +21,57 @@ class ShortcutBar extends StatelessWidget {
         final lat = loadedState?.weather.latitude ?? 0;
         final lon = loadedState?.weather.longitude ?? 0;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _ShortcutItem(
-              icon: Icons.smart_toy_outlined,
-              label: context.l10n.chatbot,
-              enabled: true,
-              onTap: () => context.push(
-                isSearched
-                    ? '/chatbot?city=${Uri.encodeQueryComponent(cityName)}'
-                    : '/chatbot',
+        // Horizontal scroll so additional shortcuts can grow without
+        // cramping mobile widths.
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: AppDimens.spaceXs),
+          child: Row(
+            children: [
+              _ShortcutItem(
+                icon: Icons.smart_toy_outlined,
+                label: context.l10n.chatbot,
+                enabled: true,
+                onTap: () => context.push(
+                  isSearched
+                      ? '/chatbot?city=${Uri.encodeQueryComponent(cityName)}'
+                      : '/chatbot',
+                ),
               ),
-            ),
-            _ShortcutItem(
-              icon: Icons.newspaper_outlined,
-              label: context.l10n.weatherNews,
-              enabled: isSearched,
-              onTap: () => context.push('/news/$cityName'),
-            ),
-            _ShortcutItem(
-              icon: Icons.air,
-              label: context.l10n.airQuality,
-              enabled: isSearched,
-              onTap: () => context.push(
-                '/air-quality/$cityName?lat=$lat&lon=$lon',
+              const SizedBox(width: AppDimens.spaceLg),
+              _ShortcutItem(
+                icon: Icons.newspaper_outlined,
+                label: context.l10n.weatherNews,
+                enabled: isSearched,
+                onTap: () => context.push('/news/$cityName'),
               ),
-            ),
-            _ShortcutItem(
-              icon: Icons.grass_outlined,
-              label: context.l10n.pollenAllergy,
-              enabled: isSearched,
-              onTap: () => _showComingSoon(context),
-            ),
-          ],
+              const SizedBox(width: AppDimens.spaceLg),
+              _ShortcutItem(
+                icon: Icons.air,
+                label: context.l10n.airQuality,
+                enabled: isSearched,
+                onTap: () => context.push(
+                  '/air-quality/$cityName?lat=$lat&lon=$lon',
+                ),
+              ),
+              const SizedBox(width: AppDimens.spaceLg),
+              _ShortcutItem(
+                icon: Icons.forum_outlined,
+                label: context.l10n.weatherDiscussion,
+                enabled: isSearched,
+                onTap: () => context.push(
+                  '/discussion?city=${Uri.encodeQueryComponent(cityName)}',
+                ),
+              ),
+              const SizedBox(width: AppDimens.spaceLg),
+              _ShortcutItem(
+                icon: Icons.grass_outlined,
+                label: context.l10n.pollenAllergy,
+                enabled: isSearched,
+                onTap: () => _showComingSoon(context),
+              ),
+            ],
+          ),
         );
       },
     );

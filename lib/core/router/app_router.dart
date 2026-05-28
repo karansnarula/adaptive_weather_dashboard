@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../di/injection.dart';
 import '../../features/air_quality/presentation/pages/air_quality_page.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/chatbot/presentation/pages/chatbot_page.dart';
+import '../../features/discussion/presentation/bloc/feed/feed_bloc.dart';
+import '../../features/discussion/presentation/bloc/feed/feed_event.dart';
+import '../../features/discussion/presentation/pages/discussion_detail_page.dart';
+import '../../features/discussion/presentation/pages/discussion_feed_page.dart';
 import '../../features/weather/presentation/pages/weather_page.dart';
 import '../../features/favorites/presentation/pages/favorites_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
@@ -64,6 +70,38 @@ abstract class AppRouter {
           final trimmed = (city == null || city.trim().isEmpty) ? null : city;
           return ChatbotPage(city: trimmed);
         },
+      ),
+      // /discussion + /discussion/:postId share a single FeedBloc instance
+      // via this ShellRoute. The detail page can patch the feed directly
+      // (via UI-layer BlocListeners) instead of needing a refresh-on-pop
+      // workaround.
+      ShellRoute(
+        builder: (context, state, child) {
+          return BlocProvider<FeedBloc>(
+            create: (_) => getIt<FeedBloc>()..add(const LoadFeed()),
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: '/discussion',
+            builder: (context, state) {
+              final city = state.uri.queryParameters['city'];
+              final trimmed =
+                  (city == null || city.trim().isEmpty) ? null : city;
+              return DiscussionFeedPage(city: trimmed);
+            },
+            routes: [
+              GoRoute(
+                path: ':postId',
+                builder: (context, state) {
+                  final postId = state.pathParameters['postId'] ?? '';
+                  return DiscussionDetailPage(postId: postId);
+                },
+              ),
+            ],
+          ),
+        ],
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => AdaptiveScaffold(
