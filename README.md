@@ -8,7 +8,7 @@ A production-grade multi-platform weather application built with Flutter, demons
 
 ## Overview
 
-Adaptive Weather Dashboard is a portfolio project showcasing production-level Flutter engineering practices. The app features user authentication, weather search with real-time city data, 5-day forecasts, favorite cities, air quality visualization, push notifications, and multi-language support — all running across five platforms from a single codebase.
+Adaptive Weather Dashboard is a portfolio project showcasing production-level Flutter engineering practices. The app features user authentication, weather search with real-time city data, 5-day forecasts, favorite cities, air quality visualization, push notifications, an AI weather chatbot, a community discussion feed, an in-app news reader, and multi-language support — all running across five platforms from a single codebase.
 
 ## Platforms
 
@@ -30,7 +30,12 @@ All platforms share the same codebase with adaptive UI that automatically adjust
 - **Air Quality** — Visualize air quality index and pollutant levels (CO, NO₂, O₃, SO₂, PM2.5, PM10) with interactive bar charts
 - **Push Notifications** — Daily weather notifications for a selected city via Firebase Cloud Messaging with a scheduled Cloud Function
 - **Static Map** — Google Static Maps showing the searched city's location with a pin marker
-- **Quick Access Shortcuts** — Contextual shortcuts for Chatbot, News, Air Quality, and Pollen that enable after a successful search
+- **AI Weather Chatbot** — Conversational assistant powered by Google Gemini 2.5 Flash with last-searched-city context awareness, gated by a 3-message daily quota persisted in SharedPreferences (foundation for a future paid tier)
+- **Weather News Feed** — Per-city news from NewsAPI with three tabs (Weather / General / Travel), pull-to-refresh, and in-app browser via `LaunchMode.inAppBrowserView` (SFSafariViewController / Chrome Custom Tabs)
+- **Weather Discussion** — Firestore-backed community feed where users post about weather events from six structured chips (Storm / Flood / Heatwave / Drought / Wildfire / Tornado), add comments (50-char limit), like posts (per-user with `arrayUnion`/`arrayRemove`), and delete their own content with cascade
+- **Unread Post Badge** — Red badge on the Discussion shortcut showing posts created since the user's last visit, computed via a single Firestore `.count()` aggregation per city search, capped visually at "9+"
+- **Branded Splash Screen** — Native cold-start splash (iOS launch storyboard + Android adaptive splash) followed by a Flutter splash with fade-in + elastic-scale animation and a launch sound via `audioplayers`
+- **Quick Access Shortcuts** — Contextual shortcuts for Chatbot, News, Air Quality, Discussion, and Pollen — horizontal-scrollable on mobile, evenly spread on tablet/desktop, gated by `isSearched`
 - **Multi-Language** — English and Thai with compile-time safe localization using ARB files
 - **Theme Switching** — Light, dark, and system theme modes persisted in SharedPreferences
 - **Temperature Units** — Toggle between Celsius and Fahrenheit
@@ -52,6 +57,12 @@ All platforms share the same codebase with adaptive UI that automatically adjust
 | Preferences | `shared_preferences` | Standard solution for simple user preferences |
 | Charts | `fl_chart` | Lightweight, customizable bar charts for air quality visualization |
 | Maps | Google Static Maps API | Simple embeddable map images without SDK overhead |
+| AI Chat | Google Gemini 2.5 Flash REST API | Cheap, fast, generous free tier on AI Studio — used via a dedicated named Dio binding so credentials never cross-pollinate with other services |
+| News | NewsAPI.org | Simple REST, free tier covers portfolio scope — three category-shaped queries per page (Weather / General / Travel) against `/everything` |
+| In-App Browser | `url_launcher` (`LaunchMode.inAppBrowserView`) | Cross-platform — SFSafariViewController on iOS, Chrome Custom Tabs on Android, new tab on web/desktop, no embedded WebView dependency |
+| Splash Audio | `audioplayers` | One-shot launch sound, gracefully no-ops on web autoplay blocks or missing assets |
+| Native Splash | `flutter_native_splash` | Generates iOS launch storyboard + Android adaptive splash + matching web splash from a single config block |
+| App Icons | `flutter_launcher_icons` | Generates Android, iOS, web, macOS, and Windows launcher icons from a single source PNG |
 | Localization | `flutter_localizations` + `intl` + ARB | Compile-time safe translations with automatic date and number formatting |
 | App Info | `package_info_plus` | Dynamic version display from pubspec.yaml |
 
@@ -90,21 +101,37 @@ lib/
 │   │   └── presentation/           ← NotificationBloc, notification city card
 │   ├── settings/                   ← Presentation only
 │   │   └── presentation/           ← SettingsBloc, theme/language/unit selectors
-│   └── air_quality/                ← Lightweight architecture (no repository/use cases)
-│       ├── data/                   ← AirQualityService (fetch + parse in one class)
-│       ├── domain/
-│       │   └── entities/           ← AirQuality entity
+│   ├── air_quality/                ← Lightweight architecture (no repository/use cases)
+│   │   ├── data/                   ← AirQualityService (fetch + parse in one class)
+│   │   ├── domain/
+│   │   │   └── entities/           ← AirQuality entity
+│   │   └── presentation/
+│   │       └── pages/              ← FutureBuilder-based page with fl_chart
+│   ├── chatbot/                    ← Full clean architecture
+│   │   ├── data/                   ← Retrofit client for Gemini, SharedPreferences quota source
+│   │   ├── domain/                 ← ChatMessage/ChatQuota entities, repository, use cases
+│   │   └── presentation/           ← ChatbotBloc, responsive page, message bubbles, typing indicator
+│   ├── news/                       ← Lightweight architecture
+│   │   ├── data/                   ← NewsService (raw Dio + inline parsing of NewsAPI articles)
+│   │   ├── domain/
+│   │   │   └── entities/           ← NewsArticle, NewsCategory
+│   │   └── presentation/           ← StatefulWidget with TabController, per-category FutureBuilders
+│   ├── discussion/                 ← Full clean architecture, ShellRoute-scoped FeedBloc
+│   │   ├── data/                   ← Firestore data source with batched cascade deletes
+│   │   ├── domain/                 ← Post/Comment entities, repository, 8 use cases
+│   │   └── presentation/           ← FeedBloc + DetailBloc + CreatePostBloc + DiscussionUnreadBloc (global)
+│   └── splash/                     ← Lightweight architecture
 │       └── presentation/
-│           └── pages/              ← FutureBuilder-based page with fl_chart
+│           └── pages/              ← Animated branded splash with audio playback
 ├── di/                             ← Dependency injection configuration
 └── main.dart                       ← Single entry point
 ```
 
 ### Architectural Approaches
 
-**Full clean architecture** is used for core features with complex state management, multiple data sources, or cross-feature communication (auth, weather, favorites, notifications).
+**Full clean architecture** is used for features with complex state management, multiple data sources, or cross-feature communication (auth, weather, favorites, notifications, chatbot, discussion).
 
-**Lightweight architecture** is used for simple read-only screens that fetch and display data without state mutation or caching (air quality). This demonstrates the senior judgment of knowing when full clean architecture is overkill.
+**Lightweight architecture** is used for simple read-only screens that fetch and display data without state mutation or caching (air quality, news, splash). This demonstrates the senior judgment of knowing when full clean architecture is overkill.
 
 ### Layer Responsibilities
 
@@ -168,7 +195,8 @@ All three can be installed side by side on the same device.
 ## Firebase Integration
 
 - **Firebase Auth** — Email/password authentication
-- **Cloud Firestore** — User profiles, notification city preferences, FCM tokens
+- **Cloud Firestore** — User profiles, notification city preferences, FCM tokens, last-discussion-visit timestamp, discussion posts, and per-post comment subcollections
+- **Cloud Firestore Security Rules** — `firestore.rules` enforces strict per-user ownership on `users/{uid}`, author-owned creates on `discussions/{postId}` and `discussions/{postId}/comments/{commentId}`, strict `arrayUnion`/`arrayRemove` semantics for `likedBy`, atomic `commentCount ±1` updates only, and server-side string-length validation
 - **Firebase Cloud Messaging** — Push notification delivery
 - **Firebase Cloud Functions** — Scheduled daily weather notifications
 - **Firebase Hosting** — Web deployment
@@ -196,6 +224,8 @@ Tests are written at each clean architecture layer:
 - Flutter SDK 3.9+
 - An OpenWeatherMap API key (free tier): [https://openweathermap.org/api](https://openweathermap.org/api)
 - A Google Maps Static API key: [https://console.cloud.google.com](https://console.cloud.google.com)
+- A Google AI Studio key for Gemini (free tier — no Cloud Project required): [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
+- A NewsAPI.org key (free tier, dev-only per their ToS): [https://newsapi.org/register](https://newsapi.org/register)
 - A Firebase project with Auth, Firestore, and Cloud Messaging enabled
 - Xcode (for iOS/macOS builds)
 - Android Studio (for Android builds)
@@ -215,7 +245,7 @@ Tests are written at each clean architecture layer:
    cp config/dev.json.example config/prod.json
    ```
 
-3. Add your API keys to each config file (OpenWeatherMap and Google Maps).
+3. Add your API keys to each config file (OpenWeatherMap, Google Maps, Gemini, NewsAPI).
 
 4. Configure Firebase:
    ```bash
@@ -295,16 +325,25 @@ firebase deploy --only hosting
 
 ## Roadmap
 
-- **v1.2.0** — AI-powered weather chatbot, weather news feed with in-app browser
-- **Future** — Pollen allergy data, user profile image upload, offline-first sync
+- **v1.2.0** *(shipped)* — AI weather chatbot (Gemini), weather news feed with in-app browser (NewsAPI), Weather Discussion community feed (Firestore-backed with posts/comments/likes/delete), Firestore security rules, branded splash screen with launch sound, and an unread-post badge on the Discussion shortcut
+- **v1.3.0** *(planned)* —
+  - Payment integration to purchase extra AI chatbot usage (lifts the 3-message daily cap)
+  - Pollen allergy data with interactive bar chart visualization (replaces the "Coming Soon" Pollen shortcut)
+  - Save News (bookmark articles to read later, stored per-user in Firestore)
+  - Weather Trivia Quiz (tentative — interactive quiz feature)
+- **Future** — User profile image upload, offline-first sync
 
 ## What This Project Demonstrates
 
 - Clean architecture with strict layer separation and pragmatic lightweight alternatives
-- State management at scale with BloC and Cubit
-- Firebase integration (Auth, Firestore, FCM, Cloud Functions, Hosting)
+- State management at scale with BloC, including ShellRoute-scoped feature BLoCs for cross-page state sharing
+- Firebase integration (Auth, Firestore, FCM, Cloud Functions, Hosting) with hand-written security rules (strict `arrayUnion`/`arrayRemove` semantics, atomic counter updates, server-side field validation)
+- LLM integration with a dedicated named Dio binding so API keys never cross-pollinate between services
+- Cheap Firestore aggregation queries (`.count()`) driving live UI badges
+- Two-layer splash screen — native cold-start coverage plus a branded Flutter splash with animation and audio
+- Cross-platform in-app browser via `LaunchMode.inAppBrowserView` (SFSafariViewController / Chrome Custom Tabs)
 - Push notifications with scheduled Cloud Functions and deep linking
-- Dependency injection patterns for a growing codebase
+- Dependency injection patterns for a growing codebase, including multiple named singletons of the same type for service isolation
 - Multi-platform responsive design without platform-specific features in business logic
 - Functional error handling with `fpdart`
 - Data visualization with interactive charts

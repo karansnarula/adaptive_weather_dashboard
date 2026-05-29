@@ -85,9 +85,8 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: scheme.primary,
+      backgroundColor: Colors.white,
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -99,10 +98,10 @@ class _SplashPageState extends State<SplashPage>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.cloud,
-                      size: AppDimens.iconLogo * 1.5,
-                      color: scheme.onPrimary,
+                    Image.asset(
+                      'assets/images/splash_logo.png',
+                      width: AppDimens.iconLogo * 1.5,
+                      height: AppDimens.iconLogo * 1.5,
                     ),
                     const SizedBox(height: AppDimens.spaceLg),
                     Text(
@@ -111,7 +110,7 @@ class _SplashPageState extends State<SplashPage>
                           .textTheme
                           .headlineMedium
                           ?.copyWith(
-                            color: scheme.onPrimary,
+                            color: Colors.black87,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
