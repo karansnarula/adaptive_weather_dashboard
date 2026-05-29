@@ -88,6 +88,9 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Disable Swift Package Manager (FlutterFire iOS build incompat)
+        run: flutter config --no-enable-swift-package-manager
+
       - name: Create config file
         run: |
           echo '{
