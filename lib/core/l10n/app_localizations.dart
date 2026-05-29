@@ -707,8 +707,8 @@ abstract class AppLocalizations {
   /// No description provided for @newsPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'News'**
-  String get newsPageTitle;
+  /// **'{city} News'**
+  String newsPageTitle(String city);
 
   /// No description provided for @newsTabWeather.
   ///

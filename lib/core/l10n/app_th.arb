@@ -157,7 +157,14 @@
   "eventDrought": "ภัยแล้ง",
   "eventWildfire": "ไฟป่า",
   "eventTornado": "ทอร์นาโด",
-  "newsPageTitle": "ข่าว",
+  "newsPageTitle": "ข่าว {city}",
+  "@newsPageTitle": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
   "newsTabWeather": "สภาพอากาศ",
   "newsTabGeneral": "ทั่วไป",
   "newsTabTravel": "ท่องเที่ยว",

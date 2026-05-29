@@ -339,7 +339,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventTornado => 'Tornado';
 
   @override
-  String get newsPageTitle => 'News';
+  String newsPageTitle(String city) {
+    return '$city News';
+  }
 
   @override
   String get newsTabWeather => 'Weather';

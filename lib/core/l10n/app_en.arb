@@ -157,7 +157,14 @@
   "eventDrought": "Drought",
   "eventWildfire": "Wildfire",
   "eventTornado": "Tornado",
-  "newsPageTitle": "News",
+  "newsPageTitle": "{city} News",
+  "@newsPageTitle": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
   "newsTabWeather": "Weather",
   "newsTabGeneral": "General",
   "newsTabTravel": "Travel",

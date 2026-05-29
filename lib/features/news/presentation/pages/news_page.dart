@@ -104,7 +104,7 @@ class _NewsPageState extends State<NewsPage>
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: () => context.pop()),
-        title: Text(l.newsPageTitle),
+        title: Text(l.newsPageTitle(widget.cityName)),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
