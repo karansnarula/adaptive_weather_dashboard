@@ -2,6 +2,7 @@ import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../responsive/responsive_builder.dart';
+import '../constants/app_dimens.dart';
 
 /// The app shell that adapts its navigation pattern based on screen size:
 /// - Mobile: Bottom navigation bar
@@ -52,7 +53,7 @@ class AdaptiveScaffold extends StatelessWidget {
               ))
                   .toList(),
             ),
-            const VerticalDivider(width: 1, thickness: 1),
+            const VerticalDivider(width: AppDimens.borderThin, thickness: AppDimens.borderThin),
             Expanded(child: body),
           ],
         ),
@@ -66,11 +67,11 @@ class AdaptiveScaffold extends StatelessWidget {
               selectedIndex: currentIndex,
               onDestinationSelected: onDestinationSelected,
               children: [
-                const SizedBox(height: 16),
+                const SizedBox(height: AppDimens.spaceLg),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+                    horizontal: AppDimens.spaceLg,
+                    vertical: AppDimens.spaceSm,
                   ),
                   child: Text(
                     context.l10n.appTitle,
@@ -79,7 +80,7 @@ class AdaptiveScaffold extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppDimens.spaceSm),
                 ...destinations.map((d) => NavigationDrawerDestination(
                   icon: d.icon,
                   selectedIcon: d.selectedIcon ?? d.icon,
@@ -87,7 +88,7 @@ class AdaptiveScaffold extends StatelessWidget {
                 )),
               ],
             ),
-            const VerticalDivider(width: 1, thickness: 1),
+            const VerticalDivider(width: AppDimens.borderThin, thickness: AppDimens.borderThin),
             Expanded(child: body),
           ],
         ),

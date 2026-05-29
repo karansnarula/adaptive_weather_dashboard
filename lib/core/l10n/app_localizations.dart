@@ -481,6 +481,276 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'App Version: {version}'**
   String appVersion(String version);
+
+  /// No description provided for @chatbotPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Weather Assistant'**
+  String get chatbotPageTitle;
+
+  /// No description provided for @chatbotInputHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about the weather…'**
+  String get chatbotInputHint;
+
+  /// No description provided for @chatbotEmptyStateGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! I\'m your weather assistant. Ask me about the climate, forecasts, or any weather curiosity.'**
+  String get chatbotEmptyStateGeneric;
+
+  /// No description provided for @chatbotEmptyStateWithCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! Ask me anything about the weather in {city}, or any other place.'**
+  String chatbotEmptyStateWithCity(String city);
+
+  /// No description provided for @chatbotQuotaExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily limit reached. Try again tomorrow.'**
+  String get chatbotQuotaExceeded;
+
+  /// No description provided for @chatbotQuotaExceededDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used your {limit} free messages for today. Come back tomorrow — paid tier coming soon.'**
+  String chatbotQuotaExceededDetail(int limit);
+
+  /// No description provided for @chatbotQuotaResetAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Resets at {time}'**
+  String chatbotQuotaResetAt(String time);
+
+  /// No description provided for @chatbotError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the assistant. Tap send to retry.'**
+  String get chatbotError;
+
+  /// No description provided for @weatherDiscussion.
+  ///
+  /// In en, this message translates to:
+  /// **'Discussion'**
+  String get weatherDiscussion;
+
+  /// No description provided for @discussionFeedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather Discussion'**
+  String get discussionFeedTitle;
+
+  /// No description provided for @discussionPostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get discussionPostTitle;
+
+  /// No description provided for @discussionAddPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Add post'**
+  String get discussionAddPost;
+
+  /// No description provided for @discussionSearchCityFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Search a city first to post'**
+  String get discussionSearchCityFirst;
+
+  /// No description provided for @discussionNoPostsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No posts yet. Be the first to share!'**
+  String get discussionNoPostsYet;
+
+  /// No description provided for @discussionNoCommentsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet. Start the conversation.'**
+  String get discussionNoCommentsYet;
+
+  /// No description provided for @discussionRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get discussionRetry;
+
+  /// No description provided for @discussionPostedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted:'**
+  String get discussionPostedOn;
+
+  /// No description provided for @discussionByAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'By {name}'**
+  String discussionByAuthor(String name);
+
+  /// No description provided for @discussionCreatePostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share an update'**
+  String get discussionCreatePostTitle;
+
+  /// No description provided for @discussionCreatePostUnder.
+  ///
+  /// In en, this message translates to:
+  /// **'Posting under {city}'**
+  String discussionCreatePostUnder(String city);
+
+  /// No description provided for @discussionTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get discussionTitleLabel;
+
+  /// No description provided for @discussionImageUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Image URL (optional)'**
+  String get discussionImageUrlLabel;
+
+  /// No description provided for @discussionDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get discussionDescriptionLabel;
+
+  /// No description provided for @discussionSubmitPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get discussionSubmitPost;
+
+  /// No description provided for @discussionAddComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a comment'**
+  String get discussionAddComment;
+
+  /// No description provided for @discussionDeletePostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete post?'**
+  String get discussionDeletePostTitle;
+
+  /// No description provided for @discussionDeletePostBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently remove the post and all its comments.'**
+  String get discussionDeletePostBody;
+
+  /// No description provided for @discussionDeleteCommentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete comment?'**
+  String get discussionDeleteCommentTitle;
+
+  /// No description provided for @discussionDeleteCommentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently remove the comment.'**
+  String get discussionDeleteCommentBody;
+
+  /// No description provided for @discussionCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get discussionCancel;
+
+  /// No description provided for @discussionDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get discussionDelete;
+
+  /// No description provided for @eventStorm.
+  ///
+  /// In en, this message translates to:
+  /// **'Storm'**
+  String get eventStorm;
+
+  /// No description provided for @eventFlood.
+  ///
+  /// In en, this message translates to:
+  /// **'Flood'**
+  String get eventFlood;
+
+  /// No description provided for @eventHeatwave.
+  ///
+  /// In en, this message translates to:
+  /// **'Heatwave'**
+  String get eventHeatwave;
+
+  /// No description provided for @eventDrought.
+  ///
+  /// In en, this message translates to:
+  /// **'Drought'**
+  String get eventDrought;
+
+  /// No description provided for @eventWildfire.
+  ///
+  /// In en, this message translates to:
+  /// **'Wildfire'**
+  String get eventWildfire;
+
+  /// No description provided for @eventTornado.
+  ///
+  /// In en, this message translates to:
+  /// **'Tornado'**
+  String get eventTornado;
+
+  /// No description provided for @newsPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{city} News'**
+  String newsPageTitle(String city);
+
+  /// No description provided for @newsTabWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get newsTabWeather;
+
+  /// No description provided for @newsTabGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get newsTabGeneral;
+
+  /// No description provided for @newsTabTravel.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get newsTabTravel;
+
+  /// No description provided for @newsNoArticles.
+  ///
+  /// In en, this message translates to:
+  /// **'No articles found.'**
+  String get newsNoArticles;
+
+  /// No description provided for @newsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load news. Pull down to retry.'**
+  String get newsError;
+
+  /// No description provided for @newsRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get newsRetry;
+
+  /// No description provided for @newsErrorOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the article.'**
+  String get newsErrorOpening;
 }
 
 class _AppLocalizationsDelegate

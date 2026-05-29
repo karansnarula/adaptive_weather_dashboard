@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/weather.dart';
 import '../../domain/entities/forecast.dart';
 import '../widgets/city_search_bar.dart';
@@ -23,21 +24,21 @@ class WeatherMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppDimens.spaceLg),
       child: Column(
         children: [
           const WelcomeHeader(),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           const CitySearchBar(),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           CityTimeCard(weather: weather),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           const ShortcutBar(),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           WeatherCard(weather: weather),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           ForecastList(forecast: forecast),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.spaceLg),
           WeatherMap(weather: weather),
         ],
       ),

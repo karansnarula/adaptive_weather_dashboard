@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/responsive/responsive_value.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/weather.dart';
 
 class CityTimeCard extends StatelessWidget {
@@ -29,22 +30,22 @@ class CityTimeCard extends StatelessWidget {
 
     final circleSize = ResponsiveValue<double>(
       context,
-      mobile: 36,
-      tablet: 40,
-      desktop: 44,
+      mobile: AppDimens.avatarSm,
+      tablet: AppDimens.avatarMd,
+      desktop: AppDimens.avatarLg,
     ).value;
 
     final fontSize = ResponsiveValue<double>(
       context,
-      mobile: 10,
-      tablet: 11,
-      desktop: 12,
+      mobile: AppDimens.fontXs,
+      tablet: AppDimens.fontXs2,
+      desktop: AppDimens.fontSm,
     ).value;
 
     return Card(
       color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppDimens.spaceLg),
         child: Column(
           children: [
             Row(
@@ -64,7 +65,7 @@ class CityTimeCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimens.spaceLg),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(7, (index) {

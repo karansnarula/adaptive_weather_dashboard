@@ -84,5 +84,92 @@
         "type": "String"
       }
     }
-  }
+  },
+  "chatbotPageTitle": "AI Weather Assistant",
+  "chatbotInputHint": "Ask about the weather…",
+  "chatbotEmptyStateGeneric": "Hi! I'm your weather assistant. Ask me about the climate, forecasts, or any weather curiosity.",
+  "chatbotEmptyStateWithCity": "Hi! Ask me anything about the weather in {city}, or any other place.",
+  "@chatbotEmptyStateWithCity": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "chatbotQuotaExceeded": "Daily limit reached. Try again tomorrow.",
+  "chatbotQuotaExceededDetail": "You've used your {limit} free messages for today. Come back tomorrow — paid tier coming soon.",
+  "@chatbotQuotaExceededDetail": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "chatbotQuotaResetAt": "Resets at {time}",
+  "@chatbotQuotaResetAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "chatbotError": "Couldn't reach the assistant. Tap send to retry.",
+  "weatherDiscussion": "Discussion",
+  "discussionFeedTitle": "Weather Discussion",
+  "discussionPostTitle": "Post",
+  "discussionAddPost": "Add post",
+  "discussionSearchCityFirst": "Search a city first to post",
+  "discussionNoPostsYet": "No posts yet. Be the first to share!",
+  "discussionNoCommentsYet": "No comments yet. Start the conversation.",
+  "discussionRetry": "Retry",
+  "discussionPostedOn": "Posted:",
+  "discussionByAuthor": "By {name}",
+  "@discussionByAuthor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "discussionCreatePostTitle": "Share an update",
+  "discussionCreatePostUnder": "Posting under {city}",
+  "@discussionCreatePostUnder": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "discussionTitleLabel": "Title",
+  "discussionImageUrlLabel": "Image URL (optional)",
+  "discussionDescriptionLabel": "Description",
+  "discussionSubmitPost": "Post",
+  "discussionAddComment": "Add a comment",
+  "discussionDeletePostTitle": "Delete post?",
+  "discussionDeletePostBody": "This will permanently remove the post and all its comments.",
+  "discussionDeleteCommentTitle": "Delete comment?",
+  "discussionDeleteCommentBody": "This will permanently remove the comment.",
+  "discussionCancel": "Cancel",
+  "discussionDelete": "Delete",
+  "eventStorm": "Storm",
+  "eventFlood": "Flood",
+  "eventHeatwave": "Heatwave",
+  "eventDrought": "Drought",
+  "eventWildfire": "Wildfire",
+  "eventTornado": "Tornado",
+  "newsPageTitle": "{city} News",
+  "@newsPageTitle": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "newsTabWeather": "Weather",
+  "newsTabGeneral": "General",
+  "newsTabTravel": "Travel",
+  "newsNoArticles": "No articles found.",
+  "newsError": "Couldn't load news. Pull down to retry.",
+  "newsRetry": "Retry",
+  "newsErrorOpening": "Couldn't open the article."
 }

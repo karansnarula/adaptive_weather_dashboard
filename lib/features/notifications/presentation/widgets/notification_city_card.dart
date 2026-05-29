@@ -2,6 +2,7 @@ import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../bloc/notification_bloc.dart';
@@ -17,7 +18,7 @@ class NotificationCityCard extends StatelessWidget {
       builder: (context, state) {
         return Card(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppDimens.spaceLg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -27,7 +28,7 @@ class NotificationCityCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppDimens.spaceMd),
                 if (state is NotificationLoaded && state.hasCity)
                   ListTile(
                     leading: Icon(

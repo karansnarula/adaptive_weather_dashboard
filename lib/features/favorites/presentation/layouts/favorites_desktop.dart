@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/favorite_city.dart';
 import '../widgets/favorite_city_tile.dart';
 
@@ -19,14 +20,14 @@ class FavoritesDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1000),
+        constraints: const BoxConstraints(maxWidth: AppDimens.contentMaxWidthMd),
         child: ListView.builder(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(AppDimens.space3xl),
           itemCount: favorites.length,
           itemBuilder: (context, index) {
             final city = favorites[index];
             return ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 600),
+              constraints: const BoxConstraints(maxWidth: AppDimens.contentMaxWidthSm),
               child: FavoriteCityTile(
                 city: city,
                 onTap: () => onCityTap(city.name),

@@ -46,3 +46,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase Agent Skills — installed locally by `firebase init`, not source code.
+# Firebase init mirrors them into both .agents/ and .claude/skills/.
+.agents/
+.claude/skills/
+skills-lock.json
+
+# Claude Code per-user settings (project-wide settings.json is fine to commit)
+.claude/settings.local.json

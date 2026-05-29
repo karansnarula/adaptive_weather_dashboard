@@ -208,4 +208,156 @@ class AppLocalizationsTh extends AppLocalizations {
   String appVersion(String version) {
     return 'เวอร์ชันแอป: $version';
   }
+
+  @override
+  String get chatbotPageTitle => 'ผู้ช่วยสภาพอากาศ AI';
+
+  @override
+  String get chatbotInputHint => 'ถามเกี่ยวกับสภาพอากาศ…';
+
+  @override
+  String get chatbotEmptyStateGeneric =>
+      'สวัสดี! ฉันคือผู้ช่วยสภาพอากาศของคุณ ถามฉันได้เกี่ยวกับสภาพภูมิอากาศ การพยากรณ์ หรือเรื่องราวเกี่ยวกับสภาพอากาศที่คุณสงสัย';
+
+  @override
+  String chatbotEmptyStateWithCity(String city) {
+    return 'สวัสดี! ถามฉันได้เกี่ยวกับสภาพอากาศใน $city หรือสถานที่อื่นๆ';
+  }
+
+  @override
+  String get chatbotQuotaExceeded =>
+      'ครบจำนวนข้อความรายวันแล้ว ลองใหม่พรุ่งนี้';
+
+  @override
+  String chatbotQuotaExceededDetail(int limit) {
+    return 'คุณใช้ข้อความฟรี $limit ข้อความของวันนี้หมดแล้ว กลับมาใหม่พรุ่งนี้ — เร็วๆ นี้จะมีแพ็กเกจแบบเสียค่าใช้จ่าย';
+  }
+
+  @override
+  String chatbotQuotaResetAt(String time) {
+    return 'รีเซ็ตเวลา $time';
+  }
+
+  @override
+  String get chatbotError => 'ไม่สามารถเชื่อมต่อผู้ช่วยได้ แตะส่งเพื่อลองใหม่';
+
+  @override
+  String get weatherDiscussion => 'พูดคุย';
+
+  @override
+  String get discussionFeedTitle => 'พูดคุยเรื่องสภาพอากาศ';
+
+  @override
+  String get discussionPostTitle => 'โพสต์';
+
+  @override
+  String get discussionAddPost => 'เพิ่มโพสต์';
+
+  @override
+  String get discussionSearchCityFirst => 'ค้นหาเมืองก่อนเพื่อโพสต์';
+
+  @override
+  String get discussionNoPostsYet => 'ยังไม่มีโพสต์ มาเป็นคนแรกที่แชร์กันเถอะ!';
+
+  @override
+  String get discussionNoCommentsYet =>
+      'ยังไม่มีความคิดเห็น เริ่มต้นการสนทนากันเถอะ';
+
+  @override
+  String get discussionRetry => 'ลองใหม่';
+
+  @override
+  String get discussionPostedOn => 'โพสต์เมื่อ:';
+
+  @override
+  String discussionByAuthor(String name) {
+    return 'โดย $name';
+  }
+
+  @override
+  String get discussionCreatePostTitle => 'แชร์อัปเดต';
+
+  @override
+  String discussionCreatePostUnder(String city) {
+    return 'โพสต์ภายใต้ $city';
+  }
+
+  @override
+  String get discussionTitleLabel => 'หัวข้อ';
+
+  @override
+  String get discussionImageUrlLabel => 'URL รูปภาพ (ไม่บังคับ)';
+
+  @override
+  String get discussionDescriptionLabel => 'รายละเอียด';
+
+  @override
+  String get discussionSubmitPost => 'โพสต์';
+
+  @override
+  String get discussionAddComment => 'เพิ่มความคิดเห็น';
+
+  @override
+  String get discussionDeletePostTitle => 'ลบโพสต์?';
+
+  @override
+  String get discussionDeletePostBody =>
+      'การทำเช่นนี้จะลบโพสต์และความคิดเห็นทั้งหมดอย่างถาวร';
+
+  @override
+  String get discussionDeleteCommentTitle => 'ลบความคิดเห็น?';
+
+  @override
+  String get discussionDeleteCommentBody =>
+      'การทำเช่นนี้จะลบความคิดเห็นอย่างถาวร';
+
+  @override
+  String get discussionCancel => 'ยกเลิก';
+
+  @override
+  String get discussionDelete => 'ลบ';
+
+  @override
+  String get eventStorm => 'พายุ';
+
+  @override
+  String get eventFlood => 'น้ำท่วม';
+
+  @override
+  String get eventHeatwave => 'คลื่นความร้อน';
+
+  @override
+  String get eventDrought => 'ภัยแล้ง';
+
+  @override
+  String get eventWildfire => 'ไฟป่า';
+
+  @override
+  String get eventTornado => 'ทอร์นาโด';
+
+  @override
+  String newsPageTitle(String city) {
+    return 'ข่าว $city';
+  }
+
+  @override
+  String get newsTabWeather => 'สภาพอากาศ';
+
+  @override
+  String get newsTabGeneral => 'ทั่วไป';
+
+  @override
+  String get newsTabTravel => 'ท่องเที่ยว';
+
+  @override
+  String get newsNoArticles => 'ไม่พบบทความ';
+
+  @override
+  String get newsError => 'โหลดข่าวไม่สำเร็จ ดึงลงเพื่อลองใหม่';
+
+  @override
+  String get newsRetry => 'ลองใหม่';
+
+  @override
+  String get newsErrorOpening => 'ไม่สามารถเปิดบทความได้';
 }

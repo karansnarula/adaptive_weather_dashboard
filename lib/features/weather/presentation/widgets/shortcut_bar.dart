@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/responsive/responsive_builder.dart';
 import '../../../../core/widgets/custom_dialog.dart';
+import '../../../discussion/presentation/bloc/unread/discussion_unread_bloc.dart';
+import '../../../discussion/presentation/bloc/unread/discussion_unread_state.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_state.dart';
 
@@ -20,36 +24,57 @@ class ShortcutBar extends StatelessWidget {
         final lat = loadedState?.weather.latitude ?? 0;
         final lon = loadedState?.weather.longitude ?? 0;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _ShortcutItem(
-              icon: Icons.smart_toy_outlined,
-              label: context.l10n.chatbot,
-              enabled: true,
-              onTap: () => context.push('/chatbot'),
+        final shortcuts = <Widget>[
+          _ShortcutItem(
+            icon: Icons.smart_toy_outlined,
+            label: context.l10n.chatbot,
+            enabled: true,
+            onTap: () => context.push(
+              isSearched
+                  ? '/chatbot?city=${Uri.encodeQueryComponent(cityName)}'
+                  : '/chatbot',
             ),
-            _ShortcutItem(
-              icon: Icons.newspaper_outlined,
-              label: context.l10n.weatherNews,
-              enabled: isSearched,
-              onTap: () => context.push('/news/$cityName'),
+          ),
+          _ShortcutItem(
+            icon: Icons.newspaper_outlined,
+            label: context.l10n.weatherNews,
+            enabled: isSearched,
+            onTap: () => context.push('/news/$cityName'),
+          ),
+          _ShortcutItem(
+            icon: Icons.air,
+            label: context.l10n.airQuality,
+            enabled: isSearched,
+            onTap: () => context.push(
+              '/air-quality/$cityName?lat=$lat&lon=$lon',
             ),
-            _ShortcutItem(
-              icon: Icons.air,
-              label: context.l10n.airQuality,
-              enabled: isSearched,
-              onTap: () => context.push(
-                '/air-quality/$cityName?lat=$lat&lon=$lon',
-              ),
-            ),
-            _ShortcutItem(
-              icon: Icons.grass_outlined,
-              label: context.l10n.pollenAllergy,
-              enabled: isSearched,
-              onTap: () => _showComingSoon(context),
-            ),
-          ],
+          ),
+          BlocSelector<DiscussionUnreadBloc, DiscussionUnreadState, int>(
+            selector: (state) => state.count,
+            builder: (context, unreadCount) {
+              return _ShortcutItem(
+                icon: Icons.forum_outlined,
+                label: context.l10n.weatherDiscussion,
+                enabled: isSearched,
+                badgeCount: unreadCount,
+                onTap: () => context.push(
+                  '/discussion?city=${Uri.encodeQueryComponent(cityName)}',
+                ),
+              );
+            },
+          ),
+          _ShortcutItem(
+            icon: Icons.grass_outlined,
+            label: context.l10n.pollenAllergy,
+            enabled: isSearched,
+            onTap: () => _showComingSoon(context),
+          ),
+        ];
+
+        return ResponsiveBuilder(
+          mobile: (_) => _ScrollableRow(items: shortcuts),
+          tablet: (_) => _SpreadRow(items: shortcuts),
+          desktop: (_) => _SpreadRow(items: shortcuts),
         );
       },
     );
@@ -67,18 +92,70 @@ class ShortcutBar extends StatelessWidget {
   }
 }
 
+class _ScrollableRow extends StatelessWidget {
+  final List<Widget> items;
+
+  const _ScrollableRow({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: AppDimens.spaceXs),
+      child: Row(
+        children: [
+          for (var i = 0; i < items.length; i++) ...[
+            if (i > 0) const SizedBox(width: AppDimens.spaceLg),
+            items[i],
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _SpreadRow extends StatelessWidget {
+  final List<Widget> items;
+
+  const _SpreadRow({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppDimens.space2xl),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: items,
+      ),
+    );
+  }
+}
+
 class _ShortcutItem extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool enabled;
   final VoidCallback onTap;
+  final int badgeCount;
 
   const _ShortcutItem({
     required this.icon,
     required this.label,
     required this.enabled,
     required this.onTap,
+    this.badgeCount = 0,
   });
+
+  Widget _wrapWithBadge(Widget child) {
+    if (badgeCount <= 0 || !enabled) return child;
+    final label = badgeCount > 9 ? '9+' : '$badgeCount';
+    return Badge(
+      label: Text(label),
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,23 +165,25 @@ class _ShortcutItem extends StatelessWidget {
         opacity: enabled ? 1.0 : 0.3,
         child: Column(
           children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: enabled
-                    ? Theme.of(context).colorScheme.primaryContainer
-                    : Theme.of(context).colorScheme.surfaceContainerHigh,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                icon,
-                color: enabled
-                    ? Theme.of(context).colorScheme.onPrimaryContainer
-                    : Theme.of(context).colorScheme.onSurfaceVariant,
+            _wrapWithBadge(
+              Container(
+                width: AppDimens.iconButtonSize,
+                height: AppDimens.iconButtonSize,
+                decoration: BoxDecoration(
+                  color: enabled
+                      ? Theme.of(context).colorScheme.primaryContainer
+                      : Theme.of(context).colorScheme.surfaceContainerHigh,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  icon,
+                  color: enabled
+                      ? Theme.of(context).colorScheme.onPrimaryContainer
+                      : Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: AppDimens.spaceXs),
             Text(
               label,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(

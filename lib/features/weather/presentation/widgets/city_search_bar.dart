@@ -2,6 +2,7 @@ import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_event.dart';
@@ -44,7 +45,7 @@ class _CitySearchBarState extends State<CitySearchBar> {
           onPressed: _onSearch,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppDimens.radiusMd),
         ),
       ),
     );

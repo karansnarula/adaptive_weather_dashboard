@@ -2,6 +2,7 @@ import 'package:adaptive_weather_dashboard/core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/app_dimens.dart';
 import '../../domain/entities/weather.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
@@ -23,10 +24,10 @@ class WeatherCard extends StatelessWidget {
       color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Padding(
         padding: const EdgeInsets.only(
-          top: 5,
-          bottom: 24,
-          right: 10,
-          left: 10,
+          top: AppDimens.spaceXxs,
+          bottom: AppDimens.space2xl,
+          right: AppDimens.spaceMd,
+          left: AppDimens.spaceMd,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -100,7 +101,7 @@ class WeatherCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimens.spaceSm),
             Text(
               weather.cityName,
               maxLines: 1,
@@ -109,13 +110,13 @@ class WeatherCard extends StatelessWidget {
                 context,
               ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimens.spaceSm),
             Image.network(
               'https://openweathermap.org/img/wn/${weather.icon}@4x.png',
-              width: 100,
-              height: 100,
+              width: AppDimens.imageHeightSm,
+              height: AppDimens.imageHeightSm,
               errorBuilder: (context, error, stack) =>
-                  const Icon(Icons.cloud, size: 100),
+                  const Icon(Icons.cloud, size: AppDimens.imageHeightSm),
             ),
             Text(
               '${weather.temperature.round()}°',
@@ -123,14 +124,14 @@ class WeatherCard extends StatelessWidget {
                 context,
               ).textTheme.displayMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppDimens.spaceXxs),
             Text(
               weather.description,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimens.spaceLg),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -174,7 +175,7 @@ class _InfoTile extends StatelessWidget {
     return Column(
       children: [
         Icon(icon, color: Theme.of(context).colorScheme.primary),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppDimens.spaceXxs),
         Text(
           value,
           style: Theme.of(

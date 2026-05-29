@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/constants/app_dimens.dart';
 import '../../../../di/injection.dart';
 import '../../data/air_quality_service.dart';
 import '../../domain/entities/air_quality.dart';
@@ -58,11 +59,11 @@ class _AirQualityPageState extends State<AirQualityPage> {
 
           final airQuality = snapshot.data!;
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppDimens.spaceLg),
             child: Column(
               children: [
                 _AqiIndicator(airQuality: airQuality),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppDimens.space2xl),
                 _PollutantChart(airQuality: airQuality),
               ],
             ),
@@ -101,7 +102,7 @@ class _AqiIndicator extends StatelessWidget {
     return Card(
       color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppDimens.space2xl),
         child: Column(
           children: [
             Text(
@@ -110,14 +111,14 @@ class _AqiIndicator extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimens.spaceLg),
             Container(
-              width: 100,
-              height: 100,
+              width: AppDimens.imageHeightSm,
+              height: AppDimens.imageHeightSm,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: _aqiColor.withValues(alpha: 0.15),
-                border: Border.all(color: _aqiColor, width: 4),
+                border: Border.all(color: _aqiColor, width: AppDimens.borderThick),
               ),
               child: Center(
                 child: Text(
@@ -129,7 +130,7 @@ class _AqiIndicator extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppDimens.spaceMd),
             Text(
               _aqiLabel(context),
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -167,7 +168,7 @@ class _PollutantChart extends StatelessWidget {
     return Card(
       color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppDimens.space2xl),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -177,9 +178,9 @@ class _PollutantChart extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimens.space2xl),
             SizedBox(
-              height: 250,
+              height: AppDimens.imageHeightLg,
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceAround,
@@ -208,7 +209,7 @@ class _PollutantChart extends StatelessWidget {
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
-                        reservedSize: 50,
+                        reservedSize: AppDimens.chartAxisReservedSize,
                         getTitlesWidget: (value, meta) {
                           return Text(
                             value.toInt().toString(),
@@ -226,7 +227,7 @@ class _PollutantChart extends StatelessWidget {
                             return const SizedBox.shrink();
                           }
                           return Padding(
-                            padding: const EdgeInsets.only(top: 8),
+                            padding: const EdgeInsets.only(top: AppDimens.spaceSm),
                             child: Text(
                               pollutants[index].name,
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -246,7 +247,7 @@ class _PollutantChart extends StatelessWidget {
                     getDrawingHorizontalLine: (value) {
                       return FlLine(
                         color: Theme.of(context).colorScheme.outlineVariant,
-                        strokeWidth: 1,
+                        strokeWidth: AppDimens.borderThin,
                       );
                     },
                   ),
@@ -257,10 +258,10 @@ class _PollutantChart extends StatelessWidget {
                         BarChartRodData(
                           toY: pollutants[index].value,
                           color: _getBarColor(pollutants[index].value, maxValue),
-                          width: 24,
+                          width: AppDimens.chartBarWidth,
                           borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(6),
-                            topRight: Radius.circular(6),
+                            topLeft: Radius.circular(AppDimens.radiusXs),
+                            topRight: Radius.circular(AppDimens.radiusXs),
                           ),
                         ),
                       ],

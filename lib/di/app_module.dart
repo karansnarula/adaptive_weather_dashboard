@@ -33,13 +33,53 @@ abstract class AppModule {
   FirebaseMessaging get messaging => FirebaseMessaging.instance;
 
   @lazySingleton
-  Dio get dio => Dio(
+  @Named('weatherDio')
+  Dio get weatherDio => Dio(
     BaseOptions(
       baseUrl: AppConfig.instance.apiBaseUrl,
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 15),
       queryParameters: {
         'appid': AppConfig.instance.apiKey,
+      },
+    ),
+  )..interceptors.add(
+    PrettyDioLogger(
+      requestBody: true,
+      responseBody: true,
+    ),
+  );
+
+  @lazySingleton
+  @Named('chatbotDio')
+  Dio get chatbotDio => Dio(
+    BaseOptions(
+      baseUrl: AppConfig.instance.geminiApiUrl,
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      queryParameters: {
+        'key': AppConfig.instance.geminiApiKey,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    ),
+  )..interceptors.add(
+    PrettyDioLogger(
+      requestBody: true,
+      responseBody: true,
+    ),
+  );
+
+  @lazySingleton
+  @Named('newsDio')
+  Dio get newsDio => Dio(
+    BaseOptions(
+      baseUrl: AppConfig.instance.newsApiUrl,
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
+      queryParameters: {
+        'apiKey': AppConfig.instance.newsApiKey,
       },
     ),
   )..interceptors.add(

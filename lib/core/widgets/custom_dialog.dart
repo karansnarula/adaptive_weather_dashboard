@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_dimens.dart';
+
 class CustomDialog extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -40,29 +42,29 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppDimens.radiusXl),
       ),
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 340),
+        constraints: const BoxConstraints(maxWidth: AppDimens.dialogMaxWidth),
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppDimens.space2xl),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 72,
-                height: 72,
+                width: AppDimens.avatarXl,
+                height: AppDimens.avatarXl,
                 decoration: BoxDecoration(
                   color: iconColor.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   icon,
-                  size: 36,
+                  size: AppDimens.avatarSm,
                   color: iconColor,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppDimens.spaceXl),
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -70,7 +72,7 @@ class CustomDialog extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppDimens.spaceMd),
               Text(
                 message,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -78,15 +80,15 @@ class CustomDialog extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppDimens.space2xl),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: () => Navigator.of(context).pop(),
                   style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    padding: const EdgeInsets.symmetric(vertical: AppDimens.paddingInputVertical),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(AppDimens.radiusMd),
                     ),
                   ),
                   child: Text(buttonText),
