@@ -14,6 +14,7 @@ import '../../features/discussion/presentation/bloc/feed/feed_event.dart';
 import '../../features/discussion/presentation/pages/discussion_detail_page.dart';
 import '../../features/discussion/presentation/pages/discussion_feed_page.dart';
 import '../../features/news/presentation/pages/news_page.dart';
+import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/weather/presentation/pages/weather_page.dart';
 import '../../features/favorites/presentation/pages/favorites_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
@@ -22,12 +23,17 @@ import '../l10n/l10n_extension.dart';
 
 abstract class AppRouter {
   static GoRouter router(AuthBloc authBloc) => GoRouter(
-    initialLocation: '/weather',
+    initialLocation: '/splash',
     refreshListenable: _GoRouterAuthNotifier(authBloc),
     /// "redirect" runs on every navigation. It checks if the user is authenticated.
     /// If not authenticated and trying to access a protected page → redirect to /login.
     /// If authenticated and on login/register → redirect to /weather. Otherwise → let them through.
     redirect: (context, state) {
+      // The splash route handles its own navigation (auth-aware) once
+      // it finishes animating and playing its sound. Bypass the redirect
+      // so it isn't kicked off-route immediately.
+      if (state.matchedLocation == '/splash') return null;
+
       final isAuthenticated = authBloc.state is Authenticated;
       final isAuthRoute = state.matchedLocation == '/login' ||
           state.matchedLocation == '/register';
@@ -43,6 +49,10 @@ abstract class AppRouter {
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/splash',
+        builder: (context, state) => const SplashPage(),
+      ),
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginPage(),

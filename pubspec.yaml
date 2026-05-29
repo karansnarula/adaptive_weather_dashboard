@@ -58,6 +58,7 @@ dependencies:
   fl_chart: ^1.2.0
   package_info_plus: ^9.0.1
   url_launcher: ^6.3.1
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ dev_dependencies:
   json_serializable: ^6.13.1
   hive_ce_generator: ^1.11.1
   mocktail: ^1.0.4
+  flutter_native_splash: ^2.4.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -87,6 +89,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/sounds/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -118,3 +123,16 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# Native splash screen (cold-start coverage). Generates iOS launch storyboard
+# + Android splash drawable. Regenerate via:
+#   dart run flutter_native_splash:create
+# The Flutter-side branded splash with animation + sound lives in
+# lib/features/splash/presentation/pages/splash_page.dart and takes over
+# once the engine boots.
+flutter_native_splash:
+  color: "#2196F3"
+  color_dark: "#0D47A1"
+  android_12:
+    color: "#2196F3"
+    color_dark: "#0D47A1"
