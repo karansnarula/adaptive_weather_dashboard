@@ -51,4 +51,15 @@ abstract class DiscussionRepository {
     required String postId,
     required String commentId,
   });
+
+  /// Count posts created since the user's last recorded visit to the
+  /// discussion feed. Drives the red unread badge on the Discussion
+  /// shortcut. Returns 0 when the user has never visited (avoids
+  /// front-loading an overwhelming badge on first login).
+  Future<Either<Failure, int>> getUnreadCount();
+
+  /// Record that the user is opening (or leaving) the discussion feed,
+  /// resetting the unread badge to 0. Writes `serverTimestamp()` to
+  /// the user doc's `last_discussion_visit` field via `SetOptions(merge: true)`.
+  Future<Either<Failure, Unit>> markDiscussionVisit();
 }

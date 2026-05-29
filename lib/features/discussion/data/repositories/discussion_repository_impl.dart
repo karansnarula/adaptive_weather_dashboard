@@ -114,4 +114,20 @@ class DiscussionRepositoryImpl implements DiscussionRepository {
     await _remote.deleteComment(postId: postId, commentId: commentId);
     return unit;
   });
+
+  @override
+  Future<Either<Failure, int>> getUnreadCount() => _guard(() async {
+    final lastVisit = await _remote.getLastDiscussionVisit();
+    // null lastVisit (first-time user) means "everything is new" — count
+    // every post in the collection. The first markDiscussionVisit (fired
+    // when they open the feed) sets the anchor, and subsequent loads
+    // count only posts created after it.
+    return _remote.countPostsSince(lastVisit);
+  });
+
+  @override
+  Future<Either<Failure, Unit>> markDiscussionVisit() => _guard(() async {
+    await _remote.markDiscussionVisit();
+    return unit;
+  });
 }

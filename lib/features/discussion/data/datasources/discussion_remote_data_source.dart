@@ -22,11 +22,18 @@ class DiscussionRemoteDataSource {
 
   const DiscussionRemoteDataSource(this._firestore, this._auth);
 
+  /// Firestore key on the user doc for "when did the user last open the
+  /// discussion feed?". Null / missing = never opened.
+  static const fLastDiscussionVisit = 'last_discussion_visit';
+
   CollectionReference<Map<String, dynamic>> get _posts =>
       _firestore.collection(PostModel.collection);
 
   CollectionReference<Map<String, dynamic>> _comments(String postId) =>
       _posts.doc(postId).collection(CommentModel.subcollection);
+
+  DocumentReference<Map<String, dynamic>> _userDoc(String uid) =>
+      _firestore.collection('users').doc(uid);
 
   /// Returns (uid, displayName) for the current user, falling back to
   /// 'Guest' when displayName is missing. Throws [NotSignedInException]
@@ -168,5 +175,46 @@ class DiscussionRemoteDataSource {
       PostModel.fCommentCount: FieldValue.increment(-1),
     });
     await batch.commit();
+  }
+
+  // ============ unread badge support ============
+
+  /// Reads the user's `last_discussion_visit` timestamp from their user
+  /// doc. Returns null when the field is missing — i.e. the user has
+  /// never opened the discussion feed.
+  Future<DateTime?> getLastDiscussionVisit() async {
+    final identity = _requireIdentity();
+    final snap = await _userDoc(identity.uid).get();
+    final raw = snap.data()?[fLastDiscussionVisit];
+    if (raw is Timestamp) return raw.toDate();
+    return null;
+  }
+
+  /// Writes the current server time to the user's
+  /// `last_discussion_visit`. Uses merge:true so other fields on the
+  /// user doc (display_name, fcm_token, notification_city, etc.) are
+  /// preserved untouched.
+  Future<void> markDiscussionVisit() async {
+    final identity = _requireIdentity();
+    await _userDoc(identity.uid).set(
+      {fLastDiscussionVisit: FieldValue.serverTimestamp()},
+      SetOptions(merge: true),
+    );
+  }
+
+  /// Cheap aggregation query — Firestore charges 1 read regardless of
+  /// how many documents match. When [since] is null the user has never
+  /// opened the feed; we count ALL posts so the badge nudges them to
+  /// take a first look.
+  Future<int> countPostsSince(DateTime? since) async {
+    _requireIdentity();
+    final query = since == null
+        ? _posts
+        : _posts.where(
+            PostModel.fCreatedAt,
+            isGreaterThan: Timestamp.fromDate(since),
+          );
+    final result = await query.count().get();
+    return result.count ?? 0;
   }
 }

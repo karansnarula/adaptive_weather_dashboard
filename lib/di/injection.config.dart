@@ -68,6 +68,8 @@ import 'package:adaptive_weather_dashboard/features/discussion/presentation/bloc
     as _i516;
 import 'package:adaptive_weather_dashboard/features/discussion/presentation/bloc/feed/feed_bloc.dart'
     as _i684;
+import 'package:adaptive_weather_dashboard/features/discussion/presentation/bloc/unread/discussion_unread_bloc.dart'
+    as _i163;
 import 'package:adaptive_weather_dashboard/features/favorites/data/datasources/favorites_local_data_source.dart'
     as _i388;
 import 'package:adaptive_weather_dashboard/features/favorites/data/models/favorite_city_model.dart'
@@ -264,6 +266,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i168.ToggleLike>(
       () => _i168.ToggleLike(gh<_i187.DiscussionRepository>()),
+    );
+    gh.factory<_i163.DiscussionUnreadBloc>(
+      () => _i163.DiscussionUnreadBloc(gh<_i187.DiscussionRepository>()),
     );
     gh.factory<_i174.AuthBloc>(
       () => _i174.AuthBloc(

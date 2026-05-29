@@ -7,6 +7,8 @@ import '../../../../core/responsive/responsive_builder.dart';
 import '../bloc/create_post/create_post_state.dart';
 import '../bloc/feed/feed_bloc.dart';
 import '../bloc/feed/feed_event.dart';
+import '../bloc/unread/discussion_unread_bloc.dart';
+import '../bloc/unread/discussion_unread_event.dart';
 import '../layouts/feed_desktop.dart';
 import '../layouts/feed_mobile.dart';
 import '../layouts/feed_tablet.dart';
@@ -15,7 +17,13 @@ import '../widgets/create_post_sheet.dart';
 /// Feed view for `/discussion`. The [FeedBloc] is provided one level up
 /// in the route tree (a [ShellRoute] in `app_router.dart`) so the
 /// [DiscussionDetailPage] can read and patch the same instance directly.
-class DiscussionFeedPage extends StatelessWidget {
+///
+/// Stateful so it can fire `MarkAsVisited` on both [initState] (when the
+/// user lands on the feed) and [dispose] (when the user pops back to the
+/// weather page). The double-fire is intentional: the second one
+/// captures any posts that arrived while the user was browsing so they
+/// aren't double-counted on the next badge refresh.
+class DiscussionFeedPage extends StatefulWidget {
   /// Last-searched city from the route's `?city=` query param. May be
   /// null — feed viewing works regardless. The FAB is disabled when
   /// null (you must search a city before posting, per UX spec).
@@ -23,8 +31,34 @@ class DiscussionFeedPage extends StatelessWidget {
 
   const DiscussionFeedPage({super.key, this.city});
 
+  @override
+  State<DiscussionFeedPage> createState() => _DiscussionFeedPageState();
+}
+
+class _DiscussionFeedPageState extends State<DiscussionFeedPage> {
+  /// Captured in [initState] so [dispose] can dispatch safely without
+  /// touching [context] after the framework has dismantled inherited
+  /// widgets.
+  late final DiscussionUnreadBloc _unreadBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _unreadBloc = context.read<DiscussionUnreadBloc>();
+    _unreadBloc.add(const MarkAsVisited());
+  }
+
+  @override
+  void dispose() {
+    // Pop out of the feed (back to /weather, or anywhere else): mark
+    // the visit so any posts created while the user was browsing aren't
+    // counted as "new" on the next badge refresh.
+    _unreadBloc.add(const MarkAsVisited());
+    super.dispose();
+  }
+
   void _openCreateSheet(BuildContext context) {
-    final c = city;
+    final c = widget.city;
     if (c == null) return;
     showCreatePostSheet(
       context,
@@ -40,7 +74,8 @@ class DiscussionFeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasCity = city != null && city!.trim().isNotEmpty;
+    final city = widget.city;
+    final hasCity = city != null && city.trim().isNotEmpty;
     return Scaffold(
       appBar: AppBar(
         // The feed lives in a nested Navigator (ShellRoute), so AppBar's

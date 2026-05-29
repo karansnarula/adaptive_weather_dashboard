@@ -12,6 +12,8 @@ import 'core/l10n/app_localizations.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
 import 'features/auth/presentation/bloc/auth_state.dart';
+import 'features/discussion/presentation/bloc/unread/discussion_unread_bloc.dart';
+import 'features/discussion/presentation/bloc/unread/discussion_unread_event.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'features/favorites/presentation/bloc/favorites_event.dart';
 import 'features/notifications/data/services/fcm_service.dart';
@@ -71,6 +73,7 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
           create: (context) => getIt<SettingsBloc>()..add(const LoadSettings()),
         ),
         BlocProvider(create: (context) => getIt<NotificationBloc>()),
+        BlocProvider(create: (context) => getIt<DiscussionUnreadBloc>()),
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -83,9 +86,15 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
             fcmService.onNotificationTapped = (cityName) {
               final isCelsius = context.read<SettingsBloc>().state.isCelsius;
               final units = isCelsius ? 'metric' : 'imperial';
-              context.read<WeatherBloc>().add(SearchCity(cityName, units: units));
+              context.read<WeatherBloc>().add(
+                SearchCity(cityName, units: units),
+              );
               _router.go('/weather');
             };
+          } else if (state is Unauthenticated) {
+            context.read<DiscussionUnreadBloc>().add(
+              const ResetUnreadCount(),
+            );
           }
         },
         child: BlocBuilder<SettingsBloc, SettingsState>(

@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/responsive/responsive_builder.dart';
 import '../../../../core/constants/app_dimens.dart';
+import '../../../discussion/presentation/bloc/unread/discussion_unread_bloc.dart';
+import '../../../discussion/presentation/bloc/unread/discussion_unread_event.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_state.dart';
 import '../layouts/weather_mobile.dart';
@@ -20,7 +22,12 @@ class WeatherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.navWeather)),
-      body: BlocBuilder<WeatherBloc, WeatherState>(
+      body: BlocConsumer<WeatherBloc, WeatherState>(
+        listenWhen: (prev, curr) =>
+            prev is! WeatherLoaded && curr is WeatherLoaded,
+        listener: (context, _) {
+          context.read<DiscussionUnreadBloc>().add(const LoadUnreadCount());
+        },
         builder: (context, state) {
           return switch (state) {
             WeatherInitial() => _buildInitial(context),
