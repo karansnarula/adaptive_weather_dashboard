@@ -4,6 +4,79 @@ A production-grade multi-platform weather application built with Flutter, demons
 
 **Live Demo:** [https://adaptive-weather-dashboard.web.app](https://adaptive-weather-dashboard.web.app)
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/01-weather_1.png" width="200" alt="Weather page top" /><br/>
+      <sub><b>Weather</b><br/>Search, current conditions, shortcut bar with unread badge</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/01-weather_2.png" width="200" alt="Weather forecast and map" /><br/>
+      <sub><b>Forecast &amp; Map</b><br/>5-day forecast and static map of the searched city</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/02-discussion-feed.png" width="200" alt="Discussion feed" /><br/>
+      <sub><b>Discussion Feed</b><br/>Firestore-backed community posts with likes &amp; comments</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/03-chatbot.png" width="200" alt="AI chatbot" /><br/>
+      <sub><b>AI Chatbot</b><br/>Gemini-powered weather assistant with daily quota</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/04-news.png" width="200" alt="News feed" /><br/>
+      <sub><b>News</b><br/>Three category tabs, in-app browser via SFSafariViewController</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/05-air-quality.png" width="200" alt="Air quality" /><br/>
+      <sub><b>Air Quality</b><br/>AQI index with pollutant breakdown via fl_chart</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/06-create-post.png" width="200" alt="Create post sheet" /><br/>
+      <sub><b>Create Post</b><br/>Event-type chips auto-fill the title with the searched city</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/07-discussion-detail.png" width="200" alt="Discussion detail" /><br/>
+      <sub><b>Post Detail</b><br/>Threaded comments with 50-char limit, swipe-back to feed</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="docs/screenshots/08-favorites.png" width="220" alt="Favorites" /><br/>
+      <sub><b>Favorites</b><br/>Local Hive storage, tap to load weather instantly</sub>
+    </td>
+    <td align="center" colspan="2">
+      <img src="docs/screenshots/09-settings.png" width="220" alt="Settings" /><br/>
+      <sub><b>Settings</b><br/>Theme mode, language (EN / TH), and temperature units</sub>
+    </td>
+  </tr>
+</table>
+
+### Responsive — same code, all five platforms
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/desktop-weather.png" width="720" alt="Desktop weather view" /><br/>
+      <sub><b>Desktop</b> — navigation drawer, wider weather layout, responsive shortcut bar with evenly-spread items</sub>
+    </td>
+  </tr>
+</table>
+
+### Branded splash
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/splash.gif" width="220" alt="Animated splash screen" /><br/>
+      <sub><b>Launch animation</b> — native cold-start splash hands off seamlessly to a Flutter-side splash with fade-in + elastic-scale animation and a launch sound</sub>
+    </td>
+  </tr>
+</table>
+
 ---
 
 ## Overview
