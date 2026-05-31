@@ -77,6 +77,14 @@ jobs:
       - name: Build Web
         run: flutter build web --dart-define-from-file=config/prod.json
 
+      - name: Deploy to Firebase Hosting (live channel)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: adaptive-weather-dashboard
+          channelId: live
+
   build-ios:
     runs-on: macos-latest
     steps:
