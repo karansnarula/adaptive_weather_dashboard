@@ -54,6 +54,7 @@ dependencies:
   firebase_auth: ^6.5.1
   cloud_firestore: ^6.4.1
   firebase_messaging: ^16.2.2
+  firebase_crashlytics: ^5.0.0
   flutter_local_notifications: ^20.1.0
   fl_chart: ^1.2.0
   package_info_plus: ^9.0.1

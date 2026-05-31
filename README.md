@@ -4,6 +4,79 @@ A production-grade multi-platform weather application built with Flutter, demons
 
 **Live Demo:** [https://adaptive-weather-dashboard.web.app](https://adaptive-weather-dashboard.web.app)
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/01-weather_1.png" width="200" alt="Weather page top" /><br/>
+      <sub><b>Weather</b><br/>Search, current conditions, shortcut bar with unread badge</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/01-weather_2.png" width="200" alt="Weather forecast and map" /><br/>
+      <sub><b>Forecast &amp; Map</b><br/>5-day forecast and static map of the searched city</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/02-discussion-feed.png" width="200" alt="Discussion feed" /><br/>
+      <sub><b>Discussion Feed</b><br/>Firestore-backed community posts with likes &amp; comments</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/03-chatbot.png" width="200" alt="AI chatbot" /><br/>
+      <sub><b>AI Chatbot</b><br/>Gemini-powered weather assistant with daily quota</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/04-news.png" width="200" alt="News feed" /><br/>
+      <sub><b>News</b><br/>Three category tabs, in-app browser via SFSafariViewController</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/05-air-quality.png" width="200" alt="Air quality" /><br/>
+      <sub><b>Air Quality</b><br/>AQI index with pollutant breakdown via fl_chart</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/06-create-post.png" width="200" alt="Create post sheet" /><br/>
+      <sub><b>Create Post</b><br/>Event-type chips auto-fill the title with the searched city</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/07-discussion-detail.png" width="200" alt="Discussion detail" /><br/>
+      <sub><b>Post Detail</b><br/>Threaded comments with 50-char limit, swipe-back to feed</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="docs/screenshots/08-favorites.png" width="220" alt="Favorites" /><br/>
+      <sub><b>Favorites</b><br/>Local Hive storage, tap to load weather instantly</sub>
+    </td>
+    <td align="center" colspan="2">
+      <img src="docs/screenshots/09-settings.png" width="220" alt="Settings" /><br/>
+      <sub><b>Settings</b><br/>Theme mode, language (EN / TH), and temperature units</sub>
+    </td>
+  </tr>
+</table>
+
+### Responsive — same code, all five platforms
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/desktop-weather.png" width="720" alt="Desktop weather view" /><br/>
+      <sub><b>Desktop</b> — navigation drawer, wider weather layout, responsive shortcut bar with evenly-spread items</sub>
+    </td>
+  </tr>
+</table>
+
+### Branded splash
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/splash.gif" width="220" alt="Animated splash screen" /><br/>
+      <sub><b>Launch animation</b> — native cold-start splash hands off seamlessly to a Flutter-side splash with fade-in + elastic-scale animation and a launch sound</sub>
+    </td>
+  </tr>
+</table>
+
 ---
 
 ## Overview
@@ -40,6 +113,7 @@ All platforms share the same codebase with adaptive UI that automatically adjust
 - **Theme Switching** — Light, dark, and system theme modes persisted in SharedPreferences
 - **Temperature Units** — Toggle between Celsius and Fahrenheit
 - **App Version Display** — Dynamic version display in settings using package_info_plus
+- **Crash Reporting** — Production observability via Firebase Crashlytics. All uncaught Flutter framework errors and uncaught async errors are recorded as fatal with full stack traces, grouped issues, and crash-free user metrics in the Firebase Console
 
 ## Tech Stack
 
@@ -53,6 +127,7 @@ All platforms share the same codebase with adaptive UI that automatically adjust
 | Authentication | `firebase_auth` | Industry-standard auth with email/password support |
 | Cloud Database | `cloud_firestore` | Real-time cloud storage for user data and notification preferences |
 | Push Notifications | `firebase_messaging` + `flutter_local_notifications` | FCM for background/terminated delivery, local notifications for foreground display |
+| Crash Reporting | `firebase_crashlytics` | Captures uncaught Flutter framework and async errors with full stack traces, grouped by issue in the Firebase Console |
 | Local Storage | `hive_ce` | Fast, type-safe key-value storage that works across all platforms |
 | Preferences | `shared_preferences` | Standard solution for simple user preferences |
 | Charts | `fl_chart` | Lightweight, customizable bar charts for air quality visualization |
@@ -199,7 +274,8 @@ All three can be installed side by side on the same device.
 - **Cloud Firestore Security Rules** — `firestore.rules` enforces strict per-user ownership on `users/{uid}`, author-owned creates on `discussions/{postId}` and `discussions/{postId}/comments/{commentId}`, strict `arrayUnion`/`arrayRemove` semantics for `likedBy`, atomic `commentCount ±1` updates only, and server-side string-length validation
 - **Firebase Cloud Messaging** — Push notification delivery
 - **Firebase Cloud Functions** — Scheduled daily weather notifications
-- **Firebase Hosting** — Web deployment
+- **Firebase Crashlytics** — Production crash reporting; uncaught Flutter framework errors (`FlutterError.onError`) and uncaught async errors (`PlatformDispatcher.instance.onError`) are recorded as fatal. Android symbol uploads handled by the `com.google.firebase.crashlytics` Gradle plugin
+- **Firebase Hosting** — Web deployment (auto-deployed by `build.yml` on `v*` tag push)
 
 ## CI/CD
 
@@ -316,7 +392,11 @@ flutter test
 
 ## Deployment
 
-The web build is deployed to Firebase Hosting:
+The web build is **automatically deployed to Firebase Hosting** by the `build.yml` workflow every time a `v*` tag is pushed — same trigger as the Android APK and iOS IPA builds. No manual `firebase deploy` step needed.
+
+Under the hood, the `build-web` job builds the prod-flavored web bundle, then `FirebaseExtended/action-hosting-deploy@v0` ships it to the live channel of the `adaptive-weather-dashboard` Firebase project. Authentication uses a Firebase service-account JSON stored as the `FIREBASE_SERVICE_ACCOUNT` GitHub repository secret.
+
+If you ever need to deploy manually (e.g. an out-of-band hotfix):
 
 ```bash
 flutter build web --dart-define-from-file=config/prod.json
@@ -341,6 +421,7 @@ firebase deploy --only hosting
 - LLM integration with a dedicated named Dio binding so API keys never cross-pollinate between services
 - Cheap Firestore aggregation queries (`.count()`) driving live UI badges
 - Two-layer splash screen — native cold-start coverage plus a branded Flutter splash with animation and audio
+- Production observability via Firebase Crashlytics, wired to capture both Flutter framework errors and uncaught async errors
 - Cross-platform in-app browser via `LaunchMode.inAppBrowserView` (SFSafariViewController / Chrome Custom Tabs)
 - Push notifications with scheduled Cloud Functions and deep linking
 - Dependency injection patterns for a growing codebase, including multiple named singletons of the same type for service isolation
