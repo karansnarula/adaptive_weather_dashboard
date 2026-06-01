@@ -2,12 +2,19 @@
 
 A production-grade multi-platform weather application built with Flutter, demonstrating clean architecture, responsive design, and scalable project infrastructure.
 
-**Live Demo:** [https://adaptive-weather-dashboard.web.app](https://adaptive-weather-dashboard.web.app)
+**Try it:**
+- **Web** — [https://adaptive-weather-dashboard.web.app](https://adaptive-weather-dashboard.web.app) (instant, no install)
+- **Android APK** — distributed via Firebase App Distribution to invited testers on every release tag. Reach out and I'll add you to the `portfolio-testers` group; you'll get an email with a one-tap install link.
+- **iOS** — the web build runs on iOS Safari. A native TestFlight build requires the $99/year Apple Developer Program — available on request.
 
 ## Screenshots
 
 <table>
   <tr>
+    <td align="center">
+      <img src="docs/screenshots/00-sign-in.png" width="200" alt="Sign in" /><br/>
+      <sub><b>Sign In</b><br/>Firebase Auth email/password — entry point before any feature is accessible</sub>
+    </td>
     <td align="center">
       <img src="docs/screenshots/01-weather_1.png" width="200" alt="Weather page top" /><br/>
       <sub><b>Weather</b><br/>Search, current conditions, shortcut bar with unread badge</sub>
@@ -20,12 +27,12 @@ A production-grade multi-platform weather application built with Flutter, demons
       <img src="docs/screenshots/02-discussion-feed.png" width="200" alt="Discussion feed" /><br/>
       <sub><b>Discussion Feed</b><br/>Firestore-backed community posts with likes &amp; comments</sub>
     </td>
+  </tr>
+  <tr>
     <td align="center">
       <img src="docs/screenshots/03-chatbot.png" width="200" alt="AI chatbot" /><br/>
       <sub><b>AI Chatbot</b><br/>Gemini-powered weather assistant with daily quota</sub>
     </td>
-  </tr>
-  <tr>
     <td align="center">
       <img src="docs/screenshots/04-news.png" width="200" alt="News feed" /><br/>
       <sub><b>News</b><br/>Three category tabs, in-app browser via SFSafariViewController</sub>
@@ -38,18 +45,18 @@ A production-grade multi-platform weather application built with Flutter, demons
       <img src="docs/screenshots/06-create-post.png" width="200" alt="Create post sheet" /><br/>
       <sub><b>Create Post</b><br/>Event-type chips auto-fill the title with the searched city</sub>
     </td>
+  </tr>
+  <tr>
     <td align="center">
       <img src="docs/screenshots/07-discussion-detail.png" width="200" alt="Discussion detail" /><br/>
       <sub><b>Post Detail</b><br/>Threaded comments with 50-char limit, swipe-back to feed</sub>
     </td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2">
-      <img src="docs/screenshots/08-favorites.png" width="220" alt="Favorites" /><br/>
+    <td align="center">
+      <img src="docs/screenshots/08-favorites.png" width="200" alt="Favorites" /><br/>
       <sub><b>Favorites</b><br/>Local Hive storage, tap to load weather instantly</sub>
     </td>
-    <td align="center" colspan="2">
-      <img src="docs/screenshots/09-settings.png" width="220" alt="Settings" /><br/>
+    <td align="center">
+      <img src="docs/screenshots/09-settings.png" width="200" alt="Settings" /><br/>
       <sub><b>Settings</b><br/>Theme mode, language (EN / TH), and temperature units</sub>
     </td>
   </tr>
@@ -283,7 +290,7 @@ Two GitHub Actions workflows:
 
 **`ci.yml`** — runs on every pull request and every push to `develop`. Installs dependencies, generates code, runs lint analysis, and executes tests. Prevents broken code from reaching the main branches.
 
-**`build.yml`** — triggered when a version tag is pushed (e.g. `v1.1.0`). Builds Android APK, iOS IPA (unsigned), and web bundle for the production flavor. API credentials are injected from GitHub repository secrets.
+**`build.yml`** — triggered when a version tag is pushed (e.g. `v1.2.1`). Builds Android APK, iOS IPA (unsigned), and web bundle for the production flavor. API credentials are injected from GitHub repository secrets. The APK is auto-uploaded to **Firebase App Distribution** for the `portfolio-testers` group and the web bundle is auto-deployed to **Firebase Hosting** — see the [Deployment](#deployment) section.
 
 ## Testing
 
@@ -392,15 +399,28 @@ flutter test
 
 ## Deployment
 
-The web build is **automatically deployed to Firebase Hosting** by the `build.yml` workflow every time a `v*` tag is pushed — same trigger as the Android APK and iOS IPA builds. No manual `firebase deploy` step needed.
+Every `v*` tag push triggers the `build.yml` workflow, which produces three artifacts in parallel and **automatically distributes the two that have free channels**:
 
-Under the hood, the `build-web` job builds the prod-flavored web bundle, then `FirebaseExtended/action-hosting-deploy@v0` ships it to the live channel of the `adaptive-weather-dashboard` Firebase project. Authentication uses a Firebase service-account JSON stored as the `FIREBASE_SERVICE_ACCOUNT` GitHub repository secret.
+| Artifact | Channel | What happens |
+|---|---|---|
+| Web bundle | **Firebase Hosting** (live channel) | Deployed via `FirebaseExtended/action-hosting-deploy@v0` to https://adaptive-weather-dashboard.web.app |
+| Android APK | **Firebase App Distribution** (`portfolio-testers` group) | Uploaded via `wzieba/Firebase-Distribution-Github-Action@v1`; everyone in the group gets an email with a one-tap install link |
+| iOS IPA (unsigned) | None | Built but not distributed — iOS distribution requires the $99/year Apple Developer Program |
+
+Both upload steps authenticate with the same Firebase service-account JSON stored as the `FIREBASE_SERVICE_ACCOUNT` GitHub repository secret.
+
+To add a new tester (recruiter, reviewer, friend): Firebase Console → App Distribution → Testers & Groups → `portfolio-testers` → invite by email. They'll receive future builds automatically.
 
 If you ever need to deploy manually (e.g. an out-of-band hotfix):
 
 ```bash
 flutter build web --dart-define-from-file=config/prod.json
 firebase deploy --only hosting
+
+flutter build apk --flavor prod --dart-define-from-file=config/prod.json
+firebase appdistribution:distribute build/app/outputs/flutter-apk/app-prod-release.apk \
+  --app 1:555454956170:android:97eeb8ee13896a6a29a373 \
+  --groups portfolio-testers
 ```
 
 ## Roadmap
