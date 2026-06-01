@@ -11,6 +11,7 @@ import 'package:hive_ce_flutter/adapters.dart';
 import 'core/config/app_config.dart';
 import 'core/theme/app_theme.dart';
 import 'core/router/app_router.dart';
+import 'core/router/app_routes.dart';
 import 'core/l10n/app_localizations.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
@@ -98,7 +99,7 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
               context.read<WeatherBloc>().add(
                 SearchCity(cityName, units: units),
               );
-              _router.go('/weather');
+              _router.go(AppRoutes.weather);
             };
           } else if (state is Unauthenticated) {
             context.read<DiscussionUnreadBloc>().add(

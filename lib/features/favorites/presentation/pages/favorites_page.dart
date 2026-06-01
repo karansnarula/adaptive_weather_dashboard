@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/responsive/responsive_builder.dart';
 import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../../../weather/presentation/bloc/weather_bloc.dart';
 import '../../../weather/presentation/bloc/weather_event.dart';
@@ -90,7 +91,7 @@ class FavoritesPage extends StatelessWidget {
     final isCelsius = context.read<SettingsBloc>().state.isCelsius;
     final units = isCelsius ? 'metric' : 'imperial';
     context.read<WeatherBloc>().add(SearchCity(city, units: units));
-    context.go('/weather');
+    context.go(AppRoutes.weather);
   }
 
   void _onRemove(BuildContext context, String city) {

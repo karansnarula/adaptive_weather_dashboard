@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/constants/app_dimens.dart';
 import '../../../../core/responsive/responsive_builder.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../../core/widgets/custom_dialog.dart';
 import '../../../discussion/presentation/bloc/unread/discussion_unread_bloc.dart';
 import '../../../discussion/presentation/bloc/unread/discussion_unread_state.dart';
@@ -30,23 +31,21 @@ class ShortcutBar extends StatelessWidget {
             label: context.l10n.chatbot,
             enabled: true,
             onTap: () => context.push(
-              isSearched
-                  ? '/chatbot?city=${Uri.encodeQueryComponent(cityName)}'
-                  : '/chatbot',
+              AppRoutes.chatbotFor(city: isSearched ? cityName : null),
             ),
           ),
           _ShortcutItem(
             icon: Icons.newspaper_outlined,
             label: context.l10n.weatherNews,
             enabled: isSearched,
-            onTap: () => context.push('/news/$cityName'),
+            onTap: () => context.push(AppRoutes.news(cityName)),
           ),
           _ShortcutItem(
             icon: Icons.air,
             label: context.l10n.airQuality,
             enabled: isSearched,
             onTap: () => context.push(
-              '/air-quality/$cityName?lat=$lat&lon=$lon',
+              AppRoutes.airQuality(city: cityName, lat: lat, lon: lon),
             ),
           ),
           BlocSelector<DiscussionUnreadBloc, DiscussionUnreadState, int>(
@@ -57,9 +56,8 @@ class ShortcutBar extends StatelessWidget {
                 label: context.l10n.weatherDiscussion,
                 enabled: isSearched,
                 badgeCount: unreadCount,
-                onTap: () => context.push(
-                  '/discussion?city=${Uri.encodeQueryComponent(cityName)}',
-                ),
+                onTap: () =>
+                    context.push(AppRoutes.discussionFor(city: cityName)),
               );
             },
           ),

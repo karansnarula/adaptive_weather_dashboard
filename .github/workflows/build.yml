@@ -41,6 +41,17 @@ jobs:
       - name: Build APK
         run: flutter build apk --flavor prod --dart-define-from-file=config/prod.json
 
+      - name: Upload APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: 1:555454956170:android:97eeb8ee13896a6a29a373
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          groups: portfolio-testers
+          file: build/app/outputs/flutter-apk/app-prod-release.apk
+          releaseNotes: |
+            Adaptive Weather Dashboard ${{ github.ref_name }}
+            Built from tag ${{ github.ref_name }} on ${{ github.sha }}.
+
   build-web:
     runs-on: ubuntu-latest
     steps:

@@ -20,10 +20,11 @@ import '../../features/favorites/presentation/pages/favorites_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import '../layout/adaptive_scaffold.dart';
 import '../l10n/l10n_extension.dart';
+import 'app_routes.dart';
 
 abstract class AppRouter {
   static GoRouter router(AuthBloc authBloc) => GoRouter(
-    initialLocation: '/splash',
+    initialLocation: AppRoutes.splash,
     refreshListenable: _GoRouterAuthNotifier(authBloc),
     /// "redirect" runs on every navigation. It checks if the user is authenticated.
     /// If not authenticated and trying to access a protected page → redirect to /login.
@@ -32,37 +33,37 @@ abstract class AppRouter {
       // The splash route handles its own navigation (auth-aware) once
       // it finishes animating and playing its sound. Bypass the redirect
       // so it isn't kicked off-route immediately.
-      if (state.matchedLocation == '/splash') return null;
+      if (state.matchedLocation == AppRoutes.splash) return null;
 
       final isAuthenticated = authBloc.state is Authenticated;
-      final isAuthRoute = state.matchedLocation == '/login' ||
-          state.matchedLocation == '/register';
+      final isAuthRoute = state.matchedLocation == AppRoutes.login ||
+          state.matchedLocation == AppRoutes.register;
 
       if (!isAuthenticated && !isAuthRoute) {
-        return '/login';
+        return AppRoutes.login;
       }
 
       if (isAuthenticated && isAuthRoute) {
-        return '/weather';
+        return AppRoutes.weather;
       }
 
       return null;
     },
     routes: [
       GoRoute(
-        path: '/splash',
+        path: AppRoutes.splash,
         builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
-        path: '/login',
+        path: AppRoutes.login,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/register',
+        path: AppRoutes.register,
         builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
-        path: '/air-quality/:city',
+        path: AppRoutes.airQualityTemplate,
         builder: (context, state) {
           final city = state.pathParameters['city'] ?? '';
           final lat = double.tryParse(state.uri.queryParameters['lat'] ?? '') ?? 0;
@@ -75,7 +76,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: '/chatbot',
+        path: AppRoutes.chatbot,
         builder: (context, state) {
           final city = state.uri.queryParameters['city'];
           final trimmed = (city == null || city.trim().isEmpty) ? null : city;
@@ -83,7 +84,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: '/news/:city',
+        path: AppRoutes.newsTemplate,
         builder: (context, state) {
           final city = state.pathParameters['city'] ?? '';
           return NewsPage(cityName: city);
@@ -102,7 +103,7 @@ abstract class AppRouter {
         },
         routes: [
           GoRoute(
-            path: '/discussion',
+            path: AppRoutes.discussion,
             builder: (context, state) {
               final city = state.uri.queryParameters['city'];
               final trimmed =
@@ -111,7 +112,7 @@ abstract class AppRouter {
             },
             routes: [
               GoRoute(
-                path: ':postId',
+                path: AppRoutes.discussionDetailSegment,
                 builder: (context, state) {
                   final postId = state.pathParameters['postId'] ?? '';
                   return DiscussionDetailPage(postId: postId);
@@ -151,7 +152,7 @@ abstract class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/weather',
+                path: AppRoutes.weather,
                 builder: (context, state) => const WeatherPage(),
               ),
             ],
@@ -159,7 +160,7 @@ abstract class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/favorites',
+                path: AppRoutes.favorites,
                 builder: (context, state) => const FavoritesPage(),
               ),
             ],
@@ -167,7 +168,7 @@ abstract class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/settings',
+                path: AppRoutes.settings,
                 builder: (context, state) => const SettingsPage(),
               ),
             ],

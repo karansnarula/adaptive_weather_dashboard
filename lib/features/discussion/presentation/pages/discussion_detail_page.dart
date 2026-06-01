@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/responsive/responsive_builder.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../../di/injection.dart';
 import '../bloc/detail/detail_bloc.dart';
 import '../bloc/detail/detail_event.dart';
@@ -84,7 +85,7 @@ class _DetailView extends StatelessWidget {
             if (context.canPop()) {
               context.pop();
             } else {
-              context.go('/discussion');
+              context.go(AppRoutes.discussion);
             }
           },
         ),

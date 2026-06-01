@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_dimens.dart';
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../domain/entities/post.dart';
 import '../bloc/feed/feed_bloc.dart';
 import '../bloc/feed/feed_event.dart';
@@ -63,7 +64,7 @@ class FeedMobile extends StatelessWidget {
             // No await-and-refresh needed: the detail page lives under
             // the same ShellRoute so it can patch this FeedBloc directly
             // (see UI-layer BlocListeners in DiscussionDetailPage).
-            onTap: () => context.push('/discussion/${p.id}'),
+            onTap: () => context.push(AppRoutes.discussionDetail(p.id)),
             onLike: () =>
                 context.read<FeedBloc>().add(ToggleLikeFromFeed(p.id)),
           );
