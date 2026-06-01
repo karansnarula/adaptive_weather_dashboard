@@ -3,6 +3,7 @@
   "APP_NAME": "Weather Dev",
   "API_BASE_URL": "https://api.openweathermap.org",
   "API_KEY": "YOUR_API_KEY_HERE",
+  "MAPS_API_KEY": "YOUR_MAPS_API_KEY_HERE",
   "GEMINI_API_URL": "https://generativelanguage.googleapis.com/v1beta/",
   "GEMINI_API_KEY": "YOUR_GEMINI_API_KEY_HERE",
   "NEWS_API_URL": "https://newsapi.org/v2/",
