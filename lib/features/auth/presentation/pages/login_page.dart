@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/router/app_routes.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -137,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: AppDimens.spaceLg),
                   TextButton(
-                    onPressed: () => context.go('/register'),
+                    onPressed: () => context.go(AppRoutes.register),
                     child: const Text("Don't have an account? Sign Up"),
                   ),
                 ],

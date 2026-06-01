@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_dimens.dart';
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 
@@ -72,7 +73,8 @@ class _SplashPageState extends State<SplashPage>
   void _navigateOut() {
     if (!mounted) return;
     final authState = context.read<AuthBloc>().state;
-    final destination = authState is Authenticated ? '/weather' : '/login';
+    final destination =
+        authState is Authenticated ? AppRoutes.weather : AppRoutes.login;
     context.go(destination);
   }
 
