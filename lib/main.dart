@@ -23,6 +23,7 @@ import 'features/favorites/presentation/bloc/favorites_event.dart';
 import 'features/notifications/data/services/fcm_service.dart';
 import 'features/notifications/presentation/bloc/notification_bloc.dart';
 import 'features/notifications/presentation/bloc/notification_event.dart';
+import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'features/settings/presentation/bloc/settings_bloc.dart';
 import 'features/settings/presentation/bloc/settings_event.dart';
 import 'features/settings/presentation/bloc/settings_state.dart';
@@ -78,7 +79,16 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
   @override
   void initState() {
     super.initState();
-    _authBloc = getIt<AuthBloc>()..add(const AuthCheckRequested());
+    // AuthCheckRequested sets up the userChanges stream subscription so we
+    // get sign-in/sign-out events. AuthRefreshRequested forces a one-shot
+    // server reload right after — needed because FirebaseAuth.currentUser
+    // restored from local storage on app launch has the photoUrl as it was
+    // when the token was issued, not the current server value (so changes
+    // made on another device won't show until the next sign-in unless we
+    // explicitly reload).
+    _authBloc = getIt<AuthBloc>()
+      ..add(const AuthCheckRequested())
+      ..add(const AuthRefreshRequested());
     _router = AppRouter.router(_authBloc);
   }
 
@@ -97,6 +107,7 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
         ),
         BlocProvider(create: (context) => getIt<NotificationBloc>()),
         BlocProvider(create: (context) => getIt<DiscussionUnreadBloc>()),
+        BlocProvider(create: (context) => getIt<ProfileBloc>()),
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {

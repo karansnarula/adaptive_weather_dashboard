@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "319090660806",
+    "project_id": "adaptive-weather-dashboard-dev",
+    "storage_bucket": "adaptive-weather-dashboard-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319090660806:android:cc40f9ba94deb660b4cec7",
+        "android_client_info": {
+          "package_name": "com.example.adaptive_weather_dashboard.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACULFCNqIdq1vVm_OIJGPyNBkeMmFwTH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

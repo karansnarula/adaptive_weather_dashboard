@@ -31,3 +31,11 @@ class AuthSignInRequested extends AuthEvent {
 class AuthSignOutRequested extends AuthEvent {
   const AuthSignOutRequested();
 }
+
+/// Forces FirebaseAuth.currentUser.reload() and re-emits the current
+/// Authenticated state with the freshly-fetched user data. Used after
+/// profile mutations (upload/remove image) so the avatar reflects
+/// the change immediately on every platform.
+class AuthRefreshRequested extends AuthEvent {
+  const AuthRefreshRequested();
+}

@@ -6,6 +6,7 @@ import '../../../../core/constants/app_dimens.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
 import '../../../notifications/presentation/widgets/notification_city_card.dart';
+import '../../../profile/presentation/widgets/profile_section.dart';
 import '../bloc/settings_bloc.dart';
 import '../bloc/settings_state.dart';
 import '../widgets/language_selector.dart';
@@ -28,6 +29,8 @@ class SettingsPage extends StatelessWidget {
             padding: const EdgeInsets.all(AppDimens.spaceLg),
             child: Column(
               children: [
+                const ProfileSection(),
+                const SizedBox(height: AppDimens.space2xl),
                 const NotificationCityCard(),
                 const SizedBox(height: AppDimens.spaceLg),
                 const LanguageSelector(),

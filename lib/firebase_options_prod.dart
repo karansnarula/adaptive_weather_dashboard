@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -64,6 +61,18 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCJtm03VhNZ5LYE3lNAXYH9Zk0OL6W98iI',
+    appId: '1:555454956170:ios:f733ea745754a16b29a373',
+    messagingSenderId: '555454956170',
+    projectId: 'adaptive-weather-dashboard',
+    storageBucket: 'adaptive-weather-dashboard.firebasestorage.app',
+    iosBundleId: 'com.example.adaptiveWeatherDashboard',
+  );
+
+  // Firebase reuses the iOS app config for macOS apps that share the
+  // same bundle ID. Manually maintained because the flutterfire CLI
+  // hung while parsing the macOS Xcode project — values match `ios`.
+  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCJtm03VhNZ5LYE3lNAXYH9Zk0OL6W98iI',
     appId: '1:555454956170:ios:f733ea745754a16b29a373',
     messagingSenderId: '555454956170',

@@ -104,6 +104,18 @@ import 'package:adaptive_weather_dashboard/features/notifications/domain/usecase
     as _i728;
 import 'package:adaptive_weather_dashboard/features/notifications/presentation/bloc/notification_bloc.dart'
     as _i728;
+import 'package:adaptive_weather_dashboard/features/profile/data/datasources/profile_remote_data_source.dart'
+    as _i444;
+import 'package:adaptive_weather_dashboard/features/profile/data/repositories/profile_repository_impl.dart'
+    as _i906;
+import 'package:adaptive_weather_dashboard/features/profile/domain/repositories/profile_repository.dart'
+    as _i490;
+import 'package:adaptive_weather_dashboard/features/profile/domain/usecases/remove_profile_image.dart'
+    as _i37;
+import 'package:adaptive_weather_dashboard/features/profile/domain/usecases/upload_profile_image.dart'
+    as _i401;
+import 'package:adaptive_weather_dashboard/features/profile/presentation/bloc/profile_bloc.dart'
+    as _i469;
 import 'package:adaptive_weather_dashboard/features/settings/presentation/bloc/settings_bloc.dart'
     as _i408;
 import 'package:adaptive_weather_dashboard/features/weather/data/datasources/weather_remote_data_source.dart'
@@ -122,6 +134,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
+import 'package:firebase_storage/firebase_storage.dart' as _i457;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_ce/hive.dart' as _i738;
 import 'package:injectable/injectable.dart' as _i526;
@@ -146,6 +159,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i59.FirebaseAuth>(() => appModule.firebaseAuth);
     gh.lazySingleton<_i974.FirebaseFirestore>(() => appModule.firestore);
     gh.lazySingleton<_i892.FirebaseMessaging>(() => appModule.messaging);
+    gh.lazySingleton<_i457.FirebaseStorage>(() => appModule.firebaseStorage);
     gh.lazySingleton<_i361.Dio>(
       () => appModule.chatbotDio,
       instanceName: 'chatbotDio',
@@ -211,6 +225,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i345.FavoritesRepository>(
       () => _i74.FavoritesRepositoryImpl(gh<_i388.FavoritesLocalDataSource>()),
     );
+    gh.lazySingleton<_i444.ProfileRemoteDataSource>(
+      () => _i444.ProfileRemoteDataSource(
+        gh<_i59.FirebaseAuth>(),
+        gh<_i974.FirebaseFirestore>(),
+        gh<_i457.FirebaseStorage>(),
+      ),
+    );
     gh.lazySingleton<_i187.DiscussionRepository>(
       () => _i341.DiscussionRepositoryImpl(
         gh<_i185.DiscussionRemoteDataSource>(),
@@ -242,6 +263,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i650.WeatherRemoteDataSource(
         gh<_i361.Dio>(instanceName: 'weatherDio'),
       ),
+    );
+    gh.lazySingleton<_i490.ProfileRepository>(
+      () => _i906.ProfileRepositoryImpl(gh<_i444.ProfileRemoteDataSource>()),
     );
     gh.factory<_i314.AddComment>(
       () => _i314.AddComment(gh<_i187.DiscussionRepository>()),
@@ -300,6 +324,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i185.DiscussionRemoteDataSource>(),
       ),
     );
+    gh.factory<_i37.RemoveProfileImage>(
+      () => _i37.RemoveProfileImage(gh<_i490.ProfileRepository>()),
+    );
+    gh.factory<_i401.UploadProfileImage>(
+      () => _i401.UploadProfileImage(gh<_i490.ProfileRepository>()),
+    );
     gh.lazySingleton<_i315.WeatherRepository>(
       () => _i61.WeatherRepositoryImpl(gh<_i650.WeatherRemoteDataSource>()),
     );
@@ -330,6 +360,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i728.SetNotificationCity>(
       () => _i728.SetNotificationCity(gh<_i235.NotificationRepository>()),
+    );
+    gh.factory<_i469.ProfileBloc>(
+      () => _i469.ProfileBloc(
+        gh<_i401.UploadProfileImage>(),
+        gh<_i37.RemoveProfileImage>(),
+        gh<_i59.FirebaseAuth>(),
+      ),
     );
     gh.factory<_i728.NotificationBloc>(
       () => _i728.NotificationBloc(

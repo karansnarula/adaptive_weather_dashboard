@@ -56,10 +56,31 @@ class AuthRemoteDataSource {
     await _firebaseAuth.signOut();
   }
 
+  /// Uses [FirebaseAuth.userChanges] instead of [authStateChanges] so that
+  /// profile mutations (e.g. updatePhotoURL after a profile-image upload)
+  /// also propagate to listeners — not just sign-in/sign-out.
   Stream<AppUserModel?> get authStateChanges {
-    return _firebaseAuth.authStateChanges().map((user) {
+    return _firebaseAuth.userChanges().map((user) {
       if (user == null) return null;
       return AppUserModel.fromFirebaseUser(user);
     });
+  }
+
+  /// Forces a fresh fetch of the current user from the Firebase backend
+  /// and returns the refreshed model. Used after profile mutations so
+  /// the local user object stays in sync — `userChanges` alone doesn't
+  /// reliably fire on `updatePhotoURL` calls on web/iOS.
+  Future<AppUserModel?> refreshCurrentUser() async {
+    final user = _firebaseAuth.currentUser;
+    if (user == null) return null;
+    try {
+      await user.reload();
+    } catch (_) {
+      // Tolerate transient network errors — fall back to the last known
+      // local state. The next reload (or sign-out) will catch up.
+    }
+    final refreshed = _firebaseAuth.currentUser;
+    if (refreshed == null) return null;
+    return AppUserModel.fromFirebaseUser(refreshed);
   }
 }
