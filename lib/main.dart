@@ -29,20 +29,33 @@ import 'features/settings/presentation/bloc/settings_state.dart';
 import 'features/weather/presentation/bloc/weather_bloc.dart';
 import 'di/injection.dart';
 import 'features/weather/presentation/bloc/weather_event.dart';
-import 'firebase_options.dart';
+import 'firebase_options_dev.dart' as dev;
+import 'firebase_options_prod.dart' as prod;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // AppConfig must initialize before Firebase so we know which flavor's
+  // Firebase project to connect to.
+  AppConfig.initialize();
+
+  // On Android/iOS, the native Firebase SDK auto-initializes from the
+  // per-flavor google-services.json / GoogleService-Info.plist before Dart
+  // even runs. Re-initializing from Dart would throw [core/duplicate-app].
+  // Web has no auto-init, so we still need to initialize there explicitly.
+  if (Firebase.apps.isEmpty) {
+    final firebaseOptions = switch (AppConfig.instance.environment) {
+      Environment.dev => dev.DefaultFirebaseOptions.currentPlatform,
+      Environment.prod => prod.DefaultFirebaseOptions.currentPlatform,
+    };
+    await Firebase.initializeApp(options: firebaseOptions);
+  }
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
-
-  AppConfig.initialize();
 
   await Hive.initFlutter();
 

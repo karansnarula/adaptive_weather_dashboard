@@ -42,11 +42,6 @@ android {
             applicationIdSuffix = ".dev"
             resValue("string", "app_name", "Weather Dev")
         }
-        create("stg") {
-            dimension = "environment"
-            applicationIdSuffix = ".stg"
-            resValue("string", "app_name", "Weather STG")
-        }
         create("prod") {
             dimension = "environment"
             resValue("string", "app_name", "Weather Dashboard")

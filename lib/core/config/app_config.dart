@@ -1,4 +1,4 @@
-enum Environment { dev, stg, prod }
+enum Environment { dev, prod }
 
 class AppConfig {
   final Environment environment;
@@ -56,7 +56,6 @@ class AppConfig {
   }
 
   bool get isDev => environment == Environment.dev;
-  bool get isStg => environment == Environment.stg;
   bool get isProd => environment == Environment.prod;
   bool get isDebugMode => !isProd;
 }

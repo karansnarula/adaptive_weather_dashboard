@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "adaptive-weather-dashboard"
+    "default": "adaptive-weather-dashboard",
+    "dev": "adaptive-weather-dashboard-dev",
+    "prod": "adaptive-weather-dashboard"
   }
 }
