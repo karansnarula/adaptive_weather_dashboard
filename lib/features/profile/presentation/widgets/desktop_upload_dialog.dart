@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_event.dart';
 
@@ -60,7 +61,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
     final file = details.files.first;
 
     if (!_isImageFile(file)) {
-      setState(() => _localErrorMessage = 'Please drop an image file.');
+      setState(() => _localErrorMessage = context.l10n.profileInvalidFile);
       return;
     }
 
@@ -75,6 +76,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l = context.l10n;
     final hasError = _localErrorMessage != null;
     final borderColor = hasError
         ? scheme.error
@@ -91,7 +93,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Upload profile image',
+                l.profileUploadTitle,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -146,8 +148,8 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                           hasError
                               ? _localErrorMessage!
                               : _isDragHover
-                                  ? 'Drop to upload'
-                                  : 'Drag image here to upload',
+                                  ? l.profileDropZoneHover
+                                  : l.profileDropZoneIdle,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
                                     color: hasError
@@ -158,7 +160,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                         if (!hasError && !_isDragHover) ...[
                           const SizedBox(height: AppDimens.spaceXs),
                           Text(
-                            'or click to browse',
+                            l.profileDropZoneClickToBrowse,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -168,7 +170,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                           ),
                           const SizedBox(height: AppDimens.spaceXs),
                           Text(
-                            'PNG, JPG, WebP · max 2MB',
+                            l.profileDropZoneHint,
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall
@@ -190,7 +192,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                     onPressed: _removePhoto,
                     icon: Icon(Icons.delete_outline, color: scheme.error),
                     label: Text(
-                      'Delete current photo',
+                      l.profileDeleteCurrent,
                       style: TextStyle(color: scheme.error),
                     ),
                     style: OutlinedButton.styleFrom(
@@ -204,7 +206,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: Text(l.profileCancel),
                 ),
               ),
             ],

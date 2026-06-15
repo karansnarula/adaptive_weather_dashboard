@@ -171,5 +171,17 @@
   "newsNoArticles": "ไม่พบบทความ",
   "newsError": "โหลดข่าวไม่สำเร็จ ดึงลงเพื่อลองใหม่",
   "newsRetry": "ลองใหม่",
-  "newsErrorOpening": "ไม่สามารถเปิดบทความได้"
+  "newsErrorOpening": "ไม่สามารถเปิดบทความได้",
+  "newsNotAvailableOnWeb": "ฟีเจอร์นี้ไม่มีให้ใช้งานบนเว็บ ลองใช้แอปบนมือถือ",
+  "profileUploadTitle": "อัปโหลดรูปโปรไฟล์",
+  "profileTakePhoto": "ถ่ายภาพ",
+  "profileSelectFromGallery": "เลือกจากแกลเลอรี",
+  "profileDeleteCurrent": "ลบรูปปัจจุบัน",
+  "profileCancel": "ยกเลิก",
+  "profileDropZoneIdle": "ลากรูปภาพมาที่นี่เพื่ออัปโหลด",
+  "profileDropZoneHover": "ปล่อยเพื่ออัปโหลด",
+  "profileDropZoneClickToBrowse": "หรือคลิกเพื่อเลือกไฟล์",
+  "profileDropZoneHint": "PNG, JPG, WebP · ขนาดสูงสุด 2MB",
+  "profileInvalidFile": "กรุณาวางไฟล์รูปภาพ",
+  "profileUpdated": "อัปเดตโปรไฟล์แล้ว"
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_event.dart';
 
@@ -41,6 +42,7 @@ class MobileUploadSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l = context.l10n;
 
     return SafeArea(
       child: Padding(
@@ -54,7 +56,7 @@ class MobileUploadSheet extends StatelessWidget {
                 vertical: AppDimens.spaceSm,
               ),
               child: Text(
-                'Upload profile image',
+                l.profileUploadTitle,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -63,12 +65,12 @@ class MobileUploadSheet extends StatelessWidget {
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.photo_camera_outlined),
-              title: const Text('Take photo'),
+              title: Text(l.profileTakePhoto),
               onTap: () => _pickFromSource(context, ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
-              title: const Text('Select from gallery'),
+              title: Text(l.profileSelectFromGallery),
               onTap: () => _pickFromSource(context, ImageSource.gallery),
             ),
             if (hasCurrentPhoto)
@@ -78,7 +80,7 @@ class MobileUploadSheet extends StatelessWidget {
                   color: scheme.error,
                 ),
                 title: Text(
-                  'Delete current photo',
+                  l.profileDeleteCurrent,
                   style: TextStyle(color: scheme.error),
                 ),
                 onTap: () => _removePhoto(context),
@@ -86,7 +88,7 @@ class MobileUploadSheet extends StatelessWidget {
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.close),
-              title: const Text('Cancel'),
+              title: Text(l.profileCancel),
               onTap: () => Navigator.of(context).pop(),
             ),
           ],

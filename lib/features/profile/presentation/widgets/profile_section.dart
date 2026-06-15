@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../../auth/domain/entities/app_user.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
@@ -65,7 +66,7 @@ class ProfileSection extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Profile updated')),
+              SnackBar(content: Text(context.l10n.profileUpdated)),
             );
         } else if (state.status == ProfileStatus.error &&
             state.errorMessage != null) {

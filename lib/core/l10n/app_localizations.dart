@@ -751,6 +751,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t open the article.'**
   String get newsErrorOpening;
+
+  /// No description provided for @newsNotAvailableOnWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature not available on web. Try the mobile app.'**
+  String get newsNotAvailableOnWeb;
+
+  /// No description provided for @profileUploadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload profile image'**
+  String get profileUploadTitle;
+
+  /// No description provided for @profileTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get profileTakePhoto;
+
+  /// No description provided for @profileSelectFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Select from gallery'**
+  String get profileSelectFromGallery;
+
+  /// No description provided for @profileDeleteCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete current photo'**
+  String get profileDeleteCurrent;
+
+  /// No description provided for @profileCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get profileCancel;
+
+  /// No description provided for @profileDropZoneIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag image here to upload'**
+  String get profileDropZoneIdle;
+
+  /// No description provided for @profileDropZoneHover.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop to upload'**
+  String get profileDropZoneHover;
+
+  /// No description provided for @profileDropZoneClickToBrowse.
+  ///
+  /// In en, this message translates to:
+  /// **'or click to browse'**
+  String get profileDropZoneClickToBrowse;
+
+  /// No description provided for @profileDropZoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'PNG, JPG, WebP · max 2MB'**
+  String get profileDropZoneHint;
+
+  /// No description provided for @profileInvalidFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Please drop an image file.'**
+  String get profileInvalidFile;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated'**
+  String get profileUpdated;
 }
 
 class _AppLocalizationsDelegate
