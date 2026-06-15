@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -31,6 +32,9 @@ abstract class AppModule {
 
   @lazySingleton
   FirebaseMessaging get messaging => FirebaseMessaging.instance;
+
+  @lazySingleton
+  FirebaseStorage get firebaseStorage => FirebaseStorage.instance;
 
   @lazySingleton
   @Named('weatherDio')

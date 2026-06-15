@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_dimens.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
+import '../../../profile/presentation/widgets/profile_avatar.dart';
 
 class WelcomeHeader extends StatelessWidget {
   const WelcomeHeader({super.key});
@@ -13,19 +14,14 @@ class WelcomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        final name = state is Authenticated
-            ? state.user.displayName ?? 'Guest'
-            : 'Guest';
+        final user = state is Authenticated ? state.user : null;
+        final name = user?.displayName ?? 'Guest';
 
         return Row(
           children: [
-            CircleAvatar(
-              radius: AppDimens.circleAvatarRadius,
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: Icon(
-                Icons.person,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+            ProfileAvatar(
+              photoUrl: user?.photoUrl,
+              size: AppDimens.circleAvatarRadius * 2,
             ),
             const SizedBox(width: AppDimens.spaceMd),
             Column(

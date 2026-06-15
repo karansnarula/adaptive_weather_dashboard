@@ -171,5 +171,17 @@
   "newsNoArticles": "No articles found.",
   "newsError": "Couldn't load news. Pull down to retry.",
   "newsRetry": "Retry",
-  "newsErrorOpening": "Couldn't open the article."
+  "newsErrorOpening": "Couldn't open the article.",
+  "newsNotAvailableOnWeb": "Feature not available on web. Try the mobile app.",
+  "profileUploadTitle": "Upload profile image",
+  "profileTakePhoto": "Take photo",
+  "profileSelectFromGallery": "Select from gallery",
+  "profileDeleteCurrent": "Delete current photo",
+  "profileCancel": "Cancel",
+  "profileDropZoneIdle": "Drag image here to upload",
+  "profileDropZoneHover": "Drop to upload",
+  "profileDropZoneClickToBrowse": "or click to browse",
+  "profileDropZoneHint": "PNG, JPG, WebP · max 2MB",
+  "profileInvalidFile": "Please drop an image file.",
+  "profileUpdated": "Profile updated"
 }

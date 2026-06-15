@@ -360,4 +360,41 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get newsErrorOpening => 'ไม่สามารถเปิดบทความได้';
+
+  @override
+  String get newsNotAvailableOnWeb =>
+      'ฟีเจอร์นี้ไม่มีให้ใช้งานบนเว็บ ลองใช้แอปบนมือถือ';
+
+  @override
+  String get profileUploadTitle => 'อัปโหลดรูปโปรไฟล์';
+
+  @override
+  String get profileTakePhoto => 'ถ่ายภาพ';
+
+  @override
+  String get profileSelectFromGallery => 'เลือกจากแกลเลอรี';
+
+  @override
+  String get profileDeleteCurrent => 'ลบรูปปัจจุบัน';
+
+  @override
+  String get profileCancel => 'ยกเลิก';
+
+  @override
+  String get profileDropZoneIdle => 'ลากรูปภาพมาที่นี่เพื่ออัปโหลด';
+
+  @override
+  String get profileDropZoneHover => 'ปล่อยเพื่ออัปโหลด';
+
+  @override
+  String get profileDropZoneClickToBrowse => 'หรือคลิกเพื่อเลือกไฟล์';
+
+  @override
+  String get profileDropZoneHint => 'PNG, JPG, WebP · ขนาดสูงสุด 2MB';
+
+  @override
+  String get profileInvalidFile => 'กรุณาวางไฟล์รูปภาพ';
+
+  @override
+  String get profileUpdated => 'อัปเดตโปรไฟล์แล้ว';
 }

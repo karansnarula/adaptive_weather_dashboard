@@ -23,26 +23,40 @@ import 'features/favorites/presentation/bloc/favorites_event.dart';
 import 'features/notifications/data/services/fcm_service.dart';
 import 'features/notifications/presentation/bloc/notification_bloc.dart';
 import 'features/notifications/presentation/bloc/notification_event.dart';
+import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'features/settings/presentation/bloc/settings_bloc.dart';
 import 'features/settings/presentation/bloc/settings_event.dart';
 import 'features/settings/presentation/bloc/settings_state.dart';
 import 'features/weather/presentation/bloc/weather_bloc.dart';
 import 'di/injection.dart';
 import 'features/weather/presentation/bloc/weather_event.dart';
-import 'firebase_options.dart';
+import 'firebase_options_dev.dart' as dev;
+import 'firebase_options_prod.dart' as prod;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // AppConfig must initialize before Firebase so we know which flavor's
+  // Firebase project to connect to.
+  AppConfig.initialize();
+
+  // On Android/iOS, the native Firebase SDK auto-initializes from the
+  // per-flavor google-services.json / GoogleService-Info.plist before Dart
+  // even runs. Re-initializing from Dart would throw [core/duplicate-app].
+  // Web has no auto-init, so we still need to initialize there explicitly.
+  if (Firebase.apps.isEmpty) {
+    final firebaseOptions = switch (AppConfig.instance.environment) {
+      Environment.dev => dev.DefaultFirebaseOptions.currentPlatform,
+      Environment.prod => prod.DefaultFirebaseOptions.currentPlatform,
+    };
+    await Firebase.initializeApp(options: firebaseOptions);
+  }
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
-
-  AppConfig.initialize();
 
   await Hive.initFlutter();
 
@@ -65,7 +79,16 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
   @override
   void initState() {
     super.initState();
-    _authBloc = getIt<AuthBloc>()..add(const AuthCheckRequested());
+    // AuthCheckRequested sets up the userChanges stream subscription so we
+    // get sign-in/sign-out events. AuthRefreshRequested forces a one-shot
+    // server reload right after — needed because FirebaseAuth.currentUser
+    // restored from local storage on app launch has the photoUrl as it was
+    // when the token was issued, not the current server value (so changes
+    // made on another device won't show until the next sign-in unless we
+    // explicitly reload).
+    _authBloc = getIt<AuthBloc>()
+      ..add(const AuthCheckRequested())
+      ..add(const AuthRefreshRequested());
     _router = AppRouter.router(_authBloc);
   }
 
@@ -84,6 +107,7 @@ class _WeatherDashboardAppState extends State<WeatherDashboardApp> {
         ),
         BlocProvider(create: (context) => getIt<NotificationBloc>()),
         BlocProvider(create: (context) => getIt<DiscussionUnreadBloc>()),
+        BlocProvider(create: (context) => getIt<ProfileBloc>()),
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {

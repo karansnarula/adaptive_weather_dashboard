@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -101,6 +102,41 @@ class _NewsPageState extends State<NewsPage>
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+
+    // NewsAPI's free tier rejects requests from deployed browser
+    // origins (HTTP 426). Even if a recruiter deep-links to /news/...
+    // on web they shouldn't see the generic "couldn't load" error —
+    // surface the actual reason instead.
+    if (kIsWeb) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: BackButton(onPressed: () => context.pop()),
+          title: Text(l.newsPageTitle(widget.cityName)),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(AppDimens.space2xl),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.web_asset_off,
+                  size: AppDimens.iconLogo,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(height: AppDimens.spaceLg),
+                Text(
+                  l.newsNotAvailableOnWeb,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: () => context.pop()),

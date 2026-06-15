@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'firebase_options_prod.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -27,7 +27,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -66,6 +69,9 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.adaptiveWeatherDashboard',
   );
 
+  // Firebase reuses the iOS app config for macOS apps that share the
+  // same bundle ID. Manually maintained because the flutterfire CLI
+  // hung while parsing the macOS Xcode project — values match `ios`.
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCJtm03VhNZ5LYE3lNAXYH9Zk0OL6W98iI',
     appId: '1:555454956170:ios:f733ea745754a16b29a373',
@@ -73,14 +79,5 @@ class DefaultFirebaseOptions {
     projectId: 'adaptive-weather-dashboard',
     storageBucket: 'adaptive-weather-dashboard.firebasestorage.app',
     iosBundleId: 'com.example.adaptiveWeatherDashboard',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDsLHqIIK2uVPL7fS-fC5X-VEjLei7lOqc',
-    appId: '1:555454956170:web:230eff95df8597fa29a373',
-    messagingSenderId: '555454956170',
-    projectId: 'adaptive-weather-dashboard',
-    authDomain: 'adaptive-weather-dashboard.firebaseapp.com',
-    storageBucket: 'adaptive-weather-dashboard.firebasestorage.app',
   );
 }

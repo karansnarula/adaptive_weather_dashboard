@@ -7,11 +7,13 @@ class AppUserModel {
   final String uid;
   final String email;
   final String? displayName;
+  final String? photoUrl;
 
   const AppUserModel({
     required this.uid,
     required this.email,
     this.displayName,
+    this.photoUrl,
   });
 
   factory AppUserModel.fromFirebaseUser(User user) {
@@ -19,6 +21,7 @@ class AppUserModel {
       uid: user.uid,
       email: user.email ?? '',
       displayName: user.displayName,
+      photoUrl: user.photoURL,
     );
   }
 
@@ -28,6 +31,7 @@ class AppUserModel {
       uid: doc.id,
       email: data['email'] ?? '',
       displayName: data['display_name'],
+      photoUrl: data['photo_url'],
     );
   }
 
@@ -35,6 +39,7 @@ class AppUserModel {
     return {
       'email': email,
       'display_name': displayName,
+      'photo_url': photoUrl,
       'created_at': FieldValue.serverTimestamp(),
     };
   }
@@ -43,5 +48,6 @@ class AppUserModel {
     uid: uid,
     email: email,
     displayName: displayName,
+    photoUrl: photoUrl,
   );
 }

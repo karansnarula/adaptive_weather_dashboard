@@ -363,4 +363,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get newsErrorOpening => 'Couldn\'t open the article.';
+
+  @override
+  String get newsNotAvailableOnWeb =>
+      'Feature not available on web. Try the mobile app.';
+
+  @override
+  String get profileUploadTitle => 'Upload profile image';
+
+  @override
+  String get profileTakePhoto => 'Take photo';
+
+  @override
+  String get profileSelectFromGallery => 'Select from gallery';
+
+  @override
+  String get profileDeleteCurrent => 'Delete current photo';
+
+  @override
+  String get profileCancel => 'Cancel';
+
+  @override
+  String get profileDropZoneIdle => 'Drag image here to upload';
+
+  @override
+  String get profileDropZoneHover => 'Drop to upload';
+
+  @override
+  String get profileDropZoneClickToBrowse => 'or click to browse';
+
+  @override
+  String get profileDropZoneHint => 'PNG, JPG, WebP · max 2MB';
+
+  @override
+  String get profileInvalidFile => 'Please drop an image file.';
+
+  @override
+  String get profileUpdated => 'Profile updated';
 }

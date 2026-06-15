@@ -264,15 +264,14 @@ Features are self-contained modules with their own `data/`, `domain/`, and `pres
 
 ## Flavors
 
-Three environments with separate application IDs and display names:
+Two environments with separate application IDs, display names, **and dedicated Firebase projects**:
 
-| Flavor | Android Application ID | iOS Bundle ID | Display Name |
-|---|---|---|---|
-| dev | `com.example.adaptive_weather_dashboard.dev` | `com.example.adaptiveWeatherDashboard.dev` | Weather Dev |
-| stg | `com.example.adaptive_weather_dashboard.stg` | `com.example.adaptiveWeatherDashboard.stg` | Weather STG |
-| prod | `com.example.adaptive_weather_dashboard` | `com.example.adaptiveWeatherDashboard` | Weather Dashboard |
+| Flavor | Android Application ID | iOS Bundle ID | Display Name | Firebase Project |
+|---|---|---|---|---|
+| dev | `com.example.adaptive_weather_dashboard.dev` | `com.example.adaptiveWeatherDashboard.dev` | Weather Dev | `adaptive-weather-dashboard-dev` |
+| prod | `com.example.adaptive_weather_dashboard` | `com.example.adaptiveWeatherDashboard` | Weather Dashboard | `adaptive-weather-dashboard` |
 
-All three can be installed side by side on the same device.
+Both can be installed side by side on the same device. Each flavor connects to its own Firebase project — independent Auth pools, Firestore data, Storage buckets, FCM tokens, and Crashlytics dashboards. Dev testers can sign up and post freely without polluting prod metrics. Per-flavor `google-services.json` (Android) and `GoogleService-Info.plist` (iOS) are selected at build time by Gradle source-sets and an Xcode build phase script respectively; per-flavor `firebase_options_<flavor>.dart` files cover web initialization.
 
 ## Firebase Integration
 
@@ -321,19 +320,35 @@ Tests are written at each clean architecture layer:
    cd adaptive_weather_dashboard
    ```
 
-2. Create your config files by copying the examples:
+2. Create your config files by copying the example:
    ```bash
    cp config/dev.json.example config/dev.json
-   cp config/dev.json.example config/stg.json
    cp config/dev.json.example config/prod.json
    ```
 
 3. Add your API keys to each config file (OpenWeatherMap, Google Maps, Gemini, NewsAPI).
 
-4. Configure Firebase:
+4. Configure Firebase — run `flutterfire configure` once per flavor, each pointing at its own Firebase project:
    ```bash
-   flutterfire configure
+   flutterfire configure \
+     --project=<your-dev-project-id> \
+     --out=lib/firebase_options_dev.dart \
+     --platforms=android,ios,web \
+     --android-package-name=com.example.adaptive_weather_dashboard.dev \
+     --ios-bundle-id=com.example.adaptiveWeatherDashboard.dev \
+     --android-out=android/app/src/dev/google-services.json \
+     --ios-out=ios/Runner/Firebase/dev/GoogleService-Info.plist
+
+   flutterfire configure \
+     --project=<your-prod-project-id> \
+     --out=lib/firebase_options_prod.dart \
+     --platforms=android,ios,web \
+     --android-package-name=com.example.adaptive_weather_dashboard \
+     --ios-bundle-id=com.example.adaptiveWeatherDashboard \
+     --android-out=android/app/src/prod/google-services.json \
+     --ios-out=ios/Runner/Firebase/prod/GoogleService-Info.plist
    ```
+   For iOS, you'll also need to add a Run Script build phase in Xcode that copies the right `GoogleService-Info.plist` based on the active configuration. See `CLAUDE.md` → "Flavors + Firebase projects" for the script body.
 
 5. Install dependencies:
    ```bash
@@ -355,9 +370,6 @@ Tests are written at each clean architecture layer:
 ```bash
 # Development (mobile)
 flutter run --flavor dev --dart-define-from-file=config/dev.json
-
-# Staging (mobile)
-flutter run --flavor stg --dart-define-from-file=config/stg.json
 
 # Production (mobile)
 flutter run --flavor prod --dart-define-from-file=config/prod.json

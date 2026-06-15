@@ -26,6 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignInRequested>(_onSignIn);
     on<AuthSignUpRequested>(_onSignUp);
     on<AuthSignOutRequested>(_onSignOut);
+    on<AuthRefreshRequested>(_onAuthRefreshRequested);
   }
 
   Future<void> _onAuthCheckRequested(
@@ -85,6 +86,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     await _signOut();
     emit(const Unauthenticated());
+  }
+
+  Future<void> _onAuthRefreshRequested(
+    AuthRefreshRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    final refreshed = await _authRepository.refreshCurrentUser();
+    if (refreshed == null) {
+      emit(const Unauthenticated());
+      return;
+    }
+    emit(Authenticated(refreshed));
   }
 
   @override
