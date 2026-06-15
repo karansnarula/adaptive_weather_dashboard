@@ -76,7 +76,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final l = context.l10n;
+    final l10n = context.l10n;
     final hasError = _localErrorMessage != null;
     final borderColor = hasError
         ? scheme.error
@@ -93,7 +93,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                l.profileUploadTitle,
+                l10n.profileUploadTitle,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -148,8 +148,8 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                           hasError
                               ? _localErrorMessage!
                               : _isDragHover
-                                  ? l.profileDropZoneHover
-                                  : l.profileDropZoneIdle,
+                                  ? l10n.profileDropZoneHover
+                                  : l10n.profileDropZoneIdle,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
                                     color: hasError
@@ -160,7 +160,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                         if (!hasError && !_isDragHover) ...[
                           const SizedBox(height: AppDimens.spaceXs),
                           Text(
-                            l.profileDropZoneClickToBrowse,
+                            l10n.profileDropZoneClickToBrowse,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -170,7 +170,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                           ),
                           const SizedBox(height: AppDimens.spaceXs),
                           Text(
-                            l.profileDropZoneHint,
+                            l10n.profileDropZoneHint,
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall
@@ -192,7 +192,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                     onPressed: _removePhoto,
                     icon: Icon(Icons.delete_outline, color: scheme.error),
                     label: Text(
-                      l.profileDeleteCurrent,
+                      l10n.profileDeleteCurrent,
                       style: TextStyle(color: scheme.error),
                     ),
                     style: OutlinedButton.styleFrom(
@@ -206,7 +206,7 @@ class _DesktopUploadDialogState extends State<DesktopUploadDialog> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text(l.profileCancel),
+                  child: Text(l10n.profileCancel),
                 ),
               ),
             ],

@@ -101,7 +101,7 @@ class _NewsPageState extends State<NewsPage>
 
   @override
   Widget build(BuildContext context) {
-    final l = context.l10n;
+    final l10n = context.l10n;
 
     // NewsAPI's free tier rejects requests from deployed browser
     // origins (HTTP 426). Even if a recruiter deep-links to /news/...
@@ -111,7 +111,7 @@ class _NewsPageState extends State<NewsPage>
       return Scaffold(
         appBar: AppBar(
           leading: BackButton(onPressed: () => context.pop()),
-          title: Text(l.newsPageTitle(widget.cityName)),
+          title: Text(l10n.newsPageTitle(widget.cityName)),
         ),
         body: Center(
           child: Padding(
@@ -126,7 +126,7 @@ class _NewsPageState extends State<NewsPage>
                 ),
                 const SizedBox(height: AppDimens.spaceLg),
                 Text(
-                  l.newsNotAvailableOnWeb,
+                  l10n.newsNotAvailableOnWeb,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -140,13 +140,13 @@ class _NewsPageState extends State<NewsPage>
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: () => context.pop()),
-        title: Text(l.newsPageTitle(widget.cityName)),
+        title: Text(l10n.newsPageTitle(widget.cityName)),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: l.newsTabWeather),
-            Tab(text: l.newsTabGeneral),
-            Tab(text: l.newsTabTravel),
+            Tab(text: l10n.newsTabWeather),
+            Tab(text: l10n.newsTabGeneral),
+            Tab(text: l10n.newsTabTravel),
           ],
         ),
       ),
