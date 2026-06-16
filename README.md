@@ -303,11 +303,13 @@ Two GitHub Actions workflows:
 
 ## Testing
 
-Tests are written at each clean architecture layer:
+**Unit + widget tests (62 cases)** — written at each clean architecture layer:
 
 - **Domain layer** — use case tests with mocked repositories
-- **Data layer** — repository tests with mocked data sources, verifying model-to-entity mapping and error handling
+- **Data layer** — repository tests with mocked data sources, verifying model-to-entity mapping and `FirebaseException`-code-to-`ProfileErrorCode` mapping
 - **Presentation layer** — BloC tests verifying state emission sequences for both success and failure paths
+
+**Integration tests (3 cases)** — live in `integration_test/` and exercise the full app with real DI, real routing, and real BLoCs against a real device or simulator. Currently a smoke test covering boot → sign-in → register navigation + form input. The full sign-up → search → favorite end-to-end journey is deferred to v1.4.0 — it needs fake Firebase backends (fake_cloud_firestore + a fake auth client) plus a test-mode DI override so the test can run hermetically without real network.
 
 ## Getting Started
 
@@ -416,7 +418,12 @@ flutter build windows --dart-define-from-file=config/prod.json
 ## Running Tests
 
 ```bash
+# Unit + widget tests (hermetic, no device needed)
 flutter test
+
+# Integration tests (real device or simulator required)
+flutter test integration_test/app_smoke_test.dart \
+  --flavor dev --dart-define-from-file=config/dev.json
 ```
 
 ## Deployment
@@ -449,12 +456,18 @@ firebase appdistribution:distribute build/app/outputs/flutter-apk/app-prod-relea
 ## Roadmap
 
 - **v1.2.0** *(shipped)* — AI weather chatbot (Gemini), weather news feed with in-app browser (NewsAPI), Weather Discussion community feed (Firestore-backed with posts/comments/likes/delete), Firestore security rules, branded splash screen with launch sound, and an unread-post badge on the Discussion shortcut
-- **v1.3.0** *(planned)* —
+- **v1.3.0** *(shipped)* — Separate dev/prod Firebase projects (independent Auth pools, Firestore data, Storage buckets, FCM tokens, Crashlytics dashboards); profile image upload with platform-aware UI (mobile bottom modal vs. desktop/web drop-zone dialog); news feature hidden on web (NewsAPI CORS blocks browser requests); profile feature fully localized
+- **v1.3.1** *(shipped)* — Quality + finish-up release. Profile error messages refactored to typed error codes (`ProfileErrorCode`) so localized strings cross the data → presentation boundary instead of English; 15 new unit tests for the profile feature; first `integration_test` scaffold (boot → sign-in → register smoke test) green on iOS + Android; FcmService hardened against iOS simulator (APNS-not-set) and missing `DarwinInitializationSettings`
+- **v1.4.0** *(planned)* —
+  - Full sign-up → search → favorite integration test journey, backed by `fake_cloud_firestore` + a fake auth client + a test-mode DI override
+  - **Patrol** test setup for native flows the standard `integration_test` package can't reach (camera + photo-picker permission dialogs for profile uploads, system-level back-press behavior)
+  - **Fire Weather Index** — wildfire-risk metric computed from temperature, humidity, wind, and precipitation (Canadian FWI System or equivalent)
+  - **Solar Irradiance** — incoming-solar-radiation surface, useful for rooftop solar and outdoor-activity planning
   - Payment integration to purchase extra AI chatbot usage (lifts the 3-message daily cap)
   - Pollen allergy data with interactive bar chart visualization (replaces the "Coming Soon" Pollen shortcut)
   - Save News (bookmark articles to read later, stored per-user in Firestore)
   - Weather Trivia Quiz (tentative — interactive quiz feature)
-- **Future** — User profile image upload, offline-first sync
+- **Future** — Offline-first sync, deep-link support (e.g. `/air-quality/:city` openable from notifications / email / shared URLs, with auth-aware routing)
 
 ## What This Project Demonstrates
 
