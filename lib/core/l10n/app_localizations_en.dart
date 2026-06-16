@@ -400,4 +400,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileUpdated => 'Profile updated';
+
+  @override
+  String get profileErrorNotSignedIn =>
+      'You must be signed in to update your profile.';
+
+  @override
+  String get profileErrorPermissionDenied =>
+      'You do not have permission to do that.';
+
+  @override
+  String get profileErrorNotFound => 'Image not found.';
+
+  @override
+  String get profileErrorCanceled => 'Upload was canceled.';
+
+  @override
+  String get profileErrorQuotaExceeded => 'Storage quota exceeded.';
+
+  @override
+  String get profileErrorInvalidImage =>
+      'Invalid image. Please try another file.';
+
+  @override
+  String get profileErrorUnknown =>
+      'An unexpected error occurred. Please try again.';
 }

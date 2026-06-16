@@ -183,5 +183,12 @@
   "profileDropZoneClickToBrowse": "หรือคลิกเพื่อเลือกไฟล์",
   "profileDropZoneHint": "PNG, JPG, WebP · ขนาดสูงสุด 2MB",
   "profileInvalidFile": "กรุณาวางไฟล์รูปภาพ",
-  "profileUpdated": "อัปเดตโปรไฟล์แล้ว"
+  "profileUpdated": "อัปเดตโปรไฟล์แล้ว",
+  "profileErrorNotSignedIn": "คุณต้องเข้าสู่ระบบก่อนเพื่อแก้ไขโปรไฟล์",
+  "profileErrorPermissionDenied": "คุณไม่ได้รับอนุญาตให้ทำสิ่งนี้",
+  "profileErrorNotFound": "ไม่พบรูปภาพ",
+  "profileErrorCanceled": "การอัปโหลดถูกยกเลิก",
+  "profileErrorQuotaExceeded": "พื้นที่จัดเก็บเต็ม",
+  "profileErrorInvalidImage": "รูปภาพไม่ถูกต้อง กรุณาเลือกไฟล์อื่น",
+  "profileErrorUnknown": "เกิดข้อผิดพลาดที่ไม่คาดคิด กรุณาลองอีกครั้ง"
 }

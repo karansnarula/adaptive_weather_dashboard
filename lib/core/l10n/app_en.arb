@@ -183,5 +183,12 @@
   "profileDropZoneClickToBrowse": "or click to browse",
   "profileDropZoneHint": "PNG, JPG, WebP · max 2MB",
   "profileInvalidFile": "Please drop an image file.",
-  "profileUpdated": "Profile updated"
+  "profileUpdated": "Profile updated",
+  "profileErrorNotSignedIn": "You must be signed in to update your profile.",
+  "profileErrorPermissionDenied": "You do not have permission to do that.",
+  "profileErrorNotFound": "Image not found.",
+  "profileErrorCanceled": "Upload was canceled.",
+  "profileErrorQuotaExceeded": "Storage quota exceeded.",
+  "profileErrorInvalidImage": "Invalid image. Please try another file.",
+  "profileErrorUnknown": "An unexpected error occurred. Please try again."
 }

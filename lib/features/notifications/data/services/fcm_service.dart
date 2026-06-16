@@ -17,15 +17,31 @@ class FcmService {
   FcmService(this._messaging, this._firestore, this._auth);
 
   Future<void> initialize() async {
-    await _messaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    try {
+      await _messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    } catch (_) {
+      // Permission prompts can throw on platforms / environments that
+      // don't support FCM (iOS simulator, web in some configurations).
+      // Token retrieval below will fail-soft on the same platforms.
+    }
 
-    final token = await _messaging.getToken();
-    if (token != null) {
-      await _saveToken(token);
+    try {
+      final token = await _messaging.getToken();
+      if (token != null) {
+        await _saveToken(token);
+      }
+    } on FirebaseException catch (_) {
+      // Tolerated cases:
+      //  * iOS simulator: APNS token never arrives, getToken throws
+      //    'apns-token-not-set'.
+      //  * Real device, first-launch timing: APNS handshake hasn't
+      //    completed yet — onTokenRefresh below will pick up the late
+      //    arrival and save it.
+      // Either way we don't want to crash app boot.
     }
 
     _messaging.onTokenRefresh.listen(_saveToken);
@@ -37,9 +53,13 @@ class FcmService {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleNotificationTap);
 
     // Handle notification tap when app was terminated
-    final initialMessage = await _messaging.getInitialMessage();
-    if (initialMessage != null) {
-      _handleNotificationTap(initialMessage);
+    try {
+      final initialMessage = await _messaging.getInitialMessage();
+      if (initialMessage != null) {
+        _handleNotificationTap(initialMessage);
+      }
+    } catch (_) {
+      // Same fail-soft rationale as getToken above.
     }
 
     // Handle foreground notifications
@@ -48,9 +68,22 @@ class FcmService {
 
   Future<void> _initLocalNotifications() async {
     const androidSettings =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const initSettings = InitializationSettings(android: androidSettings);
+    // iOS and macOS use the Darwin code path. We don't request
+    // permission here — FirebaseMessaging.requestPermission in
+    // initialize() handles that and is what the OS actually checks.
+    const darwinSettings = DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
+
+    const initSettings = InitializationSettings(
+      android: androidSettings,
+      iOS: darwinSettings,
+      macOS: darwinSettings,
+    );
 
     await _localNotifications.initialize(
       onDidReceiveNotificationResponse: (response) {
@@ -58,7 +91,8 @@ class FcmService {
         if (city != null && onNotificationTapped != null) {
           onNotificationTapped!(city);
         }
-      }, settings: initSettings,
+      },
+      settings: initSettings,
     );
   }
 

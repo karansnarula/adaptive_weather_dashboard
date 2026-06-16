@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/failures/profile_failure.dart';
 import '../../domain/usecases/remove_profile_image.dart' as uc_remove;
 import '../../domain/usecases/upload_profile_image.dart' as uc_upload;
 import 'profile_event.dart';
@@ -31,7 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (uid == null) {
       emit(state.copyWith(
         status: ProfileStatus.error,
-        errorMessage: 'You must be signed in to upload a profile image.',
+        errorCode: ProfileErrorCode.notSignedIn,
       ));
       return;
     }
@@ -46,7 +47,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     result.fold(
       (failure) => emit(state.copyWith(
         status: ProfileStatus.error,
-        errorMessage: failure.message,
+        errorCode: failure is ProfileFailure
+            ? failure.code
+            : ProfileErrorCode.unknown,
       )),
       (_) => emit(state.copyWith(status: ProfileStatus.success)),
     );
@@ -60,7 +63,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (uid == null) {
       emit(state.copyWith(
         status: ProfileStatus.error,
-        errorMessage: 'You must be signed in to remove a profile image.',
+        errorCode: ProfileErrorCode.notSignedIn,
       ));
       return;
     }
@@ -72,7 +75,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     result.fold(
       (failure) => emit(state.copyWith(
         status: ProfileStatus.error,
-        errorMessage: failure.message,
+        errorCode: failure is ProfileFailure
+            ? failure.code
+            : ProfileErrorCode.unknown,
       )),
       (_) => emit(state.copyWith(status: ProfileStatus.success)),
     );
