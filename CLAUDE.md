@@ -104,7 +104,7 @@ ARB files live in `lib/core/l10n/` (`app_en.arb`, `app_th.arb`). `flutter gen-l1
 
 `ci.yml` runs on PRs to `develop`/`main` and pushes to `develop`: pub get → build_runner → gen-l10n → analyze → test → analyze again with warnings non-fatal. The second analyze pass is intentional — the first catches errors, the second is informational. Don't bypass either.
 
-`build.yml` runs only on `v*` tag pushes and produces Android APK, iOS IPA (unsigned), and Web bundle for the **prod** flavor. iOS deployment target is patched to 15.0 via `sed` in the workflow because the local Podfile/xcconfig values aren't sufficient for the CI image — if you change iOS deployment targets, update `build.yml` too.
+`build.yml` runs only on `v*` tag pushes and produces Android APK and Web bundle for the **prod** flavor. iOS builds were intentionally removed — we don't distribute iOS (no Apple Developer Program / TestFlight) and Flutter's `--no-codesign` now requires a Development Team since recent versions. Add the job back if/when you sign up for the Developer Program.
 
 ## Git
 

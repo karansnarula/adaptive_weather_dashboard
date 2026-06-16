@@ -98,49 +98,8 @@ jobs:
           projectId: adaptive-weather-dashboard
           channelId: live
 
-  build-ios:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.x'
-          channel: 'stable'
-          cache: true
-
-      - name: Disable Swift Package Manager (FlutterFire iOS build incompat)
-        run: flutter config --no-enable-swift-package-manager
-
-      - name: Create config file
-        run: |
-          echo '{
-            "ENV": "prod",
-            "APP_NAME": "Weather Dashboard",
-            "API_BASE_URL": "${{ secrets.API_BASE_URL }}",
-            "API_KEY": "${{ secrets.API_KEY }}",
-            "MAPS_API_KEY": "${{ secrets.MAPS_API_KEY }}",
-            "GEMINI_API_URL": "https://generativelanguage.googleapis.com/v1beta/",
-            "GEMINI_API_KEY": "${{ secrets.GEMINI_API_KEY }}",
-            "NEWS_API_URL": "https://newsapi.org/v2/",
-            "NEWS_API_KEY": "${{ secrets.NEWS_API_KEY }}"
-          }' > config/prod.json
-
-      - name: Set iOS deployment target
-        run: sed -i '' 's/# platform :ios, .*/platform :ios, '\''15.0'\''/' ios/Podfile
-
-      - name: Set iOS deployment target in Xcode Project settings
-        run: |
-            sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = [0-9.]*/IPHONEOS_DEPLOYMENT_TARGET = 15.0/g' ios/Runner.xcodeproj/project.pbxproj
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Generate code
-        run: dart run build_runner build --delete-conflicting-outputs
-
-      - name: Generate localizations
-        run: flutter gen-l10n
-
-      - name: Build iOS
-        run: flutter build ios --flavor prod --dart-define-from-file=config/prod.json --no-codesign
+  # iOS build job intentionally removed: we don't distribute iOS (no Apple
+  # Developer Program, no TestFlight), and Flutter's --no-codesign now
+  # requires a Development Team since recent versions. Web + Android cover
+  # all distribution channels we actually use. Add back if/when we sign up
+  # for the Developer Program.
