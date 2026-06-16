@@ -1,27 +1,29 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/failures/profile_failure.dart';
+
 enum ProfileStatus { idle, uploading, success, error }
 
 class ProfileState extends Equatable {
   final ProfileStatus status;
-  final String? errorMessage;
+  final ProfileErrorCode? errorCode;
 
   const ProfileState({
     this.status = ProfileStatus.idle,
-    this.errorMessage,
+    this.errorCode,
   });
 
   const ProfileState.idle() : this();
 
   ProfileState copyWith({
     ProfileStatus? status,
-    String? errorMessage,
+    ProfileErrorCode? errorCode,
   }) =>
       ProfileState(
         status: status ?? this.status,
-        errorMessage: errorMessage,
+        errorCode: errorCode,
       );
 
   @override
-  List<Object?> get props => [status, errorMessage];
+  List<Object?> get props => [status, errorCode];
 }

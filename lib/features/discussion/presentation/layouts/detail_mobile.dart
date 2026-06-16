@@ -101,20 +101,20 @@ class DetailMobile extends StatelessWidget {
     BuildContext context,
     Comment comment,
   ) async {
-    final l = context.l10n;
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l.discussionDeleteCommentTitle),
-        content: Text(l.discussionDeleteCommentBody),
+        title: Text(l10n.discussionDeleteCommentTitle),
+        content: Text(l10n.discussionDeleteCommentBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(l.discussionCancel),
+            child: Text(l10n.discussionCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(l.discussionDelete),
+            child: Text(l10n.discussionDelete),
           ),
         ],
       ),

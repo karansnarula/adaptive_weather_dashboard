@@ -823,6 +823,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile updated'**
   String get profileUpdated;
+
+  /// No description provided for @profileErrorNotSignedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'You must be signed in to update your profile.'**
+  String get profileErrorNotSignedIn;
+
+  /// No description provided for @profileErrorPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to do that.'**
+  String get profileErrorPermissionDenied;
+
+  /// No description provided for @profileErrorNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Image not found.'**
+  String get profileErrorNotFound;
+
+  /// No description provided for @profileErrorCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload was canceled.'**
+  String get profileErrorCanceled;
+
+  /// No description provided for @profileErrorQuotaExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage quota exceeded.'**
+  String get profileErrorQuotaExceeded;
+
+  /// No description provided for @profileErrorInvalidImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid image. Please try another file.'**
+  String get profileErrorInvalidImage;
+
+  /// No description provided for @profileErrorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get profileErrorUnknown;
 }
 
 class _AppLocalizationsDelegate

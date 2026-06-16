@@ -18,14 +18,14 @@ class EventChipRow extends StatelessWidget {
   });
 
   String _labelFor(BuildContext context, WeatherEventType type) {
-    final l = context.l10n;
+    final l10n = context.l10n;
     return switch (type) {
-      WeatherEventType.storm => l.eventStorm,
-      WeatherEventType.flood => l.eventFlood,
-      WeatherEventType.heatwave => l.eventHeatwave,
-      WeatherEventType.drought => l.eventDrought,
-      WeatherEventType.wildfire => l.eventWildfire,
-      WeatherEventType.tornado => l.eventTornado,
+      WeatherEventType.storm => l10n.eventStorm,
+      WeatherEventType.flood => l10n.eventFlood,
+      WeatherEventType.heatwave => l10n.eventHeatwave,
+      WeatherEventType.drought => l10n.eventDrought,
+      WeatherEventType.wildfire => l10n.eventWildfire,
+      WeatherEventType.tornado => l10n.eventTornado,
     };
   }
 

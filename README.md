@@ -60,6 +60,16 @@ A production-grade multi-platform weather application built with Flutter, demons
       <sub><b>Settings</b><br/>Theme mode, language (EN / TH), and temperature units</sub>
     </td>
   </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="docs/screenshots/10a-profile-mobile.png" width="220" alt="Profile upload — mobile bottom sheet" /><br/>
+      <sub><b>Profile Upload — Mobile</b><br/>Bottom sheet: Take Photo / Select from Gallery / Delete current photo</sub>
+    </td>
+    <td align="center" colspan="2">
+      <img src="docs/screenshots/10b-profile-desktop.png" width="220" alt="Profile upload — desktop drop-zone dialog" /><br/>
+      <sub><b>Profile Upload — Desktop/Web</b><br/>Centered dialog with drag-and-drop zone + click-to-browse fallback</sub>
+    </td>
+  </tr>
 </table>
 
 ### Responsive — same code, all five platforms
@@ -289,7 +299,7 @@ Two GitHub Actions workflows:
 
 **`ci.yml`** — runs on every pull request and every push to `develop`. Installs dependencies, generates code, runs lint analysis, and executes tests. Prevents broken code from reaching the main branches.
 
-**`build.yml`** — triggered when a version tag is pushed (e.g. `v1.2.1`). Builds Android APK, iOS IPA (unsigned), and web bundle for the production flavor. API credentials are injected from GitHub repository secrets. The APK is auto-uploaded to **Firebase App Distribution** for the `portfolio-testers` group and the web bundle is auto-deployed to **Firebase Hosting** — see the [Deployment](#deployment) section.
+**`build.yml`** — triggered when a version tag is pushed (e.g. `v1.3.0`). Builds Android APK and web bundle for the production flavor. API credentials are injected from GitHub repository secrets. The APK is auto-uploaded to **Firebase App Distribution** for the `portfolio-testers` group and the web bundle is auto-deployed to **Firebase Hosting** — see the [Deployment](#deployment) section. iOS builds are intentionally not part of CI since we don't have an Apple Developer Program account; can be added when needed.
 
 ## Testing
 
@@ -411,13 +421,14 @@ flutter test
 
 ## Deployment
 
-Every `v*` tag push triggers the `build.yml` workflow, which produces three artifacts in parallel and **automatically distributes the two that have free channels**:
+Every `v*` tag push triggers the `build.yml` workflow, which produces two artifacts in parallel and **automatically distributes both**:
 
 | Artifact | Channel | What happens |
 |---|---|---|
 | Web bundle | **Firebase Hosting** (live channel) | Deployed via `FirebaseExtended/action-hosting-deploy@v0` to https://adaptive-weather-dashboard.web.app |
 | Android APK | **Firebase App Distribution** (`portfolio-testers` group) | Uploaded via `wzieba/Firebase-Distribution-Github-Action@v1`; everyone in the group gets an email with a one-tap install link |
-| iOS IPA (unsigned) | None | Built but not distributed — iOS distribution requires the $99/year Apple Developer Program |
+
+iOS is not built in CI — we don't have an Apple Developer Program account ($99/year) and Flutter's `--no-codesign` now requires a Development Team on recent versions. Local iOS dev builds work fine; the CI job can be added back from version control history if needed.
 
 Both upload steps authenticate with the same Firebase service-account JSON stored as the `FIREBASE_SERVICE_ACCOUNT` GitHub repository secret.
 

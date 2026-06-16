@@ -84,7 +84,7 @@ class _CreatePostFormState extends State<_CreatePostForm> {
         }
       },
       builder: (context, state) {
-        final l = context.l10n;
+        final l10n = context.l10n;
         final bloc = context.read<CreatePostBloc>();
         return Padding(
           padding: EdgeInsets.only(
@@ -98,14 +98,14 @@ class _CreatePostFormState extends State<_CreatePostForm> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  l.discussionCreatePostTitle,
+                  l10n.discussionCreatePostTitle,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 const SizedBox(height: AppDimens.spaceMd),
                 Text(
-                  l.discussionCreatePostUnder(state.city),
+                  l10n.discussionCreatePostUnder(state.city),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -116,7 +116,7 @@ class _CreatePostFormState extends State<_CreatePostForm> {
                   maxLength: 100,
                   onChanged: (v) => bloc.add(TitleChanged(v)),
                   decoration: InputDecoration(
-                    labelText: l.discussionTitleLabel,
+                    labelText: l10n.discussionTitleLabel,
                     counterText: '',
                     border: const OutlineInputBorder(),
                   ),
@@ -131,7 +131,7 @@ class _CreatePostFormState extends State<_CreatePostForm> {
                   controller: _imageUrlController,
                   onChanged: (v) => bloc.add(ImageUrlChanged(v)),
                   decoration: InputDecoration(
-                    labelText: l.discussionImageUrlLabel,
+                    labelText: l10n.discussionImageUrlLabel,
                     border: const OutlineInputBorder(),
                   ),
                 ),
@@ -143,7 +143,7 @@ class _CreatePostFormState extends State<_CreatePostForm> {
                   maxLines: 6,
                   maxLength: 200,
                   decoration: InputDecoration(
-                    labelText: l.discussionDescriptionLabel,
+                    labelText: l10n.discussionDescriptionLabel,
                     border: const OutlineInputBorder(),
                   ),
                 ),
@@ -158,7 +158,7 @@ class _CreatePostFormState extends State<_CreatePostForm> {
                           height: AppDimens.iconSm,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : Text(l.discussionSubmitPost),
+                      : Text(l10n.discussionSubmitPost),
                 ),
               ],
             ),

@@ -33,20 +33,20 @@ class _DetailView extends StatelessWidget {
   const _DetailView();
 
   Future<void> _confirmDeletePost(BuildContext context) async {
-    final l = context.l10n;
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l.discussionDeletePostTitle),
-        content: Text(l.discussionDeletePostBody),
+        title: Text(l10n.discussionDeletePostTitle),
+        content: Text(l10n.discussionDeletePostBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(l.discussionCancel),
+            child: Text(l10n.discussionCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(l.discussionDelete),
+            child: Text(l10n.discussionDelete),
           ),
         ],
       ),

@@ -397,4 +397,27 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get profileUpdated => 'อัปเดตโปรไฟล์แล้ว';
+
+  @override
+  String get profileErrorNotSignedIn =>
+      'คุณต้องเข้าสู่ระบบก่อนเพื่อแก้ไขโปรไฟล์';
+
+  @override
+  String get profileErrorPermissionDenied => 'คุณไม่ได้รับอนุญาตให้ทำสิ่งนี้';
+
+  @override
+  String get profileErrorNotFound => 'ไม่พบรูปภาพ';
+
+  @override
+  String get profileErrorCanceled => 'การอัปโหลดถูกยกเลิก';
+
+  @override
+  String get profileErrorQuotaExceeded => 'พื้นที่จัดเก็บเต็ม';
+
+  @override
+  String get profileErrorInvalidImage => 'รูปภาพไม่ถูกต้อง กรุณาเลือกไฟล์อื่น';
+
+  @override
+  String get profileErrorUnknown =>
+      'เกิดข้อผิดพลาดที่ไม่คาดคิด กรุณาลองอีกครั้ง';
 }

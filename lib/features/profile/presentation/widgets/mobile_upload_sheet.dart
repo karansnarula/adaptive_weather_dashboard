@@ -42,7 +42,7 @@ class MobileUploadSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final l = context.l10n;
+    final l10n = context.l10n;
 
     return SafeArea(
       child: Padding(
@@ -56,7 +56,7 @@ class MobileUploadSheet extends StatelessWidget {
                 vertical: AppDimens.spaceSm,
               ),
               child: Text(
-                l.profileUploadTitle,
+                l10n.profileUploadTitle,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -65,12 +65,12 @@ class MobileUploadSheet extends StatelessWidget {
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.photo_camera_outlined),
-              title: Text(l.profileTakePhoto),
+              title: Text(l10n.profileTakePhoto),
               onTap: () => _pickFromSource(context, ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
-              title: Text(l.profileSelectFromGallery),
+              title: Text(l10n.profileSelectFromGallery),
               onTap: () => _pickFromSource(context, ImageSource.gallery),
             ),
             if (hasCurrentPhoto)
@@ -80,7 +80,7 @@ class MobileUploadSheet extends StatelessWidget {
                   color: scheme.error,
                 ),
                 title: Text(
-                  l.profileDeleteCurrent,
+                  l10n.profileDeleteCurrent,
                   style: TextStyle(color: scheme.error),
                 ),
                 onTap: () => _removePhoto(context),
@@ -88,7 +88,7 @@ class MobileUploadSheet extends StatelessWidget {
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.close),
-              title: Text(l.profileCancel),
+              title: Text(l10n.profileCancel),
               onTap: () => Navigator.of(context).pop(),
             ),
           ],

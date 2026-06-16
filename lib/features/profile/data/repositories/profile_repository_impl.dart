@@ -4,6 +4,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../domain/failures/profile_failure.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../datasources/profile_remote_data_source.dart';
 
@@ -25,9 +26,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
       return right(url);
     } on FirebaseException catch (e) {
-      return left(ServerFailure(_mapStorageError(e)));
+      return left(ProfileFailure(_mapStorageError(e)));
     } catch (_) {
-      return left(const ServerFailure());
+      return left(const ProfileFailure(ProfileErrorCode.unknown));
     }
   }
 
@@ -39,27 +40,27 @@ class ProfileRepositoryImpl implements ProfileRepository {
       await _remote.removeProfileImage(uid: uid);
       return right(unit);
     } on FirebaseException catch (e) {
-      return left(ServerFailure(_mapStorageError(e)));
+      return left(ProfileFailure(_mapStorageError(e)));
     } catch (_) {
-      return left(const ServerFailure());
+      return left(const ProfileFailure(ProfileErrorCode.unknown));
     }
   }
 
-  String _mapStorageError(FirebaseException e) {
+  ProfileErrorCode _mapStorageError(FirebaseException e) {
     switch (e.code) {
       case 'unauthorized':
       case 'permission-denied':
-        return 'You do not have permission to do that.';
+        return ProfileErrorCode.permissionDenied;
       case 'object-not-found':
-        return 'Image not found.';
+        return ProfileErrorCode.notFound;
       case 'canceled':
-        return 'Upload was canceled.';
+        return ProfileErrorCode.canceled;
       case 'quota-exceeded':
-        return 'Storage quota exceeded.';
+        return ProfileErrorCode.quotaExceeded;
       case 'invalid-argument':
-        return 'Invalid image. Please try another file.';
+        return ProfileErrorCode.invalidImage;
       default:
-        return 'An unexpected error occurred. Please try again.';
+        return ProfileErrorCode.unknown;
     }
   }
 }

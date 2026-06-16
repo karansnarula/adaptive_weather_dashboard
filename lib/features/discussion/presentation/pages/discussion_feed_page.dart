@@ -58,11 +58,11 @@ class _DiscussionFeedPageState extends State<DiscussionFeedPage> {
   }
 
   void _openCreateSheet(BuildContext context) {
-    final c = widget.city;
-    if (c == null) return;
+    final city = widget.city;
+    if (city == null) return;
     showCreatePostSheet(
       context,
-      city: c,
+      city: city,
       onSubmitted: (CreatePostState state) {
         final created = state.createdPost;
         if (created != null) {

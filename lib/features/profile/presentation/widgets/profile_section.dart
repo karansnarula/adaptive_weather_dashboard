@@ -5,16 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../auth/domain/entities/app_user.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
+import '../../domain/failures/profile_failure.dart';
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_state.dart';
 import 'desktop_upload_dialog.dart';
 import 'mobile_upload_sheet.dart';
 import 'profile_avatar.dart';
+
+String _localizedProfileError(AppLocalizations l10n, ProfileErrorCode code) =>
+    switch (code) {
+      ProfileErrorCode.notSignedIn => l10n.profileErrorNotSignedIn,
+      ProfileErrorCode.permissionDenied => l10n.profileErrorPermissionDenied,
+      ProfileErrorCode.notFound => l10n.profileErrorNotFound,
+      ProfileErrorCode.canceled => l10n.profileErrorCanceled,
+      ProfileErrorCode.quotaExceeded => l10n.profileErrorQuotaExceeded,
+      ProfileErrorCode.invalidImage => l10n.profileErrorInvalidImage,
+      ProfileErrorCode.unknown => l10n.profileErrorUnknown,
+    };
 
 /// Settings-page header: large tappable avatar over display name + email.
 /// Tapping the avatar opens the platform-appropriate upload UI — bottom
@@ -69,11 +82,15 @@ class ProfileSection extends StatelessWidget {
               SnackBar(content: Text(context.l10n.profileUpdated)),
             );
         } else if (state.status == ProfileStatus.error &&
-            state.errorMessage != null) {
+            state.errorCode != null) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(state.errorMessage!)),
+              SnackBar(
+                content: Text(
+                  _localizedProfileError(context.l10n, state.errorCode!),
+                ),
+              ),
             );
         }
       },
