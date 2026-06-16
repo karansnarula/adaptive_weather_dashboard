@@ -91,9 +91,9 @@ Both install side-by-side on a single device (different applicationId/bundleId),
 
 ```bash
 firebase use dev
-firebase deploy --only firestore:rules,storage:rules
+firebase deploy --only firestore:rules,storage
 firebase use prod
-firebase deploy --only firestore:rules,storage:rules
+firebase deploy --only firestore:rules,storage
 ```
 
 ### Push notifications
